@@ -4,9 +4,13 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>co.com.meerkats</groupId>
   <artifactId>ucosports</artifactId>
-  <name>UCOSPORTS</name>
   <version>1.0.0-SNAPSHOT</version>
-  <packaging>war</packaging>
+  <packaging>pom</packaging>
+  
+  <modules>
+  	<module>ucosports-rest</module>
+  	<module>ucosports-web</module>
+  </modules>
 
   <properties>
     <version.wildfly.swarm>2017.3.2</version.wildfly.swarm>
@@ -27,7 +31,6 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
-
   <build>
     <finalName>ucosports</finalName>
     <plugins>
@@ -54,10 +57,15 @@
       <version>7.0</version>
       <scope>provided</scope>
     </dependency>
-    <dependency>
-      <groupId>org.wildfly.swarm</groupId>
-      <artifactId>swagger-webapp</artifactId>
-    </dependency>
+	<dependency>
+  		<groupId>org.wildfly.swarm</groupId>
+  		<artifactId>cdi</artifactId>
+	</dependency>
+	<dependency>
+    	<groupId>org.wildfly.swarm</groupId>
+    	<artifactId>multi-module-api</artifactId>
+    	<version>2017.2.0</version>
+	</dependency>
     <!-- WildFly Swarm Fractions -->
     
   </dependencies>
