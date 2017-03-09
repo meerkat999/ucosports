@@ -5,9 +5,18 @@
     <artifactId>ucosports</artifactId>
     <version>1.0.0-SNAPSHOT</version>
   </parent>
-  <artifactId>ucosports-rest</artifactId>
+  <artifactId>ucosports-jugador-ms</artifactId>
   <packaging>war</packaging>
   <dependencies>
+    <dependency>
+      <groupId>javax</groupId>
+      <artifactId>javaee-api</artifactId>
+      <version>7.0</version>
+    </dependency>
+	<dependency>
+  		<groupId>org.wildfly.swarm</groupId>
+  		<artifactId>cdi</artifactId>
+	</dependency>
     <dependency>
     	<groupId>org.wildfly.swarm</groupId>
   		<artifactId>jaxrs</artifactId>

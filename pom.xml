@@ -8,8 +8,8 @@
   <packaging>pom</packaging>
   
   <modules>
-  	<module>ucosports-rest</module>
   	<module>ucosports-web</module>
+  	<module>ucosports-jugador-ms</module>
   </modules>
 
   <properties>
@@ -31,8 +31,9 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
-  <build>
-    <finalName>ucosports</finalName>
+  
+   <build>
+    <finalName>deploy</finalName>
     <plugins>
       <plugin>
         <groupId>org.wildfly.swarm</groupId>
@@ -48,25 +49,4 @@
       </plugin>
     </plugins>
   </build>
-
-  <dependencies>
-    <!-- Java EE 7 dependency -->
-    <dependency>
-      <groupId>javax</groupId>
-      <artifactId>javaee-api</artifactId>
-      <version>7.0</version>
-      <scope>provided</scope>
-    </dependency>
-	<dependency>
-  		<groupId>org.wildfly.swarm</groupId>
-  		<artifactId>cdi</artifactId>
-	</dependency>
-	<dependency>
-    	<groupId>org.wildfly.swarm</groupId>
-    	<artifactId>multi-module-api</artifactId>
-    	<version>2017.2.0</version>
-	</dependency>
-    <!-- WildFly Swarm Fractions -->
-    
-  </dependencies>
 </project>
