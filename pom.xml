@@ -10,6 +10,7 @@
   <modules>
   	<module>ucosports-web</module>
   	<module>ucosports-jugador-ms</module>
+  	<module>ucosports-domain</module>
   </modules>
 
   <properties>
