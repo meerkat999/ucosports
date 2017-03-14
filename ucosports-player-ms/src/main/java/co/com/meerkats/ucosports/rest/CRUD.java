@@ -20,13 +20,9 @@ public class CRUD {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public PlayerDTO getPlayer() {
-		Player player = new Player();
-		player.setFirstName("Crisman");
+		Player player = repository.findOne(0);
 		PlayerDTO playerDto = new PlayerDTO();
 		playerDto.firtsName = player.getFirstName();
-		System.out.println("prueba");
-		Player player2 = repository.findOne(0);
-		System.out.println(player2);
 		return playerDto;
 	}
 }
