@@ -1,4 +1,4 @@
-package co.com.meerkats.ucosports.rest.context;
+package co.com.meerkats.ucosports.player.rest.context;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
