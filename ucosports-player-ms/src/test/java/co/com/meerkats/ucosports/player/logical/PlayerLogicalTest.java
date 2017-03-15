@@ -1,5 +1,8 @@
 package co.com.meerkats.ucosports.player.logical;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,6 +20,8 @@ public class PlayerLogicalTest {
 
 	private static final String NOMBRE = "Crisman";
 
+	private List<Player> listaEsperada;
+
 	@InjectMocks
 	private PlayerLogical logical;
 	
@@ -31,6 +36,9 @@ public class PlayerLogicalTest {
 		Player player = new Player();
 		player.setFirstName(NOMBRE);
 		Mockito.when(repository.findOne(ID)).thenReturn(player);
+		listaEsperada = new ArrayList<>();
+		listaEsperada.add(player);
+		Mockito.when(repository.findAll()).thenReturn(listaEsperada);
 	}
 	
 	@Test
@@ -44,6 +52,14 @@ public class PlayerLogicalTest {
 	public void getPlayerNull(){
 		Player player = logical.findPlayerById(IDNULL);
 		Assert.assertNull(player);
+	}
+	
+	@Test
+	public void findAllPlayers(){
+		List<Player> listaActual = logical.findAll();
+		Assert.assertNotNull(listaActual);
+		Assert.assertFalse(listaActual.isEmpty());
+		Assert.assertEquals(listaActual, listaEsperada);
 	}
 	
 }

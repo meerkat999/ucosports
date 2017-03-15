@@ -1,7 +1,10 @@
 package co.com.meerkats.ucosports.player.rest;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -17,7 +20,7 @@ public class PlayerServiceRest {
 	@Inject
 	private PlayerLogical logical;
 	
-	@Path("/getPlayerById/")
+	@Path("/getPlayerById")
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -27,5 +30,12 @@ public class PlayerServiceRest {
 			player = logical.findPlayerById(playerDto.id);
 		}
 		return player;
+	}
+
+	@Path("/getAllPlayers")
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Player> getAllPlayers() {
+		return logical.findAll();
 	}
 }

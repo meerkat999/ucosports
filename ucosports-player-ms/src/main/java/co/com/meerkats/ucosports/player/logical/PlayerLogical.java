@@ -1,5 +1,7 @@
 package co.com.meerkats.ucosports.player.logical;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import co.com.meerkats.ucosports.domain.Player;
@@ -12,6 +14,10 @@ public class PlayerLogical {
 	
 	public Player findPlayerById(Integer id) {
 		return repository.findOne(id);
+	}
+
+	public List<Player> findAll() {
+		return repository.findAll();
 	}
 
 }

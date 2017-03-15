@@ -29,4 +29,10 @@ public class PlayerServiceRestTest {
 		Mockito.verify(logical).findPlayerById(ID);
 	}
 	
+	@Test
+	public void verifyGetAll(){
+		service.getAllPlayers();
+		Mockito.verify(logical).findAll();
+	}
+	
 }
