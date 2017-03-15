@@ -19,7 +19,7 @@ The architecture of micro-services is proposed for the boom it is generating in 
 * Open the terminal in the parent folder 'ucosports' and execute: 'mvn clean package -U' or create a maven task in your IDE with the same commands: Eclipse Run/Run as/ Maven build.../ and in Goals push the same commands.
 * Run ucosporst-run.bat and get fun.
 
-# SOON PROJECT PROPIERTIES: PORTS, URLS, POOLS, CONECTIONS.
+# SOON PROJECT PROPERTIES: PORTS, URLS, POOLS, CONECTIONS.
 
 -------------------------------------------------
 
