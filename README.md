@@ -25,18 +25,18 @@ The architecture of micro-services is proposed for the boom it is generating in 
 
 # UCOSPORST - ARQUITECTURA DE MICROSERVICIOS
 
-### INTRODUCTION:
+### INTRODUCCIÓN:
 
 Esta arquitectura se propuso por el boom que ha se generado en el mundo tecnológico y del desarrollo.
 
-### BENEFITS:
+### BENEFICIOS:
 
 * Los microservicios son pequeños.
 * Son independientes.
 * Alta escalabilidad. Permite a cada desarrollador trabajar en un microservicio sin alterar el trabajo de los demás desarrolladores.
 * Fallos / Errores, solo afectan el microservicio que lo generó, no al proyecto entero.
 
-### INSTRUCTIONS FOR DEPLOY
+### INSTRUCCIONES PARA DESPLEGAR
 
 * Clona este repositorio en una carpeta llamada 'ucosports' dentro de tu workspace.
 * Importa como un proyecto maven el proyecto padre 'ucosports' y sus hijos dentro del IDE.
