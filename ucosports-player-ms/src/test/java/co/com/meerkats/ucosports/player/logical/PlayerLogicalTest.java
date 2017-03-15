@@ -1,4 +1,4 @@
-package co.com.meerkats.ucosports.player.rest;
+package co.com.meerkats.ucosports.player.logical;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -10,16 +10,15 @@ import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import co.com.meerkats.ucosports.domain.Player;
-import co.com.meerkats.ucosports.player.dto.PlayerDTO;
 import co.com.meerkats.ucosports.player.repository.IPlayerRepository;
 
 @RunWith(MockitoJUnitRunner.class)
-public class playerServiceRestTest {
-	
+public class PlayerLogicalTest {
+
 	private static final String NOMBRE = "Crisman";
 
 	@InjectMocks
-	private PlayerServiceRest serviceRest;
+	private PlayerLogical logical;
 	
 	@Mock
 	private IPlayerRepository repository;
@@ -36,18 +35,14 @@ public class playerServiceRestTest {
 	
 	@Test
 	public void getPlayer(){
-		PlayerDTO playerDto = new PlayerDTO();
-		playerDto.id = ID;
-		Player player = serviceRest.getPlayerById(playerDto);
+		Player player = logical.findPlayerById(ID);
 		Assert.assertNotNull(player);
 		Assert.assertEquals(player.getFirstName(), NOMBRE);
 	}
 	
 	@Test
 	public void getPlayerNull(){
-		PlayerDTO playerDto = new PlayerDTO();
-		playerDto.id = IDNULL;
-		Player player = serviceRest.getPlayerById(playerDto);
+		Player player = logical.findPlayerById(IDNULL);
 		Assert.assertNull(player);
 	}
 	

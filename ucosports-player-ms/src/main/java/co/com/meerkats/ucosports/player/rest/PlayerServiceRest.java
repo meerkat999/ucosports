@@ -8,14 +8,14 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import co.com.meerkats.ucosports.domain.Player;
-import co.com.meerkats.ucosports.player.dto.PlayerDTO;
-import co.com.meerkats.ucosports.player.repository.IPlayerRepository;
+import co.com.meerkats.ucosports.domain.dto.PlayerDTO;
+import co.com.meerkats.ucosports.player.logical.PlayerLogical;
 
 @Path("/playerService")
 public class PlayerServiceRest {
 
 	@Inject
-	private IPlayerRepository repository;
+	private PlayerLogical logical;
 	
 	@Path("/getPlayerById/")
 	@POST
@@ -24,7 +24,7 @@ public class PlayerServiceRest {
 	public Player getPlayerById(PlayerDTO playerDto) {
 		Player player = null;
 		if(playerDto != null && playerDto.id != null){
-			player = repository.findOne(playerDto.id);
+			player = logical.findPlayerById(playerDto.id);
 		}
 		return player;
 	}

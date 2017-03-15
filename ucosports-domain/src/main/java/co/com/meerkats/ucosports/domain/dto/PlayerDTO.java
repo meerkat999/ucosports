@@ -1,4 +1,4 @@
-package co.com.meerkats.ucosports.player.dto;
+package co.com.meerkats.ucosports.domain.dto;
 
 public class PlayerDTO {
 
