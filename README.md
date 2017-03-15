@@ -16,7 +16,7 @@ The architecture of micro-services is proposed for the boom it is generating in 
 * Clone this repo in one folder called 'ucosports' into your workspace.
 * Import the maven parent project 'ucosports' and their children modules into your IDE.
 * Refresh maven dependencies. Eclipse 'alt + f5'.
-* Open the terminal in the parent folder 'ucosports' and execute: 'mvn clean package -U'.
+* Open the terminal in the parent folder 'ucosports' and execute: 'mvn clean package -U' or create a maven task in your IDE with the same commands: Eclipse Run/Run as/ Maven build.../ and in Goals push the same commands.
 * Run ucosporst-run.bat and get fun.
 
 # SOON PROJECT PROPIERTIES: PORTS, URLS, POOLS, CONECTIONS.
@@ -41,7 +41,7 @@ Esta arquitectura se propuso por el boom que ha se generado en el mundo tecnoló
 * Clona este repositorio en una carpeta llamada 'ucosports' dentro de tu workspace.
 * Importa como un proyecto maven el proyecto padre 'ucosports' y sus hijos dentro del IDE.
 * Refresca las dependencias del maven. Eclipse 'alt + f5'.
-* Abre una terminal en la carpeta padre 'ucosports' y ejecuta: 'mvn clean package -U'.
+* Abre una terminal en la carpeta padre 'ucosports' y ejecuta: 'mvn clean package -U'. O crea una tarea para correr desde maven en tu IDE con los mismos comandos: Eclipse Run/Run as/ Maven build.../ y en Goals poner los comandos.
 * Ejecuta 'ucosporst-run.bat' y diviértete.
 
 # PRÓXIMAMENTE PROPIEDADES DEL PROYECTO: PUERTOS, URLS, POOLS, CONEXIONES.
