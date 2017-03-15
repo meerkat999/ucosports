@@ -7,6 +7,7 @@
   </parent>
   <artifactId>ucosports-reports-ms</artifactId>
   <packaging>war</packaging>
+  <version>${ucosports-reports-ms-version}</version>
   <dependencies>
     <dependency>
     	<groupId>org.wildfly.swarm</groupId>
