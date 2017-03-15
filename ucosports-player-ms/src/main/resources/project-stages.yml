@@ -3,7 +3,7 @@ swarm:
     data-sources:
       ucosportsDS:
         driver-name: mysql
-        connection-url: jdbc:mysql://localhost:3306/ucosports?serverTimezone=UTC&useSSL=false
+        connection-url: jdbc:mysql://0.0.0.0:3306/ucosports?serverTimezone=UTC&useSSL=false
         user-name: root
         password: root
   port:
