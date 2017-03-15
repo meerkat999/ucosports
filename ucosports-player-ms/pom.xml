@@ -11,7 +11,7 @@
   	<dependency>
       <groupId>co.com.meerkats</groupId>
       <artifactId>ucosports-domain</artifactId>
-      <version>1.0.0-SNAPSHOT</version>
+      <version>${ucosports-domain-version}</version>
     </dependency>
     <dependency>
       <groupId>javax</groupId>

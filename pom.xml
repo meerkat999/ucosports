@@ -20,6 +20,10 @@
     <maven.compiler.target>1.8</maven.compiler.target>
     <failOnMissingWebXml>false</failOnMissingWebXml>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <ucosports-web-version></ucosports-web-version>
+    <ucosports-player-ms-version></ucosports-player-ms-version>
+    <ucosports-domain-version>1.0.1-SNAPSHOT</ucosports-domain-version>
+    <ucosports-reports-ms-version></ucosports-reports-ms-version>
   </properties>
 
   <dependencyManagement>

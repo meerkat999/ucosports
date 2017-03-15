@@ -6,6 +6,7 @@
     <version>1.0.0-SNAPSHOT</version>
   </parent>
   <artifactId>ucosports-domain</artifactId>
+  <version>${ucosports-domain-version}</version>
 	<dependencies>
 	<dependency>
    		<groupId>javax.persistence</groupId>
