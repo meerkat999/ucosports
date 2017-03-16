@@ -1,0 +1,5 @@
+docker run --name db -d -e MYSQL_ROOT_PASSWORD=root -p 3306:3306 mysql
+
+docker exec -it db /bin/bash
+
+docker run -i --link db:db playerms
