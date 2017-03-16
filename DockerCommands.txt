@@ -1,5 +1,7 @@
 docker run --name db -d -e MYSQL_ROOT_PASSWORD=root -p 3306:3306 mysql
 
+crear schema ucosports
+
 docker exec -it db /bin/bash
 
 docker run --name playercontainer --link db:db playerimage
