@@ -1,10 +1,3 @@
 swarm:
-  datasources:
-    data-sources:
-      ucosportsDS:
-        driver-name: mysql
-        connection-url: jdbc:mysql://localhost:3306/ucosports?serverTimezone=UTC&useSSL=false
-        user-name: root
-        password: root
   port:
     offset: 50      

@@ -13,7 +13,7 @@ import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import co.com.meerkats.ucosports.domain.Player;
-import co.com.meerkats.ucosports.player.repository.IPlayerRepository;
+import co.com.meerkats.ucosports.repository.player.IPlayerRepository;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PlayerLogicalTest {

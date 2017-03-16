@@ -14,24 +14,6 @@
       <artifactId>ucosports-domain</artifactId>
       <version>${ucosports-domain-version}</version>
     </dependency>
-    <dependency>
-      <groupId>javax</groupId>
-      <artifactId>javaee-api</artifactId>
-      <version>7.0</version>
-    </dependency>
-    <dependency>
-  		<groupId>org.wildfly.swarm</groupId>
-  		<artifactId>jpa</artifactId>
-	</dependency>
-	<dependency>
-      <groupId>mysql</groupId>
-      <artifactId>mysql-connector-java</artifactId>
-      <version>6.0.6</version>
-    </dependency>
-    <dependency>
-      <groupId>org.wildfly.swarm</groupId>
-      <artifactId>datasources</artifactId>
-    </dependency>
 	<dependency>
   		<groupId>org.wildfly.swarm</groupId>
   		<artifactId>cdi</artifactId>
@@ -39,11 +21,6 @@
     <dependency>
     	<groupId>org.wildfly.swarm</groupId>
   		<artifactId>jaxrs</artifactId>
-	</dependency>
-	<dependency>
-		<groupId>org.springframework.data</groupId>
-		<artifactId>spring-data-jpa</artifactId>
-		<version>1.11.1.RELEASE</version>
 	</dependency>
 	<dependency>
   		<groupId>org.wildfly.swarm</groupId>

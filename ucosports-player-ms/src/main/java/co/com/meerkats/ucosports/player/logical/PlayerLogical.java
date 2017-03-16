@@ -2,11 +2,13 @@ package co.com.meerkats.ucosports.player.logical;
 
 import java.util.List;
 
+import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 
 import co.com.meerkats.ucosports.domain.Player;
-import co.com.meerkats.ucosports.player.repository.IPlayerRepository;
+import co.com.meerkats.ucosports.repository.player.IPlayerRepository;
 
+@Dependent
 public class PlayerLogical {
 
 	@Inject
