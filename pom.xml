@@ -12,6 +12,7 @@
   	<module>ucosports-player-ms</module>
   	<module>ucosports-domain</module>
   	<module>ucosports-reports-ms</module>
+  	<module>ucosports-team-ms</module>
   </modules>
 
   <properties>
@@ -24,6 +25,7 @@
     <ucosports-player-ms-version>1.0.2-SNAPSHOT</ucosports-player-ms-version>
     <ucosports-domain-version>1.0.3-SNAPSHOT</ucosports-domain-version>
     <ucosports-reports-ms-version>1.0.0-SNAPSHOT</ucosports-reports-ms-version>
+    <ucosports-team-ms-version>1.0.0-SNAPSHOT</ucosports-team-ms-version>
   </properties>
 
   <dependencyManagement>
