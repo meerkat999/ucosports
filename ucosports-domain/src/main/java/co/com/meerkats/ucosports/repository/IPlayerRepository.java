@@ -1,4 +1,4 @@
-package co.com.meerkats.ucosports.repository.player;
+package co.com.meerkats.ucosports.repository;
 
 import javax.enterprise.context.Dependent;
 

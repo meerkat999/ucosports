@@ -11,7 +11,7 @@ public class Player {
 
 	@Id
 	@Column(name = "idplayer")
-	private int id;
+	private Integer id;
 	
 	@Column(name = "firstnameplayer")
 	private String firstName;
@@ -24,7 +24,7 @@ public class Player {
 		this.firstName = firstName;
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 

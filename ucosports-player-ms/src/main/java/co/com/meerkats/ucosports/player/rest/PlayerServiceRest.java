@@ -20,7 +20,7 @@ public class PlayerServiceRest {
 	@Inject
 	private PlayerLogical logical;
 	
-	@Path("/getPlayerById")
+	@Path("/getById")
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -32,7 +32,7 @@ public class PlayerServiceRest {
 		return player;
 	}
 
-	@Path("/getAllPlayers")
+	@Path("/getAll")
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Player> getAllPlayers() {
