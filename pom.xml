@@ -26,6 +26,8 @@
     <ucosports-domain-version>1.0.3-SNAPSHOT</ucosports-domain-version>
     <ucosports-reports-ms-version>1.0.0-SNAPSHOT</ucosports-reports-ms-version>
     <ucosports-team-ms-version>1.0.0-SNAPSHOT</ucosports-team-ms-version>
+    <version.junit>4.12</version.junit>
+    <version.mockito>1.10.19</version.mockito>
   </properties>
 
   <dependencyManagement>
