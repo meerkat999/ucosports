@@ -9,10 +9,9 @@
   
   <modules>
   	<module>ucosports-web</module>
-  	<module>ucosports-player-ms</module>
+  	<module>ucosports-tournament-ms</module>
   	<module>ucosports-domain</module>
   	<module>ucosports-reports-ms</module>
-  	<module>ucosports-team-ms</module>
   </modules>
 
   <properties>
@@ -22,10 +21,9 @@
     <failOnMissingWebXml>false</failOnMissingWebXml>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <ucosports-web-version>1.0.0-SNAPSHOT</ucosports-web-version>
-    <ucosports-player-ms-version>1.0.2-SNAPSHOT</ucosports-player-ms-version>
+    <ucosports-tournament-ms-version>1.0.0-SNAPSHOT</ucosports-tournament-ms-version>
     <ucosports-domain-version>1.0.3-SNAPSHOT</ucosports-domain-version>
     <ucosports-reports-ms-version>1.0.0-SNAPSHOT</ucosports-reports-ms-version>
-    <ucosports-team-ms-version>1.0.0-SNAPSHOT</ucosports-team-ms-version>
     <version.junit>4.12</version.junit>
     <version.mockito>1.10.19</version.mockito>
   </properties>

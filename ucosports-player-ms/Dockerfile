@@ -1,3 +1,0 @@
-FROM java:8
-ADD target/deploy-swarm.jar /opt/ucosports-player-ms-swarm.jar
-ENTRYPOINT ["java", "-jar", "/opt/ucosports-player-ms-swarm.jar", "-Dswarm.port.offset=2"] 
