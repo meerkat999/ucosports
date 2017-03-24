@@ -1,12 +1,11 @@
 package co.com.meerkats.ucosports.repository;
 
-import javax.enterprise.context.Dependent;
-
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.cdi.Eager;
 
 import co.com.meerkats.ucosports.domain.Player;
 
-@Dependent
+@Eager
 public interface IPlayerRepository extends JpaRepository<Player, Integer> {
 
 }

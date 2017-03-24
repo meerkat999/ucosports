@@ -9,13 +9,13 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import co.com.meerkats.ucosports.domain.Team;
-import co.com.meerkats.ucosports.logical.TeamLogical;
+import co.com.meerkats.ucosports.logical.ITeamLogical;
 
 @Path("/teamService")
 public class TeamServiceRest {
 
 	@Inject
-	private TeamLogical logical;
+	private ITeamLogical logical;
 	
 	@Path("/getAll")
 	@GET

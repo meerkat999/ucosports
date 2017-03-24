@@ -8,7 +8,7 @@ import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import co.com.meerkats.ucosports.domain.dto.PlayerDTO;
-import co.com.meerkats.ucosports.logical.PlayerLogical;
+import co.com.meerkats.ucosports.logical.Impl.PlayerLogicalImpl;
 import co.com.meerkats.ucosports.rest.PlayerServiceRest;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -20,7 +20,7 @@ public class PlayerServiceRestTest {
 	private PlayerServiceRest service;
 	
 	@Mock
-	private PlayerLogical logical;
+	private PlayerLogicalImpl logical;
 	
 	@Test
 	public void verifyFindPlayer(){

@@ -2,6 +2,8 @@ package co.com.meerkats.ucosports.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -11,6 +13,7 @@ public class Player {
 
 	@Id
 	@Column(name = "idplayer")
+	@GeneratedValue(strategy = GenerationType.IDENTITY) 
 	private Integer id;
 	
 	@Column(name = "firstnameplayer")

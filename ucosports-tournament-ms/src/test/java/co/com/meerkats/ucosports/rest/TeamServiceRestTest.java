@@ -7,7 +7,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import co.com.meerkats.ucosports.logical.TeamLogical;
+import co.com.meerkats.ucosports.logical.Impl.TeamLogicalImpl;
 import co.com.meerkats.ucosports.rest.TeamServiceRest;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -17,7 +17,7 @@ public class TeamServiceRestTest {
 	private TeamServiceRest serviceRest;
 	
 	@Mock
-	private TeamLogical logical;
+	private TeamLogicalImpl logical;
 
 	@Test
 	public void getAll(){

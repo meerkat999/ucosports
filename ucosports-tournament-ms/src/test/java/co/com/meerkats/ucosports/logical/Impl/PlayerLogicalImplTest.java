@@ -1,4 +1,4 @@
-package co.com.meerkats.ucosports.logical;
+package co.com.meerkats.ucosports.logical.Impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,18 +13,18 @@ import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import co.com.meerkats.ucosports.domain.Player;
-import co.com.meerkats.ucosports.logical.PlayerLogical;
+import co.com.meerkats.ucosports.logical.Impl.PlayerLogicalImpl;
 import co.com.meerkats.ucosports.repository.IPlayerRepository;
 
 @RunWith(MockitoJUnitRunner.class)
-public class PlayerLogicalTest {
+public class PlayerLogicalImplTest {
 
 	private static final String NOMBRE = "Crisman";
 
 	private List<Player> listaEsperada;
 
 	@InjectMocks
-	private PlayerLogical logical;
+	private PlayerLogicalImpl logical;
 	
 	@Mock
 	private IPlayerRepository repository;

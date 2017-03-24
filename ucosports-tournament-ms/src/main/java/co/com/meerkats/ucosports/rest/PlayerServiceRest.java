@@ -12,13 +12,13 @@ import javax.ws.rs.core.MediaType;
 
 import co.com.meerkats.ucosports.domain.Player;
 import co.com.meerkats.ucosports.domain.dto.PlayerDTO;
-import co.com.meerkats.ucosports.logical.PlayerLogical;
+import co.com.meerkats.ucosports.logical.IPlayerLogical;
 
 @Path("/playerService")
 public class PlayerServiceRest {
 
 	@Inject
-	private PlayerLogical logical;
+	private IPlayerLogical logical;
 	
 	@Path("/getById")
 	@POST
@@ -37,5 +37,12 @@ public class PlayerServiceRest {
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Player> getAllPlayers() {
 		return logical.findAll();
+	}
+	
+	@Path("/prueba")
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Player> prueba() throws Exception{
+		return logical.prueba();
 	}
 }
