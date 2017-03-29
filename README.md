@@ -44,11 +44,11 @@ UCOSPORTS-TOURNAMENT-DOMAIN IS NOT A MICROSERVICE, is only a jar with the domain
 
 * UCOSPORTS-REPORTS-MS:
   * WildFly Swarm Server (org.wildfly.swarm)
-  * *in progress
+  * *in progress*
   
 * UCOSPORTS-INVENTORY-MS:
   * WildFly Swarm Server (org.wildfly.swarm)
-  * *in progress
+  * *in progress*
 
 * UCOSPORTS-WEB:
   * AngularJS
