@@ -1,0 +1,14 @@
+172.17.0.2
+
+docker run --name db -d -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=ucosports -p 3306:3306 mysql
+
+docker exec -it db mysql -u root -p
+
+docker run --name webcontainer --link db:db -p 8080:8080 -d webimage
+docker run --name playercontainer --link db:db -p 8082:8082 -d playerimage
+docker run --name teamcontainer --link db:db -p 8083:8083 -d teamimage
+docker run --name playercontainer --link db:db playerimage
+
+docker stop $(docker ps -q)
+docker start db
+docker start $(docker ps -a -q)
