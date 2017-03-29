@@ -17,6 +17,9 @@ The architecture of micro-services is proposed for the boom it is generating in 
 * UCOSPORTS-INVENTORY : Wildfly Swarm
 * UCOSPORTS-WEB : Wildfly Swarm (not necesary Wildfly Swarm server, can be change for other server like Apache or Node.js because only contain the folder webapp)
 
+#### NOTE:
+UCOSPORTS-DOMAIN is only a jar with the domain (entities, dtos and repositories with spring data jpa).
+
 ## INSTRUCTIONS
 
 ### ENVIRONMENT
