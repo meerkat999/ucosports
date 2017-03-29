@@ -75,7 +75,7 @@ To change the connection properties (url connection, schema, ports, users and pa
 
 #### ONE MICROSERVICE
 * Go to the folder of the microservice.
-* Run in command line 'mvn clean install -U' (Need MAVEN install in your device). (UCOSPORTS-TOURNAMENT-MS needs install UCOSPORTS-TOURNAMENT-DOMAIN firts).
+* Run in command line 'mvn clean install -U' (Need MAVEN install in your device). (UCOSPORTS-TOURNAMENT-MS needs install UCOSPORTS-TOURNAMENT-DOMAIN first).
 * Run in the command line "java -jar deploy-swarm.jar". (This action will open command window for microservice representing the server).
 
 #### NOTE
