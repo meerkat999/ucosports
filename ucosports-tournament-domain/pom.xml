@@ -5,8 +5,8 @@
     <artifactId>ucosports</artifactId>
     <version>1.0.0-SNAPSHOT</version>
   </parent>
-  <artifactId>ucosports-domain</artifactId>
-  <version>${ucosports-domain-version}</version>
+  <artifactId>ucosports-tournament-domain</artifactId>
+  <version>${ucosports-tournament-domain-version}</version>
 	<dependencies>
 		<dependency>
 	      <groupId>javax</groupId>

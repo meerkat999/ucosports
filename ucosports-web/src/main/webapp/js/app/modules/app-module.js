@@ -16,5 +16,9 @@ define(['angularAMD' , 'angular-ui-router'], function (angularAMD) {
 
     });
 
+    app.run(function($state){
+      $state.go('login');
+    });
+
     return angularAMD.bootstrap(app);
 });

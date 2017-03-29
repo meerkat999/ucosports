@@ -11,8 +11,8 @@
   <dependencies>
   	<dependency>
       <groupId>co.com.meerkats</groupId>
-      <artifactId>ucosports-domain</artifactId>
-      <version>${ucosports-domain-version}</version>
+      <artifactId>ucosports-tournament-domain</artifactId>
+      <version>${ucosports-tournament-domain-version}</version>
     </dependency>
 	<dependency>
   		<groupId>org.wildfly.swarm</groupId>
