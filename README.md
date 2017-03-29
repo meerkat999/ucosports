@@ -39,7 +39,10 @@ To change the connection properties (url connection, schema, ports, users and pa
 * Run in command line 'mvn clean install -U' (Need MAVEN install in your device). (UCOSPORTS-TOURNAMENT needs install UCOSPORTS-DOMAIN firts).
 * Run in the command line "java -jar deploy-swarm.jar". (This action will open command window for microservice representing the server).
 
-### RUN MICROSERVICES
+#### NOTE
+The build with MAVEN run all the tests. If any test fails, it will not compile. All tests must pass.
+
+### RUN
 All microservices run in the same ip, in development this ip will be 'localhost'. But each microservice, run into a different ports:
 
 * UCOSPORTS-WEB : 8081
