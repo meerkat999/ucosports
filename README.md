@@ -38,16 +38,16 @@ UCOSPORTS-TOURNAMENT-DOMAIN IS NOT A MICROSERVICE, is only a jar with the domain
   * WildFly Swarm Server
   * CDI (org.wildfly.swarm)
   * Jaxrs (org.wildfly.swarm)
-  * Jaxrs-multipart 
+  * Jaxrs-multipart (org.wildfly.swarm)
   * JUnit
   * Mockito
 
 * UCOSPORTS-REPORTS-MS:
-  * WildFly Swarm Server
+  * WildFly Swarm Server (org.wildfly.swarm)
   * *in progress
   
 * UCOSPORTS-INVENTORY-MS:
-  * WildFly Swarm Server
+  * WildFly Swarm Server (org.wildfly.swarm)
   * *in progress
 
 * UCOSPORTS-WEB:
