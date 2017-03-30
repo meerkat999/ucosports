@@ -1,0 +1,4 @@
+CREATE TABLE `ucosportstournament`.`player` (
+  `idplayer` INT NOT NULL AUTO_INCREMENT,
+  `firstnameplayer` VARCHAR(45) NULL,
+  PRIMARY KEY (`idplayer`));

@@ -6,7 +6,7 @@
 		<class>co.com.meerkats.ucosports.domain.Player</class>
 		<class>co.com.meerkats.ucosports.domain.Team</class>
         <properties>
-            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.show_sql" value="false"/>
         </properties>
     </persistence-unit>
 </persistence>
