@@ -1,11 +1,16 @@
 define(['app-module', 'restService'], function (app) {
     app.factory('playerService',['restService', function (restService) {
 
+      var path = 'playerService/'
+
         var methods = {
-          getAll : function(){
-            return restService.getArray('/rest/playerService/getAll');
+          getById : function(player){
+            return restService.post(path + 'getById', {player : player});
           },
-          post : function(path){
+          getAll : function(){
+            return restService.getArray(path + 'getAll');
+          },
+          post : function(){
             return null;
           }
         }

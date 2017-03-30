@@ -5,13 +5,17 @@ define(['app-module', 'playerService'], function (app) {
         };
 
         $scope.jugadores = [];
+        $scope.jugador = {};
 
         $scope.obtener = function(){
-
           playerService.getAll().then(function(data){
             $scope.jugadores = data;
-          })
-
+          });
+          console.log("obtener por id");
+          var player = {id : 1, firstname : null};
+          playerService.getById(player).then(function(data){
+            $scope.jugador = data;
+          });
         };
     }]);
 });

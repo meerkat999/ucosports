@@ -2,7 +2,9 @@
 define(['angularAMD' , 'angular-ui-router', 'angular-resource'], function (angularAMD) {
     var app = angular.module('app-module', ['ui.router', 'ngResource']);
 
-    app.config(function($stateProvider, $urlRouterProvider){
+    app.config(function($stateProvider, $urlRouterProvider, $httpProvider){
+
+      $httpProvider.defaults.headers.post['Content-Type'] =  'application/json';
 
     	$stateProvider
     		.state('login', angularAMD.route({
