@@ -3,22 +3,19 @@ define(['app-module', 'restService'], function (app) {
 
       var path = 'playerService/'
 
-        var methods = {
+        var servicesRest = {
           getById : function(player){
-            return restService.post(path + 'getById', player);
+            return restService.POST(path + 'getById', player);
           },
           getAll : function(){
-            return restService.getArray(path + 'getAll');
+            return restService.GETArray(path + 'getAll');
           },
           prueba : function(){
-            return restService.getArray(path + 'prueba');
-          },
-          post : function(){
-            return null;
+            return restService.GETArray(path + 'prueba');
           }
         }
 
-        return methods;
+        return servicesRest;
 
     }]);
 });
