@@ -1,5 +1,6 @@
-define(['angularAMD' , 'angular-ui-router'], function (angularAMD) {
-    var app = angular.module('app-module', ['ui.router']);
+'use strict';
+define(['angularAMD' , 'angular-ui-router', 'angular-resource'], function (angularAMD) {
+    var app = angular.module('app-module', ['ui.router', 'ngResource']);
 
     app.config(function($stateProvider, $urlRouterProvider){
 
