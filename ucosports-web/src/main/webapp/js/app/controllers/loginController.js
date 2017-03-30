@@ -11,11 +11,17 @@ define(['app-module', 'playerService'], function (app) {
           playerService.getAll().then(function(data){
             $scope.jugadores = data;
           });
-          console.log("obtener por id");
-          var player = {id : 1, firstname : null};
+          var player = {id : 1, firtsName : null};
           playerService.getById(player).then(function(data){
             $scope.jugador = data;
           });
         };
+
+        $scope.meter = function(){
+          playerService.prueba().then(function(data){
+            $scope.jugadoresMetidos = data;
+          });
+        }
+
     }]);
 });
