@@ -20,7 +20,7 @@ public class PlayerLogicalImpl implements IPlayerLogical {
 	
 	@Override
 	public Player findPlayerById(Integer id) {
-		return repository.findOne(id);
+		return repository.findOne(id); //prueba
 	}
 
 	@Override
