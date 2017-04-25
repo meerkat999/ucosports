@@ -9,7 +9,9 @@ requirejs.config({
       'angular-resource' : 'ext/angular-resource.min',
       'jquery' : 'ext/jquery-3.2.1.min',
       'app-module' : 'app/modules/app-module',
-      'loginController' : 'app/controllers/loginController',
+      'loginController' : 'app/controllers/login/loginController',
+      'appController' : 'app/controllers/home/appController',
+      'menuController' : 'app/controllers/home/menu/menuController',
       'restService' : 'app/services/restService',
       'playerService' : 'app/services/playerService'
     },

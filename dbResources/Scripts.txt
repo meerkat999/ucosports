@@ -6,3 +6,8 @@ CREATE TABLE `ucosportstournament`.`player` (
   `idplayer` INT NOT NULL AUTO_INCREMENT,
   `firstnameplayer` VARCHAR(45) NULL,
   PRIMARY KEY (`idplayer`));
+
+CREATE TABLE `ucosportstournament`.`sport` (
+  `sport_id` INT NOT NULL AUTO_INCREMENT,
+  `sport_name` VARCHAR(45) NOT NULL, `sport_number_players` INT NOT NULL, `sport_number_times` INT NOT NULL, `sport_time_times` INT NOT NULL,
+  PRIMARY KEY (`sport_id`));

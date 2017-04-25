@@ -9,18 +9,33 @@ define(['angularAMD' , 'angular-ui-router', 'angular-resource'], function (angul
     	$stateProvider
     		.state('login', angularAMD.route({
           url: '/',
+          name : 'login',
           templateUrl : 'resources/partials/login/login.html',
           controller : 'loginController'
     		}))
         .state('app', angularAMD.route({
           url: 'app',
-          templateUrl : 'resources/partials/home/app.html'
-        }));
-
+          templateUrl : 'resources/partials/home/app.html',
+          controller : 'appController'
+        }))
+        .state('app.menu', angularAMD.route({
+          url: '/menu',
+          templateUrl : 'resources/partials/home/menu/menu.html',
+          controller : 'menuController'
+        }))
+        .state('app.content', angularAMD.route({
+          templateUrl : 'resources/partials/home/menu/menu.html'
+        }))
+        ;
     });
 
-    app.run(function($state){
+
+
+    app.run(function($state, $rootScope){
       $state.go('login');
+
+      $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){
+      })
     });
 
     return angularAMD.bootstrap(app);

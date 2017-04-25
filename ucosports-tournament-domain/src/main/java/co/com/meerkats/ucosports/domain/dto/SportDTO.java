@@ -2,10 +2,11 @@ package co.com.meerkats.ucosports.domain.dto;
 
 public class SportDTO {
 
+	private Integer id;
 	private String name;
-	private Integer numberTeams;
+	private Integer numberPlayers;
 	private Integer numberTimes;
-	private Double timeTimes;
+	private Integer timeTimes;
 	
 	public String getName() {
 		return name;
@@ -13,11 +14,11 @@ public class SportDTO {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public Integer getNumberTeams() {
-		return numberTeams;
+	public Integer getNumberPlayers() {
+		return numberPlayers;
 	}
-	public void setNumberTeams(Integer numberTeams) {
-		this.numberTeams = numberTeams;
+	public void setNumberPlayers(Integer numberPlayers) {
+		this.numberPlayers = numberPlayers;
 	}
 	public Integer getNumberTimes() {
 		return numberTimes;
@@ -25,11 +26,17 @@ public class SportDTO {
 	public void setNumberTimes(Integer numberTimes) {
 		this.numberTimes = numberTimes;
 	}
-	public Double getTimeTimes() {
+	public Integer getTimeTimes() {
 		return timeTimes;
 	}
-	public void setTimeTimes(Double timeTimes) {
+	public void setTimeTimes(Integer timeTimes) {
 		this.timeTimes = timeTimes;
+	}
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
 	}
 	
 }
