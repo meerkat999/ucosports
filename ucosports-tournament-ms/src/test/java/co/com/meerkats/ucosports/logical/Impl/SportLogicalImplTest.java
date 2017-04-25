@@ -13,6 +13,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import co.com.meerkats.ucosports.domain.Sport;
 import co.com.meerkats.ucosports.domain.dto.SportDTO;
+import co.com.meerkats.ucosports.logical.ISportStatisticService;
 import co.com.meerkats.ucosports.repository.ISportRepository;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -23,6 +24,9 @@ public class SportLogicalImplTest {
 	
 	@Mock
 	private ISportRepository repository;	
+	
+	@Mock
+	private ISportStatisticService statisticService;
 	
 	@Test
 	public void debeTraerTodosLosDeportes(){
@@ -36,6 +40,8 @@ public class SportLogicalImplTest {
 	public void debeGuardarUnaEntidadDesdeUnDTO(){
 		SportDTO sportDTO = new SportDTO();
 		sportDTO.setName("futbol");
+		List<String> statistics = new ArrayList<>();
+		sportDTO.setStatistics(statistics);
 		Sport sport = new Sport();
 		sport.setName(sportDTO.getName());
 		Mockito.when(repository.save((Sport) Mockito.any())).thenReturn(sport);

@@ -8,8 +8,10 @@ import javax.transaction.Transactional;
 import javax.transaction.Transactional.TxType;
 
 import co.com.meerkats.ucosports.domain.Sport;
+import co.com.meerkats.ucosports.domain.SportStatistic;
 import co.com.meerkats.ucosports.domain.dto.SportDTO;
 import co.com.meerkats.ucosports.logical.ISportLogical;
+import co.com.meerkats.ucosports.logical.ISportStatisticService;
 import co.com.meerkats.ucosports.repository.ISportRepository;
 
 @RequestScoped
@@ -17,6 +19,9 @@ public class SportLogicalImpl implements ISportLogical {
 
 	@Inject
 	private ISportRepository repository;
+	
+	@Inject
+	private ISportStatisticService statisticService;
 	
 	@Override
 	@Transactional(value=TxType.REQUIRED, rollbackOn=Exception.class)
@@ -32,7 +37,18 @@ public class SportLogicalImpl implements ISportLogical {
 		sport.setNumberPlayers(sportDTO.getNumberPlayers());
 		sport.setNumberTimes(sportDTO.getNumberTimes());
 		sport.setTimeTimes(sportDTO.getTimeTimes());
-		return save(sport);
+		sport = save(sport);
+		persistStatistics(sportDTO, sport);
+		return sport;
+	}
+
+	private void persistStatistics(SportDTO sportDTO, Sport sport) {
+		sportDTO.getStatistics().forEach(s -> {
+			SportStatistic statistic = new SportStatistic();
+			statistic.setName(s);
+			statistic.setSport(sport);
+			statisticService.save(statistic);
+		});
 	}
 
 	@Override

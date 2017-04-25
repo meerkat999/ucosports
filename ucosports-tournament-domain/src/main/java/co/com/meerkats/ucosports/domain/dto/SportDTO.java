@@ -1,5 +1,7 @@
 package co.com.meerkats.ucosports.domain.dto;
 
+import java.util.List;
+
 public class SportDTO {
 
 	private Integer id;
@@ -7,6 +9,7 @@ public class SportDTO {
 	private Integer numberPlayers;
 	private Integer numberTimes;
 	private Integer timeTimes;
+	private List<String> statistics;
 	
 	public String getName() {
 		return name;
@@ -37,6 +40,12 @@ public class SportDTO {
 	}
 	public void setId(Integer id) {
 		this.id = id;
+	}
+	public List<String> getStatistics() {
+		return statistics;
+	}
+	public void setStatistics(List<String> statistics) {
+		this.statistics = statistics;
 	}
 	
 }
