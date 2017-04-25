@@ -29,4 +29,10 @@ public class SportServiceRestTest {
 		Mockito.verify(logical).saveDTO(dto);
 	}
 	
+	@Test
+	public void verificarTraerTodosLosDeportes(){
+		rest.getAll();
+		Mockito.verify(logical).getAll();
+	}
+	
 }

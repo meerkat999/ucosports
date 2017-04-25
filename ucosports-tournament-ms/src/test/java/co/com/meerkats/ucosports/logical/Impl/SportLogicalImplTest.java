@@ -1,5 +1,8 @@
 package co.com.meerkats.ucosports.logical.Impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,6 +23,14 @@ public class SportLogicalImplTest {
 	
 	@Mock
 	private ISportRepository repository;	
+	
+	@Test
+	public void debeTraerTodosLosDeportes(){
+		List<Sport> listaEsperada = new ArrayList<>();
+		Mockito.when(repository.findAll()).thenReturn(listaEsperada);
+		List<Sport> listaEncontrada = logical.getAll();
+		Assert.assertEquals(listaEncontrada, listaEsperada);
+	}
 	
 	@Test
 	public void debeGuardarUnaEntidadDesdeUnDTO(){

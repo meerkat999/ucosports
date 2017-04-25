@@ -1,5 +1,8 @@
 package co.com.meerkats.ucosports.rest;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -28,13 +31,36 @@ public class SportServiceRest {
 	}
 
 	
-	@Path("/getForm")
+	@Path("/save")
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public SportDTO save(SportDTO dto) {
 		Sport sport = logical.saveDTO(dto);
-		dto.setId(sport.getId());
+		return buildDTO(sport);
+	}
+
+	@Path("/getAll")
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<SportDTO> getAll() {
+		List<Sport> lista = logical.getAll();
+		List<SportDTO> listaDTO = new ArrayList<>(); 
+		if(lista != null && !lista.isEmpty()){
+			lista.stream().forEach(s -> {
+				listaDTO.add(buildDTO(s));
+			});
+		}
+		return listaDTO;
+	}
+
+	private SportDTO buildDTO(Sport s) {
+		SportDTO dto = new SportDTO();
+		dto.setId(s.getId());
+		dto.setName(s.getName());
+		dto.setNumberPlayers(s.getNumberPlayers());
+		dto.setNumberTimes(s.getNumberTimes());
+		dto.setTimeTimes(s.getTimeTimes());
 		return dto;
 	}
 

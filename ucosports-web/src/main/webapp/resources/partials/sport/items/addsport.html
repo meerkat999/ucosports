@@ -1,0 +1,24 @@
+<form name="addSportForm" class="input">
+
+  Nombre:
+  <span class="error" ng-show="addSportForm.name.$valid === false && addPressed === false">¡Cuidado, te falta este campo!</span>
+  <input type="text" name="name" id="name" ng-model="sport.name" maxlength="45" required></input>
+
+
+  Número de jugadores por equipo:
+  <span class="error" ng-show="addSportForm.numberPlayers.$valid === false && addPressed === false">¡Cuidado, te falta este campo!</span>
+  <input type="text" name="numberPlayers" id="numberPlayers" ng-model="sport.numberPlayers" maxlength="2" number required></input>
+
+
+  Número de tiempos:
+  <span class="error" ng-show="addSportForm.numberTimes.$valid === false && addPressed === false">¡Cuidado, te falta este campo!</span>
+  <input type="text" name="numberTimes" id="numberTimes" ng-model="sport.numberTimes" maxlength="2" number required></input>
+
+
+  Cantidad de tiempo por parte:
+  <span class="error" ng-show="addSportForm.timeTimes.$valid === false && addPressed === false">¡Cuidado, te falta este campo!</span>
+  <input type="text" name="timeTimes" id="timeTimes" ng-model="sport.timeTimes" maxlength="2" number required></input>
+
+  <button type="button" class="button" ng-click="add()">Agregar</button>
+
+</form>
