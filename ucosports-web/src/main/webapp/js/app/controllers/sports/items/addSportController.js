@@ -1,15 +1,9 @@
-define(['app-module', 'sportService', 'sweetalert'], function (app) {
-    app.controller('addSportController',['$scope','$state', 'sportService', function ($scope, $state, sportService) {
+define(['app-module', 'sportService', 'sweetService'], function (app) {
+    app.controller('addSportController',['$scope','$state', 'sportService', 'sweetService', function ($scope, $state, sportService, sweetService) {
 
       $scope.validationForm = function(){
-        console.log($scope.addSportForm);
         if($scope.addSportForm.$invalid === true){
-          swal({
-            title: "¡Cuidado!",
-            text: "¡Te falta llenar algunos campos!",
-            type: "warning",
-            confirmButtonText: "¡Está bien!"
-          });
+          sweetService.warning("¡Te falta llenar algunos campos!");
           $scope.addPressed = false;
           return false;
         }
@@ -21,27 +15,19 @@ define(['app-module', 'sportService', 'sweetalert'], function (app) {
         if($scope.validationForm() === true){
           sportService.save($scope.sport).then(function(data){
             if(data !== null){
-              swal({
-                title: "¡Excelente!",
-                text: "¡El deporte '"+data.name+"' ha sido añadido correctamente!",
-                type: "success",
-                confirmButtonText: "¡Está bien!"
-              });
+              sweetService.success("¡El deporte '"+data.name+"' ha sido añadido correctamente!");
               $state.reload();
             };
           }, function(error){
-            swal({
-              title: "Error!",
-              text: error,
-              type: "error",
-              confirmButtonText: "Cool"
-            });
+            sweetService.error("Error al guardar el deporte.");
           });
         };
       }
 
       $scope.init = function(){
-        $scope.sport = {};
+        $scope.sport = {
+          statistics : []
+        };
       }
 
       $scope.init();

@@ -7,8 +7,23 @@
   height: 125px;
 }
 
+input{
+  margin: 2px 2px 2px 2px;
+  max-width: 300px;
+}
+
+span{
+  margin: 2px 2px 2px 2px;
+}
+
 .menu{
   margin: 10px 2px 10px 2px;
+}
+
+.center{
+  width: 100%;
+  display: table;
+  text-align: center;
 }
 
 .button{
@@ -20,7 +35,8 @@
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
-    margin: 0px 2px 0px 2px;
+    max-width: 150px;
+    margin: 2px 2px 2px 2px;
 }
 
 .sport{
@@ -31,12 +47,24 @@
     background-color: #555555;
 }
 
-.input{
-  display: grid;
-  max-width: 300px;
-  border: ridge;
+.box{
   margin: 10px 2px 10px 2px;
+  max-width: 500px;
+  margin: 0 auto;
+  border: ridge;
 }
+
+.form{
+}
+
+.forminput{
+  margin: 2px 2px 2px 2px;
+}
+
+.tittleinput{
+  margin: 2px 2px 2px 2px;
+}
+
 
 .error{
   color: red;

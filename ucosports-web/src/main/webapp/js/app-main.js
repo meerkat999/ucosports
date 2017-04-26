@@ -19,6 +19,7 @@ requirejs.config({
       'restService' : 'app/services/restService',
       'playerService' : 'app/services/playerService',
       'sportService' : 'app/services/sports/sportService',
+      'sweetService' : 'app/services/util/sweetService',
       'numberDirective' : 'app/directives/numberDirective'
     },
     shim: {
