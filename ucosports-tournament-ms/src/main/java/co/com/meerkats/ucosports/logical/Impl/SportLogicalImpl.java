@@ -43,12 +43,15 @@ public class SportLogicalImpl implements ISportLogical {
 	}
 
 	private void persistStatistics(SportDTO sportDTO, Sport sport) {
-		sportDTO.getStatistics().forEach(s -> {
-			SportStatistic statistic = new SportStatistic();
-			statistic.setName(s);
-			statistic.setSport(sport);
-			statisticService.save(statistic);
-		});
+		List<String> statistics = sportDTO.getStatistics();
+		if(statistics != null && !statistics.isEmpty()){
+			sportDTO.getStatistics().forEach(s -> {
+				SportStatistic statistic = new SportStatistic();
+				statistic.setName(s);
+				statistic.setSport(sport);
+				statisticService.save(statistic);
+			});
+		}
 	}
 
 	@Override
