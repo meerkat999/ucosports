@@ -17,7 +17,7 @@ public class CORSFilter implements ContainerResponseFilter {
 	public void filter(ContainerRequestContext paramContainerRequestContext, ContainerResponseContext paramContainerResponseContext) throws IOException {
 		LOGGER.error("PRUEBA");
 		LOGGER.info("prueba");
-		LOGGER.info(LOGGER.getName());;
+		LOGGER.info(LOGGER.getRootLogger().getAllAppenders().nextElement().toString());;
 		paramContainerResponseContext.getHeaders().add("Access-Control-Allow-Origin", "*");
 	    paramContainerResponseContext.getHeaders().add("Access-Control-Allow-Headers", "Origin, Content-Type, Accept");
 	    paramContainerResponseContext.getHeaders().add("Access-Control-Allow-Credentials", "true");
