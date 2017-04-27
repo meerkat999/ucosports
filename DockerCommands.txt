@@ -1,13 +1,22 @@
 172.17.0.2
 
-docker run --name db -d -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=ucosports -p 3306:3306 mysql
+docker rmi $(docker images) -f //Remove all the images
+docker rm $(docker ps -a -q) -f //Remove all containers
+
+docker build -t webimage ucosports-web/
+docker build -t tournamentimage ucosports-tournament-ms/
+
+docker run --name db -d -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=ucosportstournament -p 3306:3306 mysql
 
 docker exec -it db mysql -u root -p
 
-docker run --name webcontainer --link db:db -p 8080:8080 -d webimage
-docker run --name playercontainer --link db:db -p 8082:8082 -d playerimage
-docker run --name teamcontainer --link db:db -p 8083:8083 -d teamimage
-docker run --name playercontainer --link db:db playerimage
+docker run --name webcontainer --link db:db -p 8081:8081 -d webimage
+docker run --name tournamentcontainer --link db:db -p 8082:8082 -d tournamentimage
+docker run --name tournamentcontainer --link db:db tournamentimage
+
+docker logs tournamentcontainer
+docker exec -it tournamentcontainer bash
+
 
 docker stop $(docker ps -q)
 docker start db
