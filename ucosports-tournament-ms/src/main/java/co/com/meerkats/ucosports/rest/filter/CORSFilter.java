@@ -27,7 +27,7 @@ public class CORSFilter implements ContainerResponseFilter {
 	private void log(ContainerRequestContext request, ContainerResponseContext response) {
 		String mensaje = request.getUriInfo().getAbsolutePath() + ": " + request.getMethod();
 		if(response.getStatus() != Response.Status.OK.getStatusCode()){
-			LOGGER.error(mensaje + response.getStatusInfo().getReasonPhrase());
+			LOGGER.error(mensaje + " - " + response.getStatusInfo().getReasonPhrase());
 		} else{
 			LOGGER.info(mensaje);
 		}
