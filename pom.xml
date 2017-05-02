@@ -11,7 +11,7 @@
   	<module>ucosports-web</module>
 	<module>ucosports-tournament-domain</module>
   	<module>ucosports-tournament-ms</module>
-  	<module>ucosports-reports-ms</module>
+<!--   	<module>ucosports-reports-ms</module> -->
   </modules>
 
   <properties>
