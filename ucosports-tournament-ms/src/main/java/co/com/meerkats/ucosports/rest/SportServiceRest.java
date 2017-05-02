@@ -2,6 +2,7 @@ package co.com.meerkats.ucosports.rest;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -11,8 +12,12 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import co.com.meerkats.ucosports.domain.PlayerStatistic;
 import co.com.meerkats.ucosports.domain.Sport;
+import co.com.meerkats.ucosports.domain.SportStatistic;
+import co.com.meerkats.ucosports.domain.dto.PlayerStatisticDTO;
 import co.com.meerkats.ucosports.domain.dto.SportDTO;
+import co.com.meerkats.ucosports.domain.dto.SportStatisticDTO;
 import co.com.meerkats.ucosports.domain.dto.graphic.SportFormDTO;
 import co.com.meerkats.ucosports.logical.ISportLogical;
 
@@ -61,6 +66,26 @@ public class SportServiceRest {
 		dto.setNumberPlayers(s.getNumberPlayers());
 		dto.setNumberTimes(s.getNumberTimes());
 		dto.setTimeTimes(s.getTimeTimes());
+		Set<SportStatistic> listSportStatistic = s.getListSportStatistic();
+		List<SportStatisticDTO> listaSportStatisticDTO = new ArrayList<>();
+		if(listSportStatistic != null && !listSportStatistic.isEmpty()){
+			listSportStatistic.forEach(ss -> {
+				SportStatisticDTO sportStaticDTO = new SportStatisticDTO();
+				sportStaticDTO.setName(ss.getName());
+				listaSportStatisticDTO.add(sportStaticDTO);
+			});
+		}
+		dto.setSportStatistics(listaSportStatisticDTO);
+		Set<PlayerStatistic> listPlayerStatistic = s.getListPlayerStatistic();
+		List<PlayerStatisticDTO> listPlayerStatisticDTO = new ArrayList<>();
+		if(listPlayerStatistic != null && !listPlayerStatistic.isEmpty()){
+			listPlayerStatistic.forEach(ps -> {
+				PlayerStatisticDTO playerStatisticDTO = new PlayerStatisticDTO();
+				playerStatisticDTO.setName(ps.getName());
+				listPlayerStatisticDTO.add(playerStatisticDTO);
+			});
+		}
+		dto.setPlayerStatistics(listPlayerStatisticDTO);
 		return dto;
 	}
 

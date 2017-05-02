@@ -7,9 +7,13 @@ import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.transaction.Transactional.TxType;
 
+import co.com.meerkats.ucosports.domain.PlayerStatistic;
 import co.com.meerkats.ucosports.domain.Sport;
 import co.com.meerkats.ucosports.domain.SportStatistic;
+import co.com.meerkats.ucosports.domain.dto.PlayerStatisticDTO;
 import co.com.meerkats.ucosports.domain.dto.SportDTO;
+import co.com.meerkats.ucosports.domain.dto.SportStatisticDTO;
+import co.com.meerkats.ucosports.logical.IPlayerStatisticService;
 import co.com.meerkats.ucosports.logical.ISportLogical;
 import co.com.meerkats.ucosports.logical.ISportStatisticService;
 import co.com.meerkats.ucosports.repository.ISportRepository;
@@ -21,7 +25,10 @@ public class SportLogicalImpl implements ISportLogical {
 	private ISportRepository repository;
 	
 	@Inject
-	private ISportStatisticService statisticService;
+	private ISportStatisticService sportStatisticService;
+	
+	@Inject
+	private IPlayerStatisticService playerStatisticService;
 	
 	@Override
 	@Transactional(value=TxType.REQUIRED, rollbackOn=Exception.class)
@@ -38,18 +45,29 @@ public class SportLogicalImpl implements ISportLogical {
 		sport.setNumberTimes(sportDTO.getNumberTimes());
 		sport.setTimeTimes(sportDTO.getTimeTimes());
 		sport = save(sport);
-		persistStatistics(sportDTO, sport);
+		persistSportStatistics(sportDTO.getSportStatistics(), sport);
+		persistPlayerStatistics(sportDTO.getPlayerStatistics(), sport);
 		return sport;
 	}
 
-	private void persistStatistics(SportDTO sportDTO, Sport sport) {
-		List<String> statistics = sportDTO.getStatistics();
-		if(statistics != null && !statistics.isEmpty()){
-			sportDTO.getStatistics().forEach(s -> {
-				SportStatistic statistic = new SportStatistic();
-				statistic.setName(s);
+	private void persistPlayerStatistics(List<PlayerStatisticDTO> list, Sport sport) {
+		if(list != null && !list.isEmpty()){
+			list.forEach(s -> {
+				PlayerStatistic statistic = new PlayerStatistic();
+				statistic.setName(s.getName());
 				statistic.setSport(sport);
-				statisticService.save(statistic);
+				playerStatisticService.save(statistic);
+			});
+		}
+	}
+	
+	private void persistSportStatistics(List<SportStatisticDTO> list, Sport sport) {
+		if(list != null && !list.isEmpty()){
+			list.forEach(s -> {
+				SportStatistic statistic = new SportStatistic();
+				statistic.setName(s.getName());
+				statistic.setSport(sport);
+				sportStatisticService.save(statistic);
 			});
 		}
 	}

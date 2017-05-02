@@ -1,0 +1,9 @@
+<div>Nombre : {{$parent.seeSport.name}}</div>
+<div>Número de Jugadores por Equipo : {{$parent.seeSport.numberPlayers}}</div>
+<div>Número de Tiempos : {{$parent.seeSport.numberTimes}}</div>
+<div>Tiempo por cada parte : {{$parent.seeSport.timeTimes}}</div>
+<div>Estadísticas de Equipo :
+<div ng-repeat="statisticSport in $parent.seeSport.sportStatistics">{{statisticSport.name}}</div></div>
+
+<div>Estadísticas de Jugador :
+<div ng-repeat="statisticPlayer in $parent.seeSport.playerStatistics">{{statisticPlayer.name}}</div></div>

@@ -1,6 +1,20 @@
 define(['app-module', 'sportService', 'sweetService'], function (app) {
     app.controller('addSportController',['$scope','$state', 'sportService', 'sweetService', function ($scope, $state, sportService, sweetService) {
 
+      $scope.addSportStatistic = function(){
+        var sportStatistics = {
+          name : $scope.sportStatistic
+        }
+        $scope.sport.sportStatistics.push(sportStatistics);
+      }
+
+      $scope.addPlayerStatistic = function(){
+        var playerStatistics = {
+          name : $scope.playerStatistic
+        }
+        $scope.sport.playerStatistics.push(playerStatistics);
+      }
+
       $scope.validationForm = function(){
         if($scope.addSportForm.$invalid === true){
           sweetService.warning("¡Te falta llenar algunos campos!");
@@ -26,7 +40,8 @@ define(['app-module', 'sportService', 'sweetService'], function (app) {
 
       $scope.init = function(){
         $scope.sport = {
-          statistics : []
+          sportStatistics : [],
+          playerStatistics : []
         };
       }
 

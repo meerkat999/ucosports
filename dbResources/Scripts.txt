@@ -3,9 +3,12 @@ create schema ucosportstournament;
 SET PASSWORD FOR 'root'@'localhost' = PASSWORD('MyNewPass');
 
 CREATE TABLE `ucosportstournament`.`player` (
-  `idplayer` INT NOT NULL AUTO_INCREMENT,
-  `firstnameplayer` VARCHAR(45) NULL,
-  PRIMARY KEY (`idplayer`));
+  
+`player_id` INT NOT NULL AUTO_INCREMENT,
+  
+`player_first_name` VARCHAR(45) NULL,
+ 
+ PRIMARY KEY (`player_id`));
 
 CREATE TABLE `ucosportstournament`.`sport` (
   
@@ -23,6 +26,18 @@ CREATE TABLE `ucosportstournament`.`sportstatistic` (
   PRIMARY KEY (`sportstatistic_id`),
   INDEX `fk_sport_id_idx` (`sport_id` ASC),
   CONSTRAINT `fk_sport_id`
+    FOREIGN KEY (`sport_id`)
+    REFERENCES `ucosportstournament`.`sport` (`sport_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+CREATE TABLE `ucosportstournament`.`playerstatistic` (
+  `playerstatistic_id` INT NOT NULL AUTO_INCREMENT,
+  `playerstatistic_name` VARCHAR(45) NOT NULL,
+  `sport_id` INT NOT NULL,
+  PRIMARY KEY (`playerstatistic_id`),
+  INDEX `fk_player_id_idx` (`sport_id` ASC),
+  CONSTRAINT `fk_player_id`
     FOREIGN KEY (`sport_id`)
     REFERENCES `ucosportstournament`.`sport` (`sport_id`)
     ON DELETE NO ACTION

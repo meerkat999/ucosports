@@ -2,7 +2,7 @@ define(['app-module'], function (app) {
     app.controller('menuController',['$scope','$state', function ($scope, $state) {
 
       $scope.openSport = function(){
-        $state.go("app.home.sports.index");
+        $state.go("app.home.sports");
       }
 
       $scope.openTeams = function(){

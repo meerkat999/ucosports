@@ -36,16 +36,29 @@ define(['angularAMD', 'angular-ui-router', 'angular-resource'], function (angula
   					})
   				}
   			})
-        .state('app.home.sports.index', {
-  				url: '/index',
+        .state('app.home.sports.buttons', {
+  				url: '/button',
   				views: {
   					'buttomsSports@app.home.sports': angularAMD.route({
               templateUrl : 'resources/partials/sport/items/buttomsSports.html',
               controller : 'buttomsSportsController'
-  					}),
-            'addSport@app.home.sports': angularAMD.route({
+  					})
+  				}
+  			})
+        .state('app.home.sports.buttons.addSport', {
+  				url: '/add',
+  				views: {
+            'content@app.home.sports': angularAMD.route({
               templateUrl : 'resources/partials/sport/items/addSport.html',
               controller : 'addSportController'
+  					})
+  				}
+  			})
+        .state('app.home.sports.buttons.seeSport', {
+  				url: '/see',
+  				views: {
+            'content@app.home.sports': angularAMD.route({
+              templateUrl : 'resources/partials/sport/items/seeSport.html'
   					})
   				}
   			})
@@ -64,7 +77,7 @@ define(['angularAMD', 'angular-ui-router', 'angular-resource'], function (angula
       $state.go('login');
 
       $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){
-        
+
       })
     });
 

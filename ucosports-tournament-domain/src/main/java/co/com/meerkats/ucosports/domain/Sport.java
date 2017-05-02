@@ -1,10 +1,15 @@
 package co.com.meerkats.ucosports.domain;
 
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -27,6 +32,28 @@ public class Sport {
 	
 	@Column(name = "sport_time_times")
 	private Integer timeTimes;
+	
+	@OneToMany(mappedBy = "sport", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private Set<SportStatistic> listSportStatistic;
+	
+	@OneToMany(mappedBy = "sport", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private Set<PlayerStatistic> listPlayerStatistic;
+	
+	public Set<SportStatistic> getListSportStatistic() {
+		return listSportStatistic;
+	}
+
+	public void setListSportStatistic(Set<SportStatistic> listSportStatistic) {
+		this.listSportStatistic = listSportStatistic;
+	}
+
+	public Set<PlayerStatistic> getListPlayerStatistic() {
+		return listPlayerStatistic;
+	}
+
+	public void setListPlayerStatistic(Set<PlayerStatistic> listPlayerStatistic) {
+		this.listPlayerStatistic = listPlayerStatistic;
+	}
 
 	public Integer getId() {
 		return id;
@@ -67,5 +94,6 @@ public class Sport {
 	public void setTimeTimes(Integer timeTimes) {
 		this.timeTimes = timeTimes;
 	}
+
 	
 }

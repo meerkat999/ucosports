@@ -9,7 +9,8 @@ public class SportDTO {
 	private Integer numberPlayers;
 	private Integer numberTimes;
 	private Integer timeTimes;
-	private List<String> statistics;
+	private List<SportStatisticDTO> sportStatistics;
+	private List<PlayerStatisticDTO> playerStatistics;
 	
 	public String getName() {
 		return name;
@@ -41,11 +42,18 @@ public class SportDTO {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public List<String> getStatistics() {
-		return statistics;
+	public List<SportStatisticDTO> getSportStatistics() {
+		return sportStatistics;
 	}
-	public void setStatistics(List<String> statistics) {
-		this.statistics = statistics;
+	public void setSportStatistics(List<SportStatisticDTO> sportStatistics) {
+		this.sportStatistics = sportStatistics;
 	}
+	public List<PlayerStatisticDTO> getPlayerStatistics() {
+		return playerStatistics;
+	}
+	public void setPlayerStatistics(List<PlayerStatisticDTO> playerStatistics) {
+		this.playerStatistics = playerStatistics;
+	}
+	
 	
 }

@@ -12,11 +12,11 @@ import javax.persistence.Table;
 public class Player {
 
 	@Id
-	@Column(name = "idplayer")
+	@Column(name = "player_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY) 
 	private Integer id;
 	
-	@Column(name = "firstnameplayer")
+	@Column(name = "player_first_name")
 	private String firstName;
 
 	public String getFirstName() {

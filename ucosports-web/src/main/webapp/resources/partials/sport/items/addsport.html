@@ -27,17 +27,30 @@
 
   </form>
 
-  Estadísticas:
-  <ol ng-show="sport.statistics.length > 0">
-    <li ng-repeat="s in sport.statistics track by $index">
+  Estadísticas de Equipo:
+  <ol ng-show="sport.sportStatistics.length > 0">
+    <li ng-repeat="s in sport.sportStatistics track by $index">
       <div>
-        {{s}}<button ng-click="sport.statistics.splice($index,1)">-</button>
+        {{s.name}}<button ng-click="sport.sportStatistics.splice($index,1)">-</button>
       </div>
     </li>
   </ol>
   <div>
-    <input maxlength="45" type="text" ng-model="statistic"></input>
-    <button ng-click="sport.statistics.push(statistic)">+</button>
+    <input maxlength="45" type="text" ng-model="sportStatistic"></input>
+    <button ng-click="addSportStatistic()">+</button>
+  </div>
+
+  Estadísticas de Jugador:
+  <ol ng-show="sport.playerStatistics.length > 0">
+    <li ng-repeat="s in sport.playerStatistics track by $index">
+      <div>
+        {{s.name}}<button ng-click="sport.playerStatistics.splice($index,1)">-</button>
+      </div>
+    </li>
+  </ol>
+  <div>
+    <input maxlength="45" type="text" ng-model="playerStatistic"></input>
+    <button ng-click="addPlayerStatistic()">+</button>
   </div>
 
 
