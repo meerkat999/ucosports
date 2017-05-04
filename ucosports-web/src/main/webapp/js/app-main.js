@@ -18,6 +18,7 @@ requirejs.config({
       'addSportController' : 'app/controllers/sports/items/addSportController',
       'restService' : 'app/services/restService',
       'playerService' : 'app/services/playerService',
+      'loginService' : 'app/services/login/loginService',
       'sportService' : 'app/services/sports/sportService',
       'sweetService' : 'app/services/util/sweetService',
       'numberDirective' : 'app/directives/numberDirective'

@@ -12,6 +12,7 @@
 	<module>ucosports-tournament-domain</module>
   	<module>ucosports-tournament-ms</module>
 <!--   	<module>ucosports-reports-ms</module> -->
+  	<module>ucosports-security-ms</module>
   </modules>
 
   <properties>
@@ -40,21 +41,11 @@
     </dependencies>
   </dependencyManagement>
   
-   <build>
-    <finalName>deploy</finalName>
-    <plugins>
-      <plugin>
-        <groupId>org.wildfly.swarm</groupId>
-        <artifactId>wildfly-swarm-plugin</artifactId>
-        <version>${version.wildfly.swarm}</version>
-        <executions>
-          <execution>
-            <goals>
-              <goal>package</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
-  </build>
+   <repositories>
+      <repository>
+         <id>localrepository</id>
+         <url>${user.home}/.m2/repository/</url>
+      </repository>
+   </repositories>
+  
 </project>

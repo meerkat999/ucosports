@@ -8,6 +8,23 @@
   <artifactId>ucosports-tournament-ms</artifactId>
   <version>${ucosports-tournament-ms-version}</version>
   <packaging>war</packaging>
+  <build>
+    <finalName>deploy</finalName>
+    <plugins>
+      <plugin>
+        <groupId>org.wildfly.swarm</groupId>
+        <artifactId>wildfly-swarm-plugin</artifactId>
+        <version>${version.wildfly.swarm}</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>package</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
   <dependencies>
   	<dependency>
       <groupId>co.com.meerkats</groupId>
@@ -40,6 +57,10 @@
     	<groupId>org.mockito</groupId>
     	<artifactId>mockito-all</artifactId>
     	<version>${version.mockito}</version>
+	</dependency>
+	<dependency>
+	  <groupId>org.wildfly.swarm</groupId>
+	  <artifactId>keycloak</artifactId>
 	</dependency>
   </dependencies>
 </project>

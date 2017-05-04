@@ -1,0 +1,9 @@
+{
+  "realm": "UCOSPORTS",
+  "auth-server-url": "http://localhost:8180/auth",
+  "ssl-required": "none",
+  "resource": "ucosports-web",
+  "public-client": true,
+  "enable-cors" : true,
+  "bearer-only": true
+}

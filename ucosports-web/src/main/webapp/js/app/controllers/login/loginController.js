@@ -1,27 +1,23 @@
-define(['app-module', 'playerService'], function (app) {
-    app.controller('loginController',['$scope','$state', 'playerService', function ($scope, $state, playerService) {
-        $scope.login = function(){
-          $state.go('app');
+define(['app-module', 'loginService'], function (app) {
+    app.controller('loginController',['$scope','$state', 'loginService', '$httpParamSerializer', '$http',
+    function ($scope, $state, loginService, $httpParamSerializer, $http) {
+
+    	$scope.login = function(){
+          var params = $httpParamSerializer({username: $scope.user, password: $scope.pass, client_id: "ucosports-web", grant_type: "password"});
+    	    loginService.send(params).$promise.then(
+            function(result){
+              $http.defaults.headers.post['Content-Type'] =  'application/json';
+              $http.defaults.headers.common['Authorization'] =  'Bearer ' + result.access_token;
+              $state.go("app");
+            },
+            function(deny){
+              console.log("Contraseña Incorrecta");
+            },
+            function(error){
+              console.error("No se puede iniciar sesión.");
+            }
+          );
         };
-
-        $scope.jugadores = [];
-        $scope.jugador = {};
-
-        $scope.obtener = function(){
-          playerService.getAll().then(function(data){
-            $scope.jugadores = data;
-          });
-          var player = {id : 1, firtsName : null};
-          playerService.getById(player).then(function(data){
-            $scope.jugador = data;
-          });
-        };
-
-        $scope.meter = function(){
-          playerService.prueba().then(function(data){
-            $scope.jugadoresMetidos = data;
-          });
-        }
 
     }]);
 });

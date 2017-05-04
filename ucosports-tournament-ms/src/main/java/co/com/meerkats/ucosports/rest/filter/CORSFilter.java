@@ -2,35 +2,46 @@ package co.com.meerkats.ucosports.rest.filter;
 
 import java.io.IOException;
 
-import javax.ws.rs.container.ContainerRequestContext;
-import javax.ws.rs.container.ContainerResponseContext;
-import javax.ws.rs.container.ContainerResponseFilter;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.ext.Provider;
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
-@Provider
-public class CORSFilter implements ContainerResponseFilter {
+
+public class CORSFilter implements Filter {
 	
 	private final static Logger LOGGER = Logger.getLogger(CORSFilter.class);
-	
+
 	@Override
-	public void filter(ContainerRequestContext request, ContainerResponseContext response) throws IOException {
-		log(request, response);
-		response.getHeaders().add("Access-Control-Allow-Origin", "*");
-	    response.getHeaders().add("Access-Control-Allow-Headers", "Origin, Content-Type, Accept");
-	    response.getHeaders().add("Access-Control-Allow-Credentials", "true");
-	    response.getHeaders().add("Access-Control-Allow-Methods", "*");
-	    response.getHeaders().add("Access-Control-Max-Age", "1209600");
+	public void init(FilterConfig filterConfig) throws ServletException {
+		LOGGER.info("INIT");
+		
 	}
 
-	private void log(ContainerRequestContext request, ContainerResponseContext response) {
-		String mensaje = request.getUriInfo().getAbsolutePath() + ": " + request.getMethod();
-		if(response.getStatus() != Response.Status.OK.getStatusCode()){
-			LOGGER.error(mensaje + " - " + response.getStatusInfo().getReasonPhrase());
-		} else{
-			LOGGER.info(mensaje);
-		}
+	@Override
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+			throws IOException, ServletException {
+		HttpServletResponse responses = (HttpServletResponse) response;
+		HttpServletRequest requests = (HttpServletRequest) request;
+		LOGGER.info(requests.getRequestURI());
+		responses.setHeader("Access-Control-Allow-Origin", "*");
+		responses.setHeader("Access-Control-Allow-Headers", "Origin, Content-Type, Accept");
+		responses.setHeader("Access-Control-Allow-Credentials", "true");
+		responses.setHeader("Access-Control-Allow-Methods", "*");
+		responses.setHeader("Access-Control-Max-Age", "1209600");
+		chain.doFilter(requests, responses);
 	}
+
+	@Override	
+	public void destroy() {
+		// TODO Auto-generated method stub
+		
+	}
+	
 
 }

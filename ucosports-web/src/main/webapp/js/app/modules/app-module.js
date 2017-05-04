@@ -4,13 +4,11 @@ define(['angularAMD', 'angular-ui-router', 'angular-resource'], function (angula
 
     app.config(function($stateProvider, $urlRouterProvider, $httpProvider){
 
-      $httpProvider.defaults.headers.post['Content-Type'] =  'application/json';
-
     	$stateProvider
     		.state('login', angularAMD.route({
           url: '/',
           name : 'login',
-          templateUrl : 'resources/partials/login/login.html',
+          templateUrl : 'login/login.html',
           controller : 'loginController'
     		}))
         .state('app', angularAMD.route({
@@ -69,11 +67,10 @@ define(['angularAMD', 'angular-ui-router', 'angular-resource'], function (angula
               templateUrl : 'resources/partials/teams/teams.html'
   					})
   				}
-  			})
-        ;
+  			});
     });
 
-    app.run(function($state, $rootScope){
+    app.run(function($state, $rootScope, $window){
       $state.go('login');
 
       $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){
