@@ -11,13 +11,10 @@ define(['app-module', 'loginService'], function (app) {
               $state.go("app");
             },
             function(deny){
+              $http.defaults.headers.common['Authorization'] =  'Bearer ' + "noToken";
               console.log("Contraseña Incorrecta");
-            },
-            function(error){
-              console.error("No se puede iniciar sesión.");
             }
           );
         };
-
     }]);
 });
