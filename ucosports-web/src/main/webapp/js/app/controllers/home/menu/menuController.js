@@ -1,5 +1,5 @@
-define(['app-module'], function (app) {
-    app.controller('menuController',['$scope','$state', function ($scope, $state) {
+define(['app-module', 'loginService'], function (app) {
+    app.controller('menuController',['$scope','$state', 'loginService', function ($scope, $state, loginService) {
 
       $scope.openSport = function(){
         $state.go("app.home.sports");
@@ -10,7 +10,9 @@ define(['app-module'], function (app) {
       }
 
       $scope.logout = function(){
-        $state.go("login");
+        loginService.logout().then(function(){
+          $state.go("login");
+        });
       }
 
       $scope.init = function(){
