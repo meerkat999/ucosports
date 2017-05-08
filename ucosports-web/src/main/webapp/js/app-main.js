@@ -16,6 +16,7 @@ requirejs.config({
       'sportsController' : 'app/controllers/sports/sportsController',
       'buttomsSportsController' : 'app/controllers/sports/items/buttomsSportsController',
       'addSportController' : 'app/controllers/sports/items/addSportController',
+      'seeSportController' : 'app/controllers/sports/items/seeSportController',
       'restService' : 'app/services/restService',
       'playerService' : 'app/services/playerService',
       'sportService' : 'app/services/sports/sportService',
@@ -34,5 +35,6 @@ requirejs.config({
       'sportsController',
       'buttomsSportsController',
       'addSportController',
+      'seeSportController',
       'numberDirective']
 });

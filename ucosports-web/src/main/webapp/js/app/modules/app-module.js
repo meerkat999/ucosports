@@ -58,10 +58,16 @@ define(['angularAMD', 'angular-ui-router', 'angular-resource'], function (angula
   				url: '/see',
   				views: {
             'content@app.home.sports': angularAMD.route({
-              templateUrl : 'resources/partials/sport/items/seeSport.html'
+              templateUrl : 'resources/partials/sport/items/seeSport.html',
+              controller : 'seeSportController'
   					})
   				}
   			})
+        .state('app.home.sports.buttons.seeSport.edit', angularAMD.route({
+          url: 'edit',
+          templateUrl : 'resources/partials/sport/items/addSport.html',
+          controller : 'addSportController'
+        }))
         .state('app.home.teams', {
   				url: '/teams',
   				views: {

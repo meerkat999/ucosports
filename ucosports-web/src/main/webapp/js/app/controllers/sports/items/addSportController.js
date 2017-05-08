@@ -39,9 +39,15 @@ define(['app-module', 'sportService', 'sweetService'], function (app) {
       }
 
       $scope.init = function(){
-        $scope.sport = {
-          sportStatistics : [],
-          playerStatistics : []
+        $scope.isEditing = false;
+        if($scope.$parent.sport === null || $scope.$parent.sport === undefined){
+          $scope.sport = {
+            sportStatistics : [],
+            playerStatistics : []
+          };
+        }else{
+          $scope.isEditing = true;
+          $scope.sport = $scope.$parent.sport;
         };
       }
 

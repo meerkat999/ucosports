@@ -10,7 +10,7 @@ define(['app-module', 'sportService'], function (app) {
       };
 
       $scope.openSport = function(sport){
-        $scope.$parent.seeSport = sport;
+        $scope.$parent.sport = sport;
         $state.go('app.home.sports.buttons.seeSport');
       }
 

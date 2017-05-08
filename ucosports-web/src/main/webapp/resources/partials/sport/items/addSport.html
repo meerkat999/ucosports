@@ -52,8 +52,8 @@
     <input maxlength="45" type="text" ng-model="playerStatistic"></input>
     <button ng-click="addPlayerStatistic()">+</button>
   </div>
-
-
-  <button type="button" class="button" ng-click="add()">Agregar</button>
+  
+  <button type="button" class="button" ng-click="add()" ng-if="isEditing === false">Agregar</button>
+  <button type="button" class="button" ng-click="save()" ng-if="isEditing === true">Guardar</button>
 
 </div>

@@ -1,9 +1,12 @@
-<div>Nombre : {{$parent.seeSport.name}}</div>
-<div>Número de Jugadores por Equipo : {{$parent.seeSport.numberPlayers}}</div>
-<div>Número de Tiempos : {{$parent.seeSport.numberTimes}}</div>
-<div>Tiempo por cada parte : {{$parent.seeSport.timeTimes}}</div>
+
+<div>Nombre : {{$parent.sport.name}}</div>
+<div>Número de Jugadores por Equipo : {{$parent.sport.numberPlayers}}</div>
+<div>Número de Tiempos : {{$parent.sport.numberTimes}}</div>
+<div>Tiempo por cada parte : {{$parent.sport.timeTimes}}</div>
 <div>Estadísticas de Equipo :
-<div ng-repeat="statisticSport in $parent.seeSport.sportStatistics">{{statisticSport.name}}</div></div>
+<div ng-repeat="statisticSport in $parent.sport.sportStatistics">{{statisticSport.name}}</div></div>
 
 <div>Estadísticas de Jugador :
-<div ng-repeat="statisticPlayer in $parent.seeSport.playerStatistics">{{statisticPlayer.name}}</div></div>
+<div ng-repeat="statisticPlayer in $parent.sport.playerStatistics">{{statisticPlayer.name}}</div></div>
+<div><button class="button" type="button" ng-click="openEdit()">Editar</button></div>
+<div ui-view></div>
