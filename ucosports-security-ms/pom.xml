@@ -29,6 +29,13 @@
 	  <dependency>
 	  	<groupId>org.wildfly.swarm</groupId>
 	  	<artifactId>keycloak-server</artifactId>
+	  	<version>2017.5.0</version><!--$NO-MVN-MAN-VER$-->
 	  </dependency>
+	  <dependency>
+	      <groupId>mysql</groupId>
+	      <artifactId>mysql-connector-java</artifactId>
+	      <version>6.0.6</version>
+      </dependency>
   </dependencies>
+  
 </project>

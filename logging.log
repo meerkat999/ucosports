@@ -1,1 +1,145 @@
-2017-04-27 16:08:43 ERROR CORSFilter:18 - PRUEBA
+2017-05-02 18:22:18 INFO  CORSFilter:32 - http://localhost:8082/rest/sportService/getAll: GET
+2017-05-02 18:23:17 INFO  CORSFilter:32 - http://localhost:8082/rest/sportService/save: OPTIONS
+2017-05-02 18:23:18 INFO  CORSFilter:32 - http://localhost:8082/rest/sportService/save: POST
+2017-05-02 18:23:18 INFO  CORSFilter:32 - http://localhost:8082/rest/sportService/getAll: GET
+2017-05-02 18:23:35 INFO  CORSFilter:32 - http://localhost:8082/rest/sportService/getAll: GET
+2017-05-02 18:24:19 INFO  CORSFilter:32 - http://localhost:8082/rest/sportService/getAll: GET
+2017-05-02 18:43:23 INFO  CORSFilter:32 - http://localhost:8082/rest/sportService/getAll: GET
+2017-05-02 18:44:18 INFO  CORSFilter:32 - http://localhost:8082/rest/sportService/getAll: GET
+2017-05-02 18:48:02 INFO  CORSFilter:32 - http://localhost:8082/rest/sportService/save: OPTIONS
+2017-05-02 18:48:02 INFO  CORSFilter:32 - http://localhost:8082/rest/sportService/save: POST
+2017-05-02 18:48:02 INFO  CORSFilter:32 - http://localhost:8082/rest/sportService/getAll: GET
+2017-05-02 19:01:53 INFO  CORSFilter:32 - http://localhost:8082/rest/sportService/getAll: GET
+2017-05-02 19:09:46 INFO  CORSFilter:32 - http://localhost:8082/rest/sportService/getAll: GET
+2017-05-02 19:09:48 INFO  CORSFilter:32 - http://localhost:8082/rest/sportService/getAll: GET
+2017-05-03 09:11:09 INFO  CORSFilter:32 - http://localhost:8082/rest/sportService/getAll: GET
+2017-05-03 09:11:17 INFO  CORSFilter:32 - http://localhost:8082/rest/sportService/save: OPTIONS
+2017-05-03 09:11:19 INFO  CORSFilter:32 - http://localhost:8082/rest/sportService/save: POST
+2017-05-03 09:11:19 INFO  CORSFilter:32 - http://localhost:8082/rest/sportService/getAll: GET
+2017-05-03 10:57:21 INFO  CORSFilter:32 - http://localhost:8082/rest/sportService/getForm: GET
+2017-05-03 10:57:46 INFO  CORSFilter:32 - http://localhost:8082/rest/sportService/getForm: GET
+2017-05-03 10:57:47 INFO  CORSFilter:32 - http://localhost:8082/rest/sportService/getForm: GET
+2017-05-03 12:12:16 INFO  CORSFilter:32 - http://localhost:8082/rest/sportService/getAll: GET
+2017-05-03 12:20:54 INFO  CORSFilter:32 - http://localhost:8082/rest/sportService/getAll: GET
+2017-05-03 13:27:29 INFO  CORSFilter:32 - http://localhost:8082/rest/sportService/getForm: GET
+2017-05-03 13:28:34 INFO  CORSFilter:32 - http://localhost:8082/rest/sportService/getForm: GET
+2017-05-03 13:30:09 INFO  CORSFilter:32 - http://localhost:8082/rest/sportService/getForm: GET
+2017-05-03 13:42:56 INFO  CORSFilter:32 - http://localhost:8082/rest/sportService/getAll: GET
+2017-05-03 13:44:16 INFO  CORSFilter:32 - http://localhost:8082/rest/sportService/getForm: GET
+2017-05-03 13:44:17 INFO  CORSFilter:32 - http://localhost:8082/rest/sportService/getForm: GET
+2017-05-03 13:44:21 INFO  CORSFilter:32 - http://localhost:8082/rest/sportService/getForm: GET
+2017-05-03 13:44:56 INFO  CORSFilter:32 - http://localhost:8082/rest/sportService/getAll: GET
+2017-05-03 13:49:15 INFO  CORSFilter:32 - http://localhost:8082/rest/sportService/getAll: GET
+2017-05-03 14:10:14 INFO  CORSFilter:32 - http://localhost:8082/rest/sportService/getAll: GET
+2017-05-03 14:10:19 INFO  CORSFilter:32 - http://localhost:8082/rest/sportService/getAll: GET
+2017-05-03 14:37:34 INFO  CORSFilter:22 - INIT
+2017-05-03 14:37:34 INFO  CORSFilter:31 - /rest/sportService/getAll
+2017-05-03 14:37:44 INFO  CORSFilter:31 - /rest/sportService/getAll
+2017-05-03 14:37:54 INFO  CORSFilter:31 - /rest/sportService/getForm
+2017-05-03 14:37:55 INFO  CORSFilter:31 - /rest/sportService/getForm
+2017-05-03 14:37:56 INFO  CORSFilter:31 - /rest/sportService/getForm
+2017-05-03 14:37:56 INFO  CORSFilter:31 - /rest/sportService/getForm
+2017-05-03 14:38:10 INFO  CORSFilter:31 - /rest/sportService/getForm
+2017-05-03 14:38:11 INFO  CORSFilter:31 - /rest/sportService/getForm
+2017-05-03 14:40:47 INFO  CORSFilter:22 - INIT
+2017-05-03 14:40:47 INFO  CORSFilter:31 - /rest/sportService/getForm
+2017-05-03 14:52:51 INFO  CORSFilter:22 - INIT
+2017-05-03 14:52:51 INFO  CORSFilter:31 - /rest/sportService/getForm
+2017-05-03 14:53:01 INFO  CORSFilter:31 - /rest/sportService/getForm
+2017-05-03 15:00:32 INFO  CORSFilter:31 - /rest/sportService/getForm
+2017-05-03 15:00:33 INFO  CORSFilter:31 - /rest/sportService/getForm
+2017-05-03 15:01:22 INFO  CORSFilter:31 - /rest/sportService/getAll
+2017-05-03 15:17:13 INFO  CORSFilter:22 - INIT
+2017-05-03 15:17:13 INFO  CORSFilter:31 - /rest/sportService/getForm
+2017-05-03 15:17:18 INFO  CORSFilter:31 - /rest/sportService/getForm
+2017-05-03 15:21:29 INFO  CORSFilter:31 - /rest/sportService/getForm
+2017-05-03 15:25:57 INFO  CORSFilter:31 - /rest/sportService/getForm
+2017-05-03 15:30:31 INFO  CORSFilter:31 - /rest/sportService/getAll
+2017-05-03 15:40:01 INFO  CORSFilter:31 - /rest/sportService/save
+2017-05-03 15:40:43 INFO  CORSFilter:31 - /rest/sportService/save
+2017-05-03 15:43:56 INFO  CORSFilter:31 - /rest/sportService/getForm
+2017-05-03 15:44:00 INFO  CORSFilter:31 - /rest/sportService/getForm
+2017-05-03 15:44:00 INFO  CORSFilter:31 - /rest/sportService/getForm
+2017-05-03 15:44:00 INFO  CORSFilter:31 - /rest/sportService/getForm
+2017-05-03 15:44:13 INFO  CORSFilter:31 - /rest/sportService/getForm
+2017-05-03 15:45:10 INFO  CORSFilter:31 - /rest/sportService/getForm
+2017-05-03 15:45:13 INFO  CORSFilter:31 - /rest/sportService/getForm
+2017-05-03 15:45:19 INFO  CORSFilter:31 - /rest/sportService/save
+2017-05-03 15:45:39 INFO  CORSFilter:31 - /rest/sportService/getForm
+2017-05-03 16:03:50 INFO  CORSFilter:22 - INIT
+2017-05-03 16:03:50 INFO  CORSFilter:31 - /rest/sportService/getAll
+2017-05-03 16:03:56 INFO  CORSFilter:31 - /rest/sportService/getAll
+2017-05-03 16:10:27 INFO  CORSFilter:31 - /rest/sportService/getAll
+2017-05-03 16:10:31 INFO  CORSFilter:31 - /rest/sportService/getAll
+2017-05-03 16:10:34 INFO  CORSFilter:31 - /rest/sportService/getAll
+2017-05-03 16:10:34 INFO  CORSFilter:31 - /rest/sportService/getAll
+2017-05-03 16:10:36 INFO  CORSFilter:31 - /rest/sportService/getAll
+2017-05-03 16:10:40 INFO  CORSFilter:31 - /rest/sportService/getAll
+2017-05-03 16:11:17 INFO  CORSFilter:31 - /rest/sportService/getAll
+2017-05-03 16:16:59 INFO  CORSFilter:31 - /rest/sportService/getAll
+2017-05-03 16:17:24 INFO  CORSFilter:31 - /rest/sportService/getAll
+2017-05-03 16:17:27 INFO  CORSFilter:31 - /rest/sportService/getAll
+2017-05-03 16:17:27 INFO  CORSFilter:31 - /rest/sportService/getAll
+2017-05-03 16:17:29 INFO  CORSFilter:31 - /rest/sportService/getAll
+2017-05-03 16:17:32 INFO  CORSFilter:31 - /rest/sportService/getAll
+2017-05-03 16:17:43 INFO  CORSFilter:31 - /rest/sportService/getAll
+2017-05-03 16:18:32 INFO  CORSFilter:31 - /rest/sportService/getAll
+2017-05-03 16:18:35 INFO  CORSFilter:31 - /rest/sportService/getAll
+2017-05-03 16:19:28 INFO  CORSFilter:31 - /rest/sportService/getAll
+2017-05-03 16:19:29 INFO  CORSFilter:31 - /rest/sportService/getAll
+2017-05-03 16:19:30 INFO  CORSFilter:31 - /rest/sportService/getAll
+2017-05-03 16:19:31 INFO  CORSFilter:31 - /rest/sportService/getAll
+2017-05-03 16:19:36 INFO  CORSFilter:31 - /rest/sportService/getAll
+2017-05-03 16:20:12 INFO  CORSFilter:31 - /rest/sportService/getAll
+2017-05-03 16:20:17 INFO  CORSFilter:31 - /rest/sportService/getAll
+2017-05-03 16:24:28 INFO  CORSFilter:31 - /rest/sportService/getAll
+2017-05-03 16:26:34 INFO  CORSFilter:31 - /rest/sportService/getAll
+2017-05-03 16:26:37 INFO  CORSFilter:31 - /rest/sportService/getAll
+2017-05-03 16:26:39 INFO  CORSFilter:31 - /rest/sportService/getAll
+2017-05-03 16:26:40 INFO  CORSFilter:31 - /rest/sportService/getAll
+2017-05-03 16:26:40 INFO  CORSFilter:31 - /rest/sportService/getAll
+2017-05-03 16:26:41 INFO  CORSFilter:31 - /rest/sportService/getAll
+2017-05-03 16:26:41 INFO  CORSFilter:31 - /rest/sportService/getAll
+2017-05-03 16:26:42 INFO  CORSFilter:31 - /rest/sportService/getAll
+2017-05-03 16:26:42 INFO  CORSFilter:31 - /rest/sportService/getAll
+2017-05-03 16:26:42 INFO  CORSFilter:31 - /rest/sportService/getAll
+2017-05-03 16:26:42 INFO  CORSFilter:31 - /rest/sportService/getAll
+2017-05-03 16:26:42 INFO  CORSFilter:31 - /rest/sportService/getAll
+2017-05-03 16:26:43 INFO  CORSFilter:31 - /rest/sportService/getAll
+2017-05-03 16:26:43 INFO  CORSFilter:31 - /rest/sportService/getAll
+2017-05-03 16:26:44 INFO  CORSFilter:31 - /rest/sportService/getAll
+2017-05-03 16:26:45 INFO  CORSFilter:31 - /rest/sportService/getAll
+2017-05-03 16:26:46 INFO  CORSFilter:31 - /rest/sportService/getAll
+2017-05-03 16:26:46 INFO  CORSFilter:31 - /rest/sportService/getAll
+2017-05-03 16:26:46 INFO  CORSFilter:31 - /rest/sportService/getAll
+2017-05-03 16:26:47 INFO  CORSFilter:31 - /rest/sportService/getAll
+2017-05-03 16:26:47 INFO  CORSFilter:31 - /rest/sportService/getAll
+2017-05-03 16:26:48 INFO  CORSFilter:31 - /rest/sportService/getAll
+2017-05-03 16:27:04 INFO  CORSFilter:31 - /rest/sportService/getAll
+2017-05-03 16:27:05 INFO  CORSFilter:31 - /rest/sportService/getAll
+2017-05-03 16:27:06 INFO  CORSFilter:31 - /rest/sportService/getAll
+2017-05-03 16:27:07 INFO  CORSFilter:31 - /rest/sportService/getAll
+2017-05-04 07:37:30 INFO  CORSFilter:22 - INIT
+2017-05-04 07:37:30 INFO  CORSFilter:31 - /rest/sportService/getAll
+2017-05-04 07:37:37 INFO  CORSFilter:31 - /rest/sportService/getAll
+2017-05-04 07:37:49 INFO  CORSFilter:31 - /rest/sportService/getAll
+2017-05-04 07:38:30 INFO  CORSFilter:31 - /rest/sportService/getAll
+2017-05-04 09:03:44 INFO  CORSFilter:22 - INIT
+2017-05-04 09:03:44 INFO  CORSFilter:31 - /rest/sportService/getAll
+2017-05-04 11:14:52 INFO  CORSFilter:31 - /rest/teamService/getAll
+2017-05-04 11:15:27 INFO  CORSFilter:31 - /rest/sportService/getAll
+2017-05-04 11:28:25 INFO  CORSFilter:31 - /rest/sportService/getAll
+2017-05-04 11:33:33 INFO  CORSFilter:31 - /rest/sportService/getAll
+2017-05-04 11:33:43 INFO  CORSFilter:31 - /rest/sportService/save
+2017-05-04 11:33:46 INFO  CORSFilter:31 - /rest/sportService/getAll
+2017-05-04 11:34:09 INFO  CORSFilter:31 - /rest/sportService/getAll
+2017-05-04 11:34:30 INFO  CORSFilter:31 - /rest/sportService/getAll
+2017-05-04 11:34:35 INFO  CORSFilter:31 - /rest/sportService/getAll
+2017-05-04 11:45:10 INFO  CORSFilter:31 - /rest/sportService/getAll
+2017-05-04 11:45:12 INFO  CORSFilter:31 - /rest/sportService/getAll
+2017-05-04 11:47:39 INFO  CORSFilter:31 - /rest/sportService/getAll
+2017-05-04 11:47:42 INFO  CORSFilter:31 - /rest/sportService/getAll
+2017-05-04 11:49:14 INFO  CORSFilter:31 - /rest/sportService/getAll
+2017-05-04 13:58:49 INFO  CORSFilter:22 - INIT
+2017-05-04 13:58:49 INFO  CORSFilter:31 - /rest/sportService/getAll
+2017-05-04 15:03:44 INFO  CORSFilter:31 - /rest/sportService/getAll

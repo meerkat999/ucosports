@@ -1,0 +1,10 @@
+swarm:
+ datasources:
+  data-sources:
+   KeycloakDS:
+    driver-name: mysql
+    connection-url: jdbc:mysql://172.17.0.3:3306/ucosportssecurity?serverTimezone=UTC&useSSL=false
+    user-name: root
+    password: root
+ port:
+  offset: 100
