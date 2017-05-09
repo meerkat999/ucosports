@@ -7,12 +7,8 @@ import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.transaction.Transactional.TxType;
 
-import co.com.meerkats.ucosports.domain.PlayerStatistic;
 import co.com.meerkats.ucosports.domain.Sport;
-import co.com.meerkats.ucosports.domain.SportStatistic;
-import co.com.meerkats.ucosports.domain.dto.PlayerStatisticDTO;
 import co.com.meerkats.ucosports.domain.dto.SportDTO;
-import co.com.meerkats.ucosports.domain.dto.SportStatisticDTO;
 import co.com.meerkats.ucosports.logical.IPlayerStatisticService;
 import co.com.meerkats.ucosports.logical.ISportLogical;
 import co.com.meerkats.ucosports.logical.ISportStatisticService;
@@ -39,42 +35,40 @@ public class SportLogicalImpl implements ISportLogical {
 	@Override
 	@Transactional(value=TxType.REQUIRED, rollbackOn=Exception.class)
 	public Sport saveDTO(SportDTO sportDTO) {
-		Sport sport = new Sport();
-		sport.setName(sportDTO.getName());
-		sport.setNumberPlayers(sportDTO.getNumberPlayers());
-		sport.setNumberTimes(sportDTO.getNumberTimes());
-		sport.setTimeTimes(sportDTO.getTimeTimes());
+		Sport sport = buildEntity(sportDTO);
 		sport = save(sport);
-		persistSportStatistics(sportDTO.getSportStatistics(), sport);
-		persistPlayerStatistics(sportDTO.getPlayerStatistics(), sport);
+		sportStatisticService.persistSportStatisticsDTO(sportDTO.getSportStatistics(), sport);
+		playerStatisticService.persistPlayerStatistics(sportDTO.getPlayerStatistics(), sport);
 		return sport;
-	}
-
-	private void persistPlayerStatistics(List<PlayerStatisticDTO> list, Sport sport) {
-		if(list != null && !list.isEmpty()){
-			list.forEach(s -> {
-				PlayerStatistic statistic = new PlayerStatistic();
-				statistic.setName(s.getName());
-				statistic.setSport(sport);
-				playerStatisticService.save(statistic);
-			});
-		}
-	}
-	
-	private void persistSportStatistics(List<SportStatisticDTO> list, Sport sport) {
-		if(list != null && !list.isEmpty()){
-			list.forEach(s -> {
-				SportStatistic statistic = new SportStatistic();
-				statistic.setName(s.getName());
-				statistic.setSport(sport);
-				sportStatisticService.save(statistic);
-			});
-		}
 	}
 
 	@Override
 	public List<Sport> getAll() {
 		return repository.findAll();
+	}
+
+	@Override
+	@Transactional(value=TxType.REQUIRED, rollbackOn=Exception.class)
+	public Sport updateDTO(SportDTO sportDTO) {
+		Sport sport = repository.findOne(sportDTO.getId());
+		setEntity(sportDTO, sport);
+		sportStatisticService.updateSportStatisticsDTO(sportDTO.getSportStatistics(), sport);
+		playerStatisticService.updatePlayerStatisticsDTO(sportDTO.getPlayerStatistics(), sport);
+		return repository.save(sport);
+	}
+	
+	private Sport buildEntity(SportDTO sportDTO) {
+		Sport sport = new Sport();
+		sport = setEntity(sportDTO, sport);
+		return sport;
+	}
+	
+	private Sport setEntity(SportDTO sportDTO, Sport sport) {
+		sport.setName(sportDTO.getName());
+		sport.setNumberPlayers(sportDTO.getNumberPlayers());
+		sport.setNumberTimes(sportDTO.getNumberTimes());
+		sport.setTimeTimes(sportDTO.getTimeTimes());
+		return sport;
 	}
 
 }

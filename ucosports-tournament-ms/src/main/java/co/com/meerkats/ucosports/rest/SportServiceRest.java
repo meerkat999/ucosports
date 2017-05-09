@@ -18,7 +18,6 @@ import co.com.meerkats.ucosports.domain.SportStatistic;
 import co.com.meerkats.ucosports.domain.dto.PlayerStatisticDTO;
 import co.com.meerkats.ucosports.domain.dto.SportDTO;
 import co.com.meerkats.ucosports.domain.dto.SportStatisticDTO;
-import co.com.meerkats.ucosports.domain.dto.graphic.SportFormDTO;
 import co.com.meerkats.ucosports.logical.ISportLogical;
 
 @Path("/sportService")
@@ -26,15 +25,6 @@ public class SportServiceRest {
 	
 	@Inject
 	private ISportLogical logical;
-	
-	@Path("/getForm")
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	public SportFormDTO getPlayerById() {
-		SportFormDTO sportFormDTO = new SportFormDTO();
-		return sportFormDTO;
-	}
-
 	
 	@Path("/save")
 	@POST
@@ -72,6 +62,8 @@ public class SportServiceRest {
 			listSportStatistic.forEach(ss -> {
 				SportStatisticDTO sportStaticDTO = new SportStatisticDTO();
 				sportStaticDTO.setName(ss.getName());
+				sportStaticDTO.setId(ss.getId());
+				sportStaticDTO.setSport_id(s.getId());
 				listaSportStatisticDTO.add(sportStaticDTO);
 			});
 		}
@@ -82,11 +74,21 @@ public class SportServiceRest {
 			listPlayerStatistic.forEach(ps -> {
 				PlayerStatisticDTO playerStatisticDTO = new PlayerStatisticDTO();
 				playerStatisticDTO.setName(ps.getName());
+				playerStatisticDTO.setId(ps.getId());
+				playerStatisticDTO.setSport_id(s.getId());
 				listPlayerStatisticDTO.add(playerStatisticDTO);
 			});
 		}
 		dto.setPlayerStatistics(listPlayerStatisticDTO);
 		return dto;
+	}
+
+	@Path("/update")
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Sport update(SportDTO dto) {
+		return logical.updateDTO(dto);
 	}
 
 }

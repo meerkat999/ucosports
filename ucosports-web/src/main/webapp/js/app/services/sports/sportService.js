@@ -7,6 +7,9 @@ define(['app-module', 'restService'], function (app) {
           save : function(sport){
             return restService.POST(path + 'save', sport);
           },
+          update : function(sport){
+            return restService.POST(path + 'update', sport);
+          },
           getAll : function(){
             return restService.GETArray(path + 'getAll');
           }

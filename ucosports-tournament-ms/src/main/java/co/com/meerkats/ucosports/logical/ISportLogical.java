@@ -10,5 +10,6 @@ public interface ISportLogical {
 	Sport save(Sport sport);
 	Sport saveDTO(SportDTO sportDTO);
 	List<Sport> getAll();
+	Sport updateDTO(SportDTO dto);
 
 }

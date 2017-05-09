@@ -21,10 +21,16 @@ public class SportServiceRestTest {
 	private ISportLogical logical;
 	
 	@Test
+	public void verificarActualizarEquipo(){
+		SportDTO dto = new SportDTO();
+		rest.update(dto);
+		Mockito.verify(logical).updateDTO(dto);
+	}
+	
+	@Test
 	public void verificarAccesoAlEjb(){
 		SportDTO dto = new SportDTO();
-		Sport sport = new Sport();
-		Mockito.when(logical.saveDTO(dto)).thenReturn(sport);
+		Mockito.when(logical.saveDTO(dto)).thenReturn(new Sport());
 		rest.save(dto);
 		Mockito.verify(logical).saveDTO(dto);
 	}

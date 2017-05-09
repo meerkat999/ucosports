@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -15,11 +16,16 @@ import co.com.meerkats.ucosports.domain.Sport;
 import co.com.meerkats.ucosports.domain.dto.PlayerStatisticDTO;
 import co.com.meerkats.ucosports.domain.dto.SportDTO;
 import co.com.meerkats.ucosports.domain.dto.SportStatisticDTO;
+import co.com.meerkats.ucosports.logical.IPlayerStatisticService;
 import co.com.meerkats.ucosports.logical.ISportStatisticService;
 import co.com.meerkats.ucosports.repository.ISportRepository;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SportLogicalImplTest {
+
+	private static final Integer ID = 1;
+
+	private static final String NAME_CAMBIADO = "NAME CAMBIADO";
 
 	@InjectMocks
 	private SportLogicalImpl logical;
@@ -29,6 +35,29 @@ public class SportLogicalImplTest {
 	
 	@Mock
 	private ISportStatisticService statisticService;
+	
+	@Mock
+	private IPlayerStatisticService playerStatistictsService;
+	
+	@Mock
+	private SportDTO dto; 
+	
+	@Before
+	public void init(){
+		Mockito.when(dto.getId()).thenReturn(ID);
+	}
+	
+	@Test
+	public void debeActualizarDeporte(){
+		Sport sportViejo = new Sport();
+		Sport sportActual = new Sport();
+		Mockito.when(repository.findOne(ID)).thenReturn(sportViejo);
+		Mockito.when(repository.save(sportViejo)).thenReturn(sportActual);
+		Mockito.when(dto.getName()).thenReturn(NAME_CAMBIADO);
+		Sport sport = logical.updateDTO(dto);
+		Assert.assertNotNull(sport);
+		Assert.assertNotEquals(sport, sportViejo);
+	}
 	
 	@Test
 	public void debeTraerTodosLosDeportes(){

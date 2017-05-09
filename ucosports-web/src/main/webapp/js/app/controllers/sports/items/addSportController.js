@@ -22,7 +22,7 @@ define(['app-module', 'sportService', 'sweetService'], function (app) {
           return false;
         }
         return true;
-      }
+      };
 
       $scope.add = function(){
         $scope.addPressed = true;
@@ -36,7 +36,21 @@ define(['app-module', 'sportService', 'sweetService'], function (app) {
             sweetService.error("Error al guardar el deporte.");
           });
         };
-      }
+      };
+
+      $scope.save = function(){
+        $scope.addPressed = true;
+        if($scope.validationForm() === true){
+          sportService.update($scope.sport).then(function(data){
+            if(data !== null){
+              sweetService.success("¡El deporte '"+data.name+"' ha sido actualizado correctamente!");
+              $state.reload();
+            };
+          }, function(error){
+            sweetService.error("Error al actualizar el deporte.");
+          });
+        };
+      };
 
       $scope.init = function(){
         $scope.isEditing = false;
