@@ -1,5 +1,6 @@
 package co.com.meerkats.ucosports.logical.Impl;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.enterprise.context.RequestScoped;
@@ -8,6 +9,7 @@ import javax.transaction.Transactional;
 import javax.transaction.Transactional.TxType;
 
 import co.com.meerkats.ucosports.domain.Sport;
+import co.com.meerkats.ucosports.domain.constants.StatesEnum;
 import co.com.meerkats.ucosports.domain.dto.SportDTO;
 import co.com.meerkats.ucosports.logical.IPlayerStatisticService;
 import co.com.meerkats.ucosports.logical.ISportLogical;
@@ -36,6 +38,8 @@ public class SportLogicalImpl implements ISportLogical {
 	@Transactional(value=TxType.REQUIRED, rollbackOn=Exception.class)
 	public Sport saveDTO(SportDTO sportDTO) {
 		Sport sport = buildEntity(sportDTO);
+		sport.setDateCreation(new Date());
+		sport.setState(StatesEnum.ACTIVO.getValue());
 		sport = save(sport);
 		sportStatisticService.persistSportStatisticsDTO(sportDTO.getSportStatistics(), sport);
 		playerStatisticService.persistPlayerStatistics(sportDTO.getPlayerStatistics(), sport);

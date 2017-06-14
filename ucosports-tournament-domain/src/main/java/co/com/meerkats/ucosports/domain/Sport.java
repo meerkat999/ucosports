@@ -1,5 +1,6 @@
 package co.com.meerkats.ucosports.domain;
 
+import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -33,12 +34,29 @@ public class Sport {
 	@Column(name = "sport_time_times")
 	private Integer timeTimes;
 	
+	@Column(name = "sport_state")
+	private String state;
+	
+	@Column(name = "sport_date_creation")
+	private Date dateCreation;
+	
 	@OneToMany(mappedBy = "sport", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Set<SportStatistic> listSportStatistic;
 	
 	@OneToMany(mappedBy = "sport", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Set<PlayerStatistic> listPlayerStatistic;
 	
+	@OneToMany(mappedBy = "sport", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private Set<Team> listTeams;
+	
+	public Set<Team> getListTeams() {
+		return listTeams;
+	}
+
+	public void setListTeams(Set<Team> listTeams) {
+		this.listTeams = listTeams;
+	}
+
 	public Set<SportStatistic> getListSportStatistic() {
 		return listSportStatistic;
 	}
@@ -95,5 +113,20 @@ public class Sport {
 		this.timeTimes = timeTimes;
 	}
 
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	public Date getDateCreation() {
+		return dateCreation;
+	}
+
+	public void setDateCreation(Date dateCreation) {
+		this.dateCreation = dateCreation;
+	}	
 	
 }

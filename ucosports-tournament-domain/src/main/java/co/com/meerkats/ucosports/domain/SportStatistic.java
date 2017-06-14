@@ -20,6 +20,9 @@ public class SportStatistic {
 	
 	@Column(name = "sportstatistic_name")
 	private String name;
+	
+	@Column(name = "sportstatistic_state")
+	private String state;
 
 	@ManyToOne
 	@JoinColumn(name = "sport_id")
@@ -47,6 +50,14 @@ public class SportStatistic {
 
 	public void setSport(Sport sport) {
 		this.sport = sport;
+	}
+	
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
 	}
 	
 }

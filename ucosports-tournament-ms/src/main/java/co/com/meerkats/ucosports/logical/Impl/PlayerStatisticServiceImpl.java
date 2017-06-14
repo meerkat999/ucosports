@@ -9,6 +9,7 @@ import javax.inject.Inject;
 
 import co.com.meerkats.ucosports.domain.PlayerStatistic;
 import co.com.meerkats.ucosports.domain.Sport;
+import co.com.meerkats.ucosports.domain.constants.StatesEnum;
 import co.com.meerkats.ucosports.domain.dto.PlayerStatisticDTO;
 import co.com.meerkats.ucosports.logical.IPlayerStatisticService;
 import co.com.meerkats.ucosports.repository.IPlayerStatisticRepository;
@@ -37,6 +38,7 @@ public class PlayerStatisticServiceImpl implements IPlayerStatisticService {
 				PlayerStatistic statistic = new PlayerStatistic();
 				statistic.setName(s.getName());
 				statistic.setSport(sport);
+				statistic.setState(StatesEnum.ACTIVO.getValue());
 				statistic = save(statistic);
 				listEntities.add(statistic);
 			});

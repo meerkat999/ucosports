@@ -1,1 +1,14 @@
 2017-04-27 16:08:43 ERROR CORSFilter:18 - PRUEBA
+2017-06-13 17:43:51 INFO  CORSFilter:32 - http://localhost:8082/rest/sportService/getAll: GET
+2017-06-13 18:05:14 INFO  CORSFilter:32 - http://localhost:8082/rest/sportService/getAll: GET
+2017-06-13 18:05:37 INFO  CORSFilter:32 - http://localhost:8082/rest/sportService/update: OPTIONS
+2017-06-13 18:05:38 INFO  CORSFilter:32 - http://localhost:8082/rest/sportService/update: POST
+2017-06-13 18:05:38 INFO  CORSFilter:32 - http://localhost:8082/rest/sportService/getAll: GET
+2017-06-13 18:06:40 INFO  CORSFilter:32 - http://localhost:8082/rest/sportService/save: OPTIONS
+2017-06-13 18:38:26 INFO  CORSFilter:32 - http://localhost:8082/rest/sportService/getAll: GET
+2017-06-13 18:38:47 INFO  CORSFilter:32 - http://localhost:8082/rest/sportService/save: OPTIONS
+2017-06-13 18:38:47 INFO  CORSFilter:32 - http://localhost:8082/rest/sportService/save: POST
+2017-06-13 18:38:47 INFO  CORSFilter:32 - http://localhost:8082/rest/sportService/getAll: GET
+2017-06-13 18:39:31 INFO  CORSFilter:32 - http://localhost:8082/rest/sportService/getAll: GET
+2017-06-13 19:12:25 INFO  CORSFilter:32 - http://localhost:8082/rest/teamService/getAll: GET
+2017-06-13 19:13:06 INFO  CORSFilter:32 - http://localhost:8082/rest/teamService/getAll: GET
