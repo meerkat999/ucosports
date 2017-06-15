@@ -1,4 +1,4 @@
-package co.com.meerkats.ucosports.domain.dto;
+package co.com.meerkats.ucosports.dto;
 
 import java.util.List;
 
@@ -11,6 +11,7 @@ public class SportDTO {
 	private Integer timeTimes;
 	private List<SportStatisticDTO> sportStatistics;
 	private List<PlayerStatisticDTO> playerStatistics;
+	private List<TeamDTO> teams;
 	
 	public String getName() {
 		return name;
@@ -53,6 +54,12 @@ public class SportDTO {
 	}
 	public void setPlayerStatistics(List<PlayerStatisticDTO> playerStatistics) {
 		this.playerStatistics = playerStatistics;
+	}
+	public List<TeamDTO> getTeams() {
+		return teams;
+	}
+	public void setTeams(List<TeamDTO> teams) {
+		this.teams = teams;
 	}
 	
 	

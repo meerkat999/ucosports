@@ -7,7 +7,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import co.com.meerkats.ucosports.domain.dto.PlayerDTO;
+import co.com.meerkats.ucosports.dto.PlayerDTO;
 import co.com.meerkats.ucosports.logical.Impl.PlayerLogicalImpl;
 import co.com.meerkats.ucosports.rest.PlayerServiceRest;
 
@@ -25,7 +25,7 @@ public class PlayerServiceRestTest {
 	@Test
 	public void verifyFindPlayer(){
 		PlayerDTO playerDto = new PlayerDTO();
-		playerDto.id = ID;
+		playerDto.setPlayer_id(ID);
 		service.getPlayerById(playerDto);
 		Mockito.verify(logical).findPlayerById(ID);
 	}

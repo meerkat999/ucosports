@@ -9,14 +9,19 @@ import javax.transaction.Transactional;
 import javax.transaction.Transactional.TxType;
 
 import co.com.meerkats.ucosports.domain.Player;
+import co.com.meerkats.ucosports.dto.PlayerDTO;
 import co.com.meerkats.ucosports.logical.IPlayerLogical;
+import co.com.meerkats.ucosports.logical.ITeamLogical;
 import co.com.meerkats.ucosports.repository.IPlayerRepository;
 
 @RequestScoped
-public class PlayerLogicalImpl implements IPlayerLogical {
+public class PlayerLogicalImpl extends LogicalCommonImpl<Player, PlayerDTO> implements IPlayerLogical {
 
 	@Inject
 	private IPlayerRepository repository;
+	
+	@Inject
+	private ITeamLogical teamLogical;
 	
 	@Override
 	public Player findPlayerById(Integer id) {
@@ -41,6 +46,17 @@ public class PlayerLogicalImpl implements IPlayerLogical {
 		lista.add(addPlayer(new Player()));
 		lista.add(addPlayer(new Player()));
 		return lista;
+	}
+
+	@Override
+	public PlayerDTO buildDTO(Player entity, Boolean herencia) {
+		PlayerDTO playerDTO = new PlayerDTO();
+		playerDTO.setPlayer_id(entity.getId());
+		playerDTO.setPlayer_firts_name(entity.getFirstName());
+		if(herencia){
+			playerDTO.setTeams(teamLogical.listEntitiesToListDTOs(entity.getTeams(), !herencia));
+		}
+		return playerDTO;
 	}
 
 }

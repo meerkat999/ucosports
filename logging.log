@@ -12,3 +12,49 @@
 2017-06-13 18:39:31 INFO  CORSFilter:32 - http://localhost:8082/rest/sportService/getAll: GET
 2017-06-13 19:12:25 INFO  CORSFilter:32 - http://localhost:8082/rest/teamService/getAll: GET
 2017-06-13 19:13:06 INFO  CORSFilter:32 - http://localhost:8082/rest/teamService/getAll: GET
+2017-06-14 18:39:56 INFO  CORSFilter:32 - http://localhost:8082/rest/teamService/getAll: GET
+2017-06-14 19:00:02 INFO  CORSFilter:32 - http://localhost:8082/rest/teamService/getAll: GET
+2017-06-14 20:00:37 INFO  CORSFilter:32 - http://localhost:8082/rest/teamService/getAll: GET
+2017-06-14 20:04:48 INFO  CORSFilter:32 - http://localhost:8082/rest/teamService/getAll: GET
+2017-06-14 20:15:40 INFO  CORSFilter:32 - http://localhost:8082/rest/teamService/getAll: GET
+2017-06-14 20:22:41 INFO  CORSFilter:32 - http://localhost:8082/rest/teamService/getAll: GET
+2017-06-14 21:04:00 INFO  CORSFilter:32 - http://localhost:8082/rest/teamService/getAll: GET
+2017-06-14 21:09:15 INFO  CORSFilter:32 - http://localhost:8082/rest/teamService/getAll: GET
+2017-06-14 21:46:22 WARN  LoadContexts:98 - HHH000100: Fail-safe cleanup (collections) : org.hibernate.engine.loading.internal.CollectionLoadContext@1084a86d<rs=Result set representing update count of -1>
+2017-06-14 21:46:22 WARN  CollectionLoadContext:377 - HHH000160: On CollectionLoadContext#cleanup, localLoadingCollectionKeys contained [1] entries
+2017-06-14 21:49:21 INFO  CORSFilter:32 - http://localhost:8082/rest/teamService/getAll: GET
+2017-06-14 21:50:02 INFO  CORSFilter:32 - http://localhost:8082/rest/teamService/getAll: GET
+2017-06-14 21:50:17 INFO  CORSFilter:32 - http://localhost:8082/rest/sportService/getAll: GET
+2017-06-14 21:50:34 INFO  CORSFilter:32 - http://localhost:8082/rest/playerService/getAll: GET
+2017-06-14 21:56:48 INFO  CORSFilter:32 - http://localhost:8082/rest/playerService/getAll: GET
+2017-06-14 21:56:52 INFO  TeamLogicalImpl:39 - 3
+2017-06-14 21:56:52 INFO  CORSFilter:32 - http://localhost:8082/rest/teamService/getAll: GET
+2017-06-14 22:02:17 INFO  TeamLogicalImpl:40 - Capturamos todos los equipos
+2017-06-14 22:02:17 INFO  TeamLogicalImpl:41 - 3
+2017-06-14 22:02:17 INFO  TeamLogicalImpl:64 - Recorremos y construimos: Barcelona
+2017-06-14 22:02:17 INFO  TeamLogicalImpl:64 - Recorremos y construimos: Madrid
+2017-06-14 22:02:17 INFO  TeamLogicalImpl:64 - Recorremos y construimos: Lakers
+2017-06-14 22:02:17 INFO  CORSFilter:32 - http://localhost:8082/rest/teamService/getAll: GET
+2017-06-14 22:02:17 INFO  TeamLogicalImpl:40 - Capturamos todos los equipos
+2017-06-14 22:02:17 INFO  TeamLogicalImpl:41 - 3
+2017-06-14 22:02:17 INFO  TeamLogicalImpl:64 - Recorremos y construimos: Barcelona
+2017-06-14 22:02:17 INFO  TeamLogicalImpl:64 - Recorremos y construimos: Madrid
+2017-06-14 22:02:17 INFO  TeamLogicalImpl:64 - Recorremos y construimos: Lakers
+2017-06-14 22:02:17 INFO  CORSFilter:32 - http://localhost:8082/rest/teamService/getAll: GET
+2017-06-14 22:07:01 INFO  TeamLogicalImpl:40 - Capturamos todos los equipos
+2017-06-14 22:07:01 INFO  TeamLogicalImpl:41 - 3
+2017-06-14 22:07:01 INFO  TeamLogicalImpl:64 - Recorremos y construimos: Barcelona
+2017-06-14 22:07:01 INFO  TeamLogicalImpl:64 - Recorremos y construimos: Madrid
+2017-06-14 22:07:01 INFO  TeamLogicalImpl:64 - Recorremos y construimos: Lakers
+2017-06-14 22:07:01 INFO  TeamServiceRest:29 - Se devolverá en el servicio rest.
+2017-06-14 22:07:01 INFO  TeamServiceRest:30 - Tamano de la lista a devolver: 0
+2017-06-14 22:07:01 INFO  CORSFilter:32 - http://localhost:8082/rest/teamService/getAll: GET
+2017-06-14 22:11:41 INFO  CORSFilter:32 - http://localhost:8082/rest/teamService/getAll: GET
+2017-06-14 22:11:51 INFO  CORSFilter:32 - http://localhost:8082/rest/playerService/getAll: GET
+2017-06-14 22:12:14 INFO  CORSFilter:32 - http://localhost:8082/rest/sportService/getAll: GET
+2017-06-14 22:12:49 INFO  CORSFilter:32 - http://localhost:8082/rest/teamService/getAll: GET
+2017-06-14 22:19:22 INFO  CORSFilter:32 - http://localhost:8082/rest/teamService/getAll: GET
+2017-06-14 22:19:27 INFO  CORSFilter:32 - http://localhost:8082/rest/sportService/getAll: GET
+2017-06-14 22:24:04 INFO  CORSFilter:32 - http://localhost:8082/rest/sportService/getAll: GET
+2017-06-14 22:24:21 INFO  CORSFilter:32 - http://localhost:8082/rest/sportService/getAll: GET
+2017-06-14 22:24:31 INFO  CORSFilter:32 - http://localhost:8082/rest/teamService/getAll: GET

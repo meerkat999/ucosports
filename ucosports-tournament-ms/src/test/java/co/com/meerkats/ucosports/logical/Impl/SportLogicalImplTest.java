@@ -13,9 +13,9 @@ import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import co.com.meerkats.ucosports.domain.Sport;
-import co.com.meerkats.ucosports.domain.dto.PlayerStatisticDTO;
-import co.com.meerkats.ucosports.domain.dto.SportDTO;
-import co.com.meerkats.ucosports.domain.dto.SportStatisticDTO;
+import co.com.meerkats.ucosports.dto.PlayerStatisticDTO;
+import co.com.meerkats.ucosports.dto.SportDTO;
+import co.com.meerkats.ucosports.dto.SportStatisticDTO;
 import co.com.meerkats.ucosports.logical.IPlayerStatisticService;
 import co.com.meerkats.ucosports.logical.ISportStatisticService;
 import co.com.meerkats.ucosports.repository.ISportRepository;
@@ -63,7 +63,7 @@ public class SportLogicalImplTest {
 	public void debeTraerTodosLosDeportes(){
 		List<Sport> listaEsperada = new ArrayList<>();
 		Mockito.when(repository.findAll()).thenReturn(listaEsperada);
-		List<Sport> listaEncontrada = logical.getAll();
+		List<Sport> listaEncontrada = logical.findAll();
 		Assert.assertEquals(listaEncontrada, listaEsperada);
 	}
 	

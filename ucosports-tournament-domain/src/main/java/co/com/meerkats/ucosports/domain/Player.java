@@ -1,10 +1,17 @@
 package co.com.meerkats.ucosports.domain;
 
+import java.math.BigInteger;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -16,27 +23,47 @@ public class Player {
 	@GeneratedValue(strategy = GenerationType.IDENTITY) 
 	private Integer id;
 	
-	@Column(name = "player_first_name")
+	@Column(name = "player_firts_name")
 	private String firstName;
 
 	@Column(name = "player_second_name")
 	private String secondName;
 	
-	@Column(name = "player_first_lastname")
+	@Column(name = "player_firts_lastname")
 	private String firstLastname;
 	
 	@Column(name = "player_second_lastname")
 	private String secondLastName;
 	
 	@Column(name = "player_celnumber")
-	private Integer celNumber;
+	private BigInteger celNumber;
 	
-	@Column(name = "player_identificacion")
-	private Integer identificacion;
+	@Column(name = "player_identification")
+	private BigInteger identificacion;
 	
 	@Column(name = "player_state")
 	private String state;
 	
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(
+			name = "team_player_inscription",
+			joinColumns = {
+					@JoinColumn(name="player_id")
+			},
+			inverseJoinColumns = {
+					@JoinColumn(name="team_id"),
+					@JoinColumn(name="sport_id")
+			})
+	private List<Team> teams;
+	
+	public List<Team> getTeams() {
+		return teams;
+	}
+
+	public void setTeams(List<Team> teams) {
+		this.teams = teams;
+	}
+
 	public String getFirstName() {
 		return firstName;
 	}
@@ -77,19 +104,19 @@ public class Player {
 		this.secondLastName = secondLastName;
 	}
 
-	public Integer getCelNumber() {
+	public BigInteger getCelNumber() {
 		return celNumber;
 	}
 
-	public void setCelNumber(Integer celNumber) {
+	public void setCelNumber(BigInteger celNumber) {
 		this.celNumber = celNumber;
 	}
 
-	public Integer getIdentificacion() {
+	public BigInteger getIdentificacion() {
 		return identificacion;
 	}
 
-	public void setIdentificacion(Integer identificacion) {
+	public void setIdentificacion(BigInteger identificacion) {
 		this.identificacion = identificacion;
 	}
 

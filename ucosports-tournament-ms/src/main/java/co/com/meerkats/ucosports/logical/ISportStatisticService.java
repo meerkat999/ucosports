@@ -5,7 +5,7 @@ import java.util.Set;
 
 import co.com.meerkats.ucosports.domain.Sport;
 import co.com.meerkats.ucosports.domain.SportStatistic;
-import co.com.meerkats.ucosports.domain.dto.SportStatisticDTO;
+import co.com.meerkats.ucosports.dto.SportStatisticDTO;
 
 public interface ISportStatisticService {
 

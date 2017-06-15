@@ -8,7 +8,7 @@
   <packaging>pom</packaging>
   
   <modules>
-  	<module>ucosports-web</module>
+<!--   	<module>ucosports-web</module> -->
 	<module>ucosports-tournament-domain</module>
   	<module>ucosports-tournament-ms</module>
 <!--   	<module>ucosports-reports-ms</module> -->

@@ -1,11 +1,13 @@
 package co.com.meerkats.ucosports.domain;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -13,10 +15,17 @@ import javax.persistence.Table;
 @Table(name = "team")
 public class Team {
 
-	@Id
-	@Column(name = "team_id")
-	private Integer id;
+	@EmbeddedId
+	private TeamKey id;
 	
+	public TeamKey getId() {
+		return id;
+	}
+
+	public void setId(TeamKey id) {
+		this.id = id;
+	}
+
 	@Column(name = "team_name")
 	private String teamName;
 	
@@ -27,15 +36,42 @@ public class Team {
 	private Date dateCreation;
 	
 	@ManyToOne
-	@JoinColumn(name = "sport_id")
+	@JoinColumn(name = "sport_id", insertable = false, updatable = false)
 	private Sport sport;
+	
+	@ManyToMany(mappedBy = "teams")
+	private List<Player> players;
 
-	public Integer getId() {
-		return id;
+	public String getState() {
+		return state;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	public Date getDateCreation() {
+		return dateCreation;
+	}
+
+	public void setDateCreation(Date dateCreation) {
+		this.dateCreation = dateCreation;
+	}
+
+	public Sport getSport() {
+		return sport;
+	}
+
+	public void setSport(Sport sport) {
+		this.sport = sport;
+	}
+
+	public List<Player> getPlayers() {
+		return players;
+	}
+
+	public void setPlayers(List<Player> players) {
+		this.players = players;
 	}
 
 	public String getTeamName() {

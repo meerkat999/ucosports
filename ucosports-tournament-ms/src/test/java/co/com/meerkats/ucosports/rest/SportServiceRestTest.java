@@ -8,7 +8,7 @@ import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import co.com.meerkats.ucosports.domain.Sport;
-import co.com.meerkats.ucosports.domain.dto.SportDTO;
+import co.com.meerkats.ucosports.dto.SportDTO;
 import co.com.meerkats.ucosports.logical.ISportLogical;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -38,7 +38,7 @@ public class SportServiceRestTest {
 	@Test
 	public void verificarTraerTodosLosDeportes(){
 		rest.getAll();
-		Mockito.verify(logical).getAll();
+		Mockito.verify(logical).findAllDTO();
 	}
 	
 }

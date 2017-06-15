@@ -11,7 +11,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import co.com.meerkats.ucosports.domain.Player;
-import co.com.meerkats.ucosports.domain.dto.PlayerDTO;
+import co.com.meerkats.ucosports.dto.PlayerDTO;
 import co.com.meerkats.ucosports.logical.IPlayerLogical;
 
 @Path("/playerService")
@@ -24,10 +24,10 @@ public class PlayerServiceRest {
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Player getPlayerById(PlayerDTO playerDto) {
-		Player player = null;
-		if(playerDto != null && playerDto.id != null){
-			player = logical.findPlayerById(playerDto.id);
+	public PlayerDTO getPlayerById(PlayerDTO playerDto) {
+		PlayerDTO player = null;
+		if(playerDto != null && playerDto.getPlayer_id() != null){
+			player = logical.buildDTO(logical.findPlayerById(playerDto.getPlayer_id()), true);
 		}
 		return player;
 	}
@@ -35,10 +35,11 @@ public class PlayerServiceRest {
 	@Path("/getAll")
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Player> getAllPlayers() {
-		return logical.findAll();
+	public List<PlayerDTO> getAllPlayers() {
+		return logical.listEntitiesToListDTOs(logical.findAll(), true);
 	}
 	
+	//Servicio de prueba para demostración de transacciones
 	@Path("/prueba")
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)

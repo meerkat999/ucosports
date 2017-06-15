@@ -1,9 +1,10 @@
-package co.com.meerkats.ucosports.domain.dto;
+package co.com.meerkats.ucosports.dto;
 
-public class SportStatisticDTO {
-
-	private Integer id;
+public class PlayerStatisticDTO {
+	
 	private String name;
+	private Integer id;
+	private String state;
 	private Integer sport_id;
 
 	public String getName() {
@@ -29,5 +30,13 @@ public class SportStatisticDTO {
 	public void setSport_id(Integer sport_id) {
 		this.sport_id = sport_id;
 	}
-	
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
 }

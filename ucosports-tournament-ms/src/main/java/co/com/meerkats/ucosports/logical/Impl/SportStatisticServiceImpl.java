@@ -10,7 +10,7 @@ import javax.inject.Inject;
 import co.com.meerkats.ucosports.domain.Sport;
 import co.com.meerkats.ucosports.domain.SportStatistic;
 import co.com.meerkats.ucosports.domain.constants.StatesEnum;
-import co.com.meerkats.ucosports.domain.dto.SportStatisticDTO;
+import co.com.meerkats.ucosports.dto.SportStatisticDTO;
 import co.com.meerkats.ucosports.logical.ISportStatisticService;
 import co.com.meerkats.ucosports.repository.ISportStatisticRepository;
 

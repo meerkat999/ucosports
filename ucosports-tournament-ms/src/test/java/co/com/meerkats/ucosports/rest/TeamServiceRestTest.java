@@ -8,7 +8,6 @@ import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import co.com.meerkats.ucosports.logical.Impl.TeamLogicalImpl;
-import co.com.meerkats.ucosports.rest.TeamServiceRest;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TeamServiceRestTest {
@@ -22,7 +21,7 @@ public class TeamServiceRestTest {
 	@Test
 	public void getAll(){
 		serviceRest.getAll();
-		Mockito.verify(logical).findAll();
+		Mockito.verify(logical).findAllDTO();
 	}
 	
 	
