@@ -2,17 +2,17 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>co.com.meerkats</groupId>
-    <artifactId>ucosports</artifactId>
+    <artifactId>hotelturin</artifactId>
     <version>1.0.0-SNAPSHOT</version>
   </parent>
-  <artifactId>ucosports-tournament-ms</artifactId>
-  <version>${ucosports-tournament-ms-version}</version>
+  <artifactId>hotelturin-ms</artifactId>
+  <version>${hotelturin-ms-version}</version>
   <packaging>war</packaging>
   <dependencies>
   	<dependency>
       <groupId>co.com.meerkats</groupId>
-      <artifactId>ucosports-tournament-domain</artifactId>
-      <version>${ucosports-tournament-domain-version}</version>
+      <artifactId>hotelturin-domain</artifactId>
+      <version>${hotelturin-domain-version}</version>
     </dependency>
 	<dependency>
 	    <groupId>log4j</groupId>

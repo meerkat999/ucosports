@@ -2,12 +2,12 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>co.com.meerkats</groupId>
-    <artifactId>ucosports</artifactId>
+    <artifactId>hotelturin</artifactId>
     <version>1.0.0-SNAPSHOT</version>
   </parent>
-  <artifactId>ucosports-web</artifactId>
+  <artifactId>hotelturin-web</artifactId>
   <packaging>war</packaging>
-  <version>${ucosports-web-version}</version>
+  <version>${hotelturin-web-version}</version>
   <dependencies>
   	<dependency>
       <groupId>org.wildfly.swarm</groupId>

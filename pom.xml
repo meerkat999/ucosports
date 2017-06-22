@@ -3,15 +3,14 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>co.com.meerkats</groupId>
-  <artifactId>ucosports</artifactId>
+  <artifactId>hotelturin</artifactId>
   <version>1.0.0-SNAPSHOT</version>
   <packaging>pom</packaging>
   
   <modules>
-<!--   	<module>ucosports-web</module> -->
-	<module>ucosports-tournament-domain</module>
-  	<module>ucosports-tournament-ms</module>
-<!--   	<module>ucosports-reports-ms</module> -->
+<!--   	<module>hotelturin-web</module> -->
+	<module>hotelturin-domain</module>
+  	<module>hotelturin-ms</module>
   </modules>
 
   <properties>
@@ -20,10 +19,9 @@
     <maven.compiler.target>1.8</maven.compiler.target>
     <failOnMissingWebXml>false</failOnMissingWebXml>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <ucosports-web-version>1.0.0-SNAPSHOT</ucosports-web-version>
-    <ucosports-tournament-ms-version>1.0.0-SNAPSHOT</ucosports-tournament-ms-version>
-    <ucosports-tournament-domain-version>1.0.4-SNAPSHOT</ucosports-tournament-domain-version>
-    <ucosports-reports-ms-version>1.0.0-SNAPSHOT</ucosports-reports-ms-version>
+    <hotelturin-web-version>1.0.0-SNAPSHOT</hotelturin-web-version>
+    <hotelturin-ms-version>1.0.0-SNAPSHOT</hotelturin-ms-version>
+    <hotelturin-domain-version>1.0.4-SNAPSHOT</hotelturin-domain-version>
     <version.junit>4.12</version.junit>
     <version.mockito>1.10.19</version.mockito>
   </properties>
