@@ -1,4 +1,4 @@
 swarm:
   port:
-    offset: 51
+    offset: 1
   stdoutFile: log.txt     

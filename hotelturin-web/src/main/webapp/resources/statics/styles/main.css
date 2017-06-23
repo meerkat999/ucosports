@@ -1,8 +1,9 @@
 #header {
-  background-image: url(/resources/statics/images/ucoheader.png);
+  background-image: url(/resources/statics/images/header.png);
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
+  backgroun-color: black;
   max-width: 100%;
   height: 125px;
 }

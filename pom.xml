@@ -8,7 +8,7 @@
   <packaging>pom</packaging>
   
   <modules>
-<!--   	<module>hotelturin-web</module> -->
+   	<module>hotelturin-web</module>
 	<module>hotelturin-domain</module>
   	<module>hotelturin-ms</module>
   </modules>
@@ -19,9 +19,9 @@
     <maven.compiler.target>1.8</maven.compiler.target>
     <failOnMissingWebXml>false</failOnMissingWebXml>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <hotelturin-web-version>1.0.0-SNAPSHOT</hotelturin-web-version>
-    <hotelturin-ms-version>1.0.0-SNAPSHOT</hotelturin-ms-version>
-    <hotelturin-domain-version>1.0.4-SNAPSHOT</hotelturin-domain-version>
+    <hotelturin-web-version>1.0.1-SNAPSHOT</hotelturin-web-version>
+    <hotelturin-ms-version>1.0.2-SNAPSHOT</hotelturin-ms-version>
+    <hotelturin-domain-version>1.0.5-SNAPSHOT</hotelturin-domain-version>
     <version.junit>4.12</version.junit>
     <version.mockito>1.10.19</version.mockito>
   </properties>

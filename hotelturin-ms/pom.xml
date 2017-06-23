@@ -6,8 +6,9 @@
     <version>1.0.0-SNAPSHOT</version>
   </parent>
   <artifactId>hotelturin-ms</artifactId>
-  <version>${hotelturin-ms-version}</version>
+  
   <packaging>war</packaging>
+  <version>${hotelturin-ms-version}</version>
   <dependencies>
   	<dependency>
       <groupId>co.com.meerkats</groupId>
