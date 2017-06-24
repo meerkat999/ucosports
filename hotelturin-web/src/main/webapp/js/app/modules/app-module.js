@@ -20,11 +20,20 @@ define(['angularAMD', 'angular-ui-router', 'angular-resource'], function (angula
 				  controller : 'appController'
 				})
 			)
+      .state('app.checkin', {
+        url: '/checkin',
+        views: {
+          'content@app': angularAMD.route({
+            templateUrl : 'resources/partials/checkin/checkin.html',
+            controller : 'checkinController'
+          })
+        }
+      })
       .state('app.registrarCliente', {
         url: '/registrarCliente',
         views: {
           'content@app': angularAMD.route({
-            templateUrl : 'resources/partials/cliente/registrar.html',
+            templateUrl : 'resources/partials/cliente/registrarCliente.html',
             controller : 'clienteController'
           })
         }

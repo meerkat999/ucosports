@@ -1,0 +1,14 @@
+<div style="display: inline-grid;">
+
+  <label>Verificar registro</label>
+  <select id="tipoDocumento"
+    ng-model="tipodocumento" ng-change="validarEnTiempoRealCamposCedula()" ng-options="tipo.id as tipo.nombre for tipo in listaTiposDocumentos"
+    ></select>
+  <input type="text" ng-change="validarEnTiempoRealCamposCedula()" maxlength="10" number ng-model="cedulaVerificar" ></input>
+  <input type="text" ng-change="validarEnTiempoRealCamposCedula()"  maxlength="10" number  ng-model="confirmacionCedula"></input>
+  <button ng-if="esNecesarioRegistrar">Registrar</button>
+
+  <label>Habitacion Ejemplo</label>
+  <input type="text" maxlength="10"></input>
+
+</div>

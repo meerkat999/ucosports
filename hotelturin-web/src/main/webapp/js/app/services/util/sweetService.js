@@ -10,6 +10,9 @@ define(['app-module', 'sweetalert'], function (app) {
           },
           success : function(text){
             swal({title: "¡Excelente!",text: text,type: "success", confirmButtonText: "¡Está bien!"});
+          },
+          info : function(title, text){
+            swal({title: title,text: text, confirmButtonText: "¡Está bien!"});
           }
         };
 
