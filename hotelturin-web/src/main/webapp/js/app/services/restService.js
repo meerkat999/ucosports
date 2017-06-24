@@ -1,7 +1,7 @@
 define(['app-module'], function (app) {
     app.factory('restService',['$resource', '$q', '$location', function ($resource, $q, $location) {
 
-        var baseUrl = $location.protocol() + "://" + $location.host() + ":8082/rest/";
+        var baseUrl = $location.protocol() + "://" + $location.host() + ":8081/rest/";
 
         var httpMethods = {
           POST : function(path, params){

@@ -12,7 +12,9 @@ requirejs.config({
       'app-module' : 'app/modules/app-module',
       'loginController' : 'app/controllers/login/loginController',
       'appController' : 'app/controllers/home/appController',
+      'clienteController' : 'app/controllers/clienteController',
       'restService' : 'app/services/restService',
+      'clienteService' : 'app/services/clienteService',
       'sweetService' : 'app/services/util/sweetService',
     },
     shim: {
@@ -22,5 +24,5 @@ requirejs.config({
     	'app-module' : ['angular']
     },
     deps: [
-      'app-module']
+      'app-module', 'sweetService', 'clienteController']
 });

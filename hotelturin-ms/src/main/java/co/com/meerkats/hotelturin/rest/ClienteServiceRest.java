@@ -35,4 +35,12 @@ public class ClienteServiceRest {
 		return logical.getById(key);
 	}
 	
+	@POST
+	@Path("/add")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public ClienteDTO add(ClienteDTO cliente){
+		return logical.add(cliente);
+	}
+	
 }

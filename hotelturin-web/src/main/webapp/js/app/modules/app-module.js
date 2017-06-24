@@ -20,6 +20,24 @@ define(['angularAMD', 'angular-ui-router', 'angular-resource'], function (angula
 				  controller : 'appController'
 				})
 			)
+      .state('app.registrarCliente', {
+        url: '/registrarCliente',
+        views: {
+          'content@app': angularAMD.route({
+            templateUrl : 'resources/partials/cliente/registrar.html',
+            controller : 'clienteController'
+          })
+        }
+      })
+      .state('app.registrarCliente.listar', {
+        url: '/listar',
+        views: {
+          'list@app': angularAMD.route({
+            templateUrl : 'resources/partials/cliente/listClientes.html',
+            controller : 'clienteController'
+          })
+        }
+      })
     });
 
     app.run(function($state, $rootScope){
@@ -28,7 +46,7 @@ define(['angularAMD', 'angular-ui-router', 'angular-resource'], function (angula
       $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){
 
       })
-    
+
     });
 
     return angularAMD.bootstrap(app);
