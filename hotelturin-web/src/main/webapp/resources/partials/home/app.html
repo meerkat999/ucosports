@@ -1,4 +1,8 @@
 <div>app</div>
 <button ng-click="goRegistrarCliente()">Registrar Cliente</button>
-<div ui-view="content">Aquí debe de ir un formulario cuando apretemos el botón</div>
-<div ui-view="list">Aquí se listarán los clientes</div>
+<div id="content" style="display: flex">
+  Contenido1:
+  <div ui-view="content" style="max-width: 50%">Aquí debe de ir un formulario cuando apretemos el botón</div>
+  Contenido2:
+  <div ui-view="content2" style="max-width: 50%">Aquí se listarán los clientes</div>
+</div>

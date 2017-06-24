@@ -1,8 +1,9 @@
-define(['app-module', 'sweetService', 'clienteService'], function (app) {
-    app.controller('clienteController',['$scope','$state', 'sweetService', 'clienteService',
-        function ($scope, $state, sweetService, clienteService) {
+define(['app-module', 'sweetService', 'clienteService', 'tipoDocumentoService'], function (app) {
+    app.controller('clienteController',['$scope','$state', 'sweetService', 'clienteService', 'tipoDocumentoService',
+        function ($scope, $state, sweetService, clienteService, tipoDocumentoService) {
 
       $scope.listClientes = [];
+      $scope.listaTiposDocumentos = [];
       $scope.nuevoCliente = {
         id : {}
       };
@@ -11,26 +12,21 @@ define(['app-module', 'sweetService', 'clienteService'], function (app) {
         clienteService.add($scope.nuevoCliente).then(function(data){
           if(data !== null){
             sweetService.success("Cliente " + data.nombreCompleto + " registrado a las: " + new Date(data.fechaRegistro));
-            $scope.obtenerClientes();
+            $state.reload();
           }
         },function(error){
-          sweetService.error(error);
+          sweetService.error("Ha ocurrido un error al intentar añadir al cliente. Si el problema persiste, comúniquese con el área de sistemas.");
         })
       }
 
       $scope.registrar = function(){
-        clienteService.getById($scope.nuevoCliente.id).then(function(data){
-          if(data !== null){
-
-            sweetService.warning(angular.toJson(data));
-          }else{
+        clienteService.getById($scope.nuevoCliente.id).then(function(cliente){
+          if(cliente.id !== undefined){
+            sweetService.warning("Ya existe un cliente con esa identificación.");
+          }else {
             $scope.agregar();
           }
-        }, function(error){
-          sweetService.error(error);
-        });
-
-
+        })
       }
 
       $scope.obtenerClientes = function(){
@@ -41,12 +37,18 @@ define(['app-module', 'sweetService', 'clienteService'], function (app) {
             sweetService.warning("Sin información.");
           }
         }, function(error){
-          sweetService.error(error);
+          sweetService.error("No se pudieron obtener los clientes");
         })
       }
 
       $scope.init = function(){
-        sweetService.success("Vamos a registrar un cliente.");
+        tipoDocumentoService.getAll().then(function(lista){
+          if(lista !== null && lista !== undefined){
+            $scope.listaTiposDocumentos = lista;
+          }
+        }, function(error){
+          sweetService.error("No se pudieron obtener los tipos de documento.");
+        })
         $scope.obtenerClientes();
       }
 

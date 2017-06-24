@@ -1,7 +1,18 @@
 <div>Formulario</div>
-<input type="text" ng-model="nuevoCliente.celular"></input>
-<input type="text" ng-model="nuevoCliente.apellidoUno"></input>
-<input type="text" ng-model="nuevoCliente.nombreUno"></input>
-<input type="text" ng-model="nuevoCliente.id.id"></input>
-<input type="text" ng-model="nuevoCliente.id.tipodocumento"></input>
-<button type="text" ng-click="registrar()">Guardar</button>
+{{nuevoCliente}}
+{{listaTiposDocumentos}}
+<form style="display: inline-grid;">
+  <label>Tipo de Documento:</label>
+  <select ng-model="nuevoCliente.id.tipodocumento"  tabindex="1">
+    <option ng-repeat="tipo in listaTiposDocumentos" value="{{tipo.id}}">{{tipo.nombre}}</option>
+  </select>
+  <label>Número de Identificación:</label>
+  <input type="text" ng-model="nuevoCliente.id.id" tabindex="2"></input>
+  <label>Primer Nombre:</label>
+  <input type="text" ng-model="nuevoCliente.nombreUno" tabindex="3"></input>
+  <label>Primer Apellido:</label>
+  <input type="text" ng-model="nuevoCliente.apellidoUno" tabindex="4"></input>
+  <label>Celular:</label>
+  <input type="text" ng-model="nuevoCliente.celular" tabindex="5"></input>
+  <button ng-click="registrar()">Guardar</button>
+</form>

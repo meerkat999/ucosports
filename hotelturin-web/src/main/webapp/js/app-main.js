@@ -15,6 +15,7 @@ requirejs.config({
       'clienteController' : 'app/controllers/clienteController',
       'restService' : 'app/services/restService',
       'clienteService' : 'app/services/clienteService',
+      'tipoDocumentoService' : 'app/services/tipoDocumentoService',
       'sweetService' : 'app/services/util/sweetService',
     },
     shim: {

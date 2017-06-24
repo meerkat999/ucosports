@@ -32,7 +32,7 @@ define(['angularAMD', 'angular-ui-router', 'angular-resource'], function (angula
       .state('app.registrarCliente.listar', {
         url: '/listar',
         views: {
-          'list@app': angularAMD.route({
+          'content2@app': angularAMD.route({
             templateUrl : 'resources/partials/cliente/listClientes.html',
             controller : 'clienteController'
           })
