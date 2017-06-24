@@ -7,6 +7,7 @@ import co.com.meerkats.hotelturin.logical.ILogicalCommon;
 
 public abstract class LogicalCommonImpl<X, Y> implements ILogicalCommon<X, Y> {
 
+	
 	@Override
 	public List<Y> listEntitiesToListDTOs(List<X> listEntities) {
 		List<Y> listDTOs = new ArrayList<>();
