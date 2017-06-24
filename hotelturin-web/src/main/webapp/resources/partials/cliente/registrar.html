@@ -1,18 +1,32 @@
 <div>Formulario</div>
-{{nuevoCliente}}
-{{listaTiposDocumentos}}
 <form style="display: inline-grid;">
+
+  <label style="color: red;" ng-if="erroresFormularioRegistro[0]">Falta escoger el tipo de documento.</label>
   <label>Tipo de Documento:</label>
-  <select ng-model="nuevoCliente.id.tipodocumento"  tabindex="1">
-    <option ng-repeat="tipo in listaTiposDocumentos" value="{{tipo.id}}">{{tipo.nombre}}</option>
-  </select>
+  <select id="tipoDocumento"
+    ng-model="nuevoCliente.id.tipodocumento" ng-change="validarEnTiempoRealCamposCedula()" ng-options="tipo.id as tipo.nombre for tipo in listaTiposDocumentos"
+    tabindex="1"></select>
+
+  <label style="color: red;"  ng-if="erroresFormularioRegistro[1]">Falta digelenciar la cédula</label>
   <label>Número de Identificación:</label>
-  <input type="text" ng-model="nuevoCliente.id.id" tabindex="2"></input>
+  <input maxlength="10" ng-change="validarEnTiempoRealCamposCedula()" number type="text" ng-model="nuevoCliente.id.id" tabindex="2"></input>
+
+  <label style="color: red;"  ng-if="erroresFormularioRegistro[2]">El número de cédula no coincide con el ingresado.</label>
+  <label>Confirmar Número de Identificación</label>
+  <input maxlength="10" ng-change="validarEnTiempoRealCamposCedula()" number type="text" ng-model="confirmacionCedula" tabindex="3"></input>
+
+  <label style="color: red;"  ng-if="erroresFormularioRegistro[3]">Falta digilenciar el nombre.</label>
   <label>Primer Nombre:</label>
-  <input type="text" ng-model="nuevoCliente.nombreUno" tabindex="3"></input>
+  <input type="text" ng-model="nuevoCliente.nombreUno" tabindex="4"></input>
+
+  <label style="color: red;"  ng-if="erroresFormularioRegistro[4]">Falta digilenciar el apellido.</label>
   <label>Primer Apellido:</label>
-  <input type="text" ng-model="nuevoCliente.apellidoUno" tabindex="4"></input>
-  <label>Celular:</label>
-  <input type="text" ng-model="nuevoCliente.celular" tabindex="5"></input>
+  <input type="text" ng-model="nuevoCliente.apellidoUno" tabindex="5"></input>
+
+  <label style="color: red;"  ng-if="erroresFormularioRegistro[5]">Falta digilenciar el celular o el teléfono de contacto.</label>
+  <label>Celular o teléfono:</label>
+  <input number type="text" maxlength="10" ng-model="nuevoCliente.celular" tabindex="6"></input>
+
   <button ng-click="registrar()">Guardar</button>
+
 </form>
