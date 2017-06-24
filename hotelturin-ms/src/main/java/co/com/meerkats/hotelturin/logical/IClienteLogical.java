@@ -4,11 +4,12 @@ import java.util.List;
 
 import co.com.meerkats.hotelturin.domain.Cliente;
 import co.com.meerkats.hotelturin.dto.ClienteDTO;
+import co.com.meerkats.hotelturin.dto.ClienteKeyDTO;
 
 public interface IClienteLogical extends ILogicalCommon<Cliente, ClienteDTO> {
 
-	Cliente getClienteById(Integer id);
-	List<Cliente> findAll();
-	Cliente addCliente(Cliente player);
+	List<ClienteDTO> getAll();
+
+	ClienteDTO getById(ClienteKeyDTO key);
 	
 }

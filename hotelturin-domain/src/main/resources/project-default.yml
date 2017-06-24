@@ -3,6 +3,7 @@ swarm:
     data-sources:
       hotelturinDS:
         driver-name: mysql
-        connection-url: jdbc:mysql://localhost:3306/htdb?serverTimezone=UTC&useSSL=false
+        connection-url: jdbc:mysql://localhost:3306/bdtu?serverTimezone=UTC&useSSL=false&zeroDateTimeBehavior=convertToNull
+        
         user-name: root
         password: root

@@ -58,3 +58,19 @@
 2017-06-14 22:24:04 INFO  CORSFilter:32 - http://localhost:8082/rest/sportService/getAll: GET
 2017-06-14 22:24:21 INFO  CORSFilter:32 - http://localhost:8082/rest/sportService/getAll: GET
 2017-06-14 22:24:31 INFO  CORSFilter:32 - http://localhost:8082/rest/teamService/getAll: GET
+2017-06-23 18:26:32 ERROR CORSFilter:30 - http://localhost:8081/rest/: GET - Not Found
+2017-06-23 18:26:47 ERROR CORSFilter:30 - http://localhost:8081/rest/playerService/: GET - Not Found
+2017-06-23 18:26:56 ERROR CORSFilter:30 - http://localhost:8081/rest/playerService/: GET - Not Found
+2017-06-23 18:57:11 ERROR CORSFilter:30 - http://localhost:8081/rest/clienteService/getAll: GET - Not Found
+2017-06-23 18:57:31 ERROR CORSFilter:30 - http://localhost:8081/rest/clienteService/getAll: GET - Not Found
+2017-06-23 19:00:48 ERROR CORSFilter:30 - http://localhost:8081/rest/: GET - Not Found
+2017-06-23 19:00:54 ERROR CORSFilter:30 - http://localhost:8081/rest/clienteService/getAll: GET - Not Found
+2017-06-23 19:01:02 ERROR CORSFilter:30 - http://localhost:8081/rest/: GET - Not Found
+2017-06-23 19:01:09 ERROR CORSFilter:30 - http://localhost:8081/rest/clienteService: GET - Not Found
+2017-06-23 19:01:20 ERROR CORSFilter:30 - http://localhost:8081/rest/clienteService/getAll: GET - Not Found
+2017-06-23 19:03:26 ERROR CORSFilter:30 - http://localhost:8081/rest/clienteService//getAll: GET - Not Found
+2017-06-23 19:25:48 INFO  CORSFilter:32 - http://localhost:8081/rest/clienteService/getAll: GET
+2017-06-23 19:26:36 INFO  CORSFilter:32 - http://localhost:8081/rest/clienteService/getAll: GET
+2017-06-23 19:42:27 ERROR CORSFilter:30 - http://localhost:8081/rest/clienteService/getByID: POST - Not Found
+2017-06-23 19:42:43 INFO  CORSFilter:32 - http://localhost:8081/rest/clienteService/getById: POST
+2017-06-23 19:43:37 INFO  CORSFilter:32 - http://localhost:8081/rest/clienteService/getById: POST
