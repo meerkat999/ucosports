@@ -39,7 +39,7 @@ public class ClienteServiceRest {
 	@Path("/add")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public ClienteDTO add(ClienteDTO cliente){
+	public ClienteDTO add(ClienteDTO cliente) throws Exception{
 		return logical.add(cliente);
 	}
 	

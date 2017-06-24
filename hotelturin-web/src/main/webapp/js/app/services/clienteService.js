@@ -1,5 +1,5 @@
 define(['app-module', 'restService'], function (app) {
-    app.factory('clienteService',['restService', function (restService) {
+    app.factory('clienteService',['restService', '$q', function (restService, $q) {
 
       var path = 'clienteService/'
 

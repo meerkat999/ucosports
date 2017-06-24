@@ -6,6 +6,9 @@
         <properties>
             <property name="hibernate.show_sql" value="false"/>
             <property name="hibernate.enable_lazy_load_no_trans" value="true"/>
+            <property name="connection.autoReconnect" value="true"/>
+			<property name="connection.autoReconnectForPools" value="true"/>
+			<property name="connection.is-connection-validation-required" value="true"/>
         </properties>
     </persistence-unit>
 </persistence>

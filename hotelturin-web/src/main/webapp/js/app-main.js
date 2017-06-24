@@ -15,7 +15,9 @@ requirejs.config({
       'clienteController' : 'app/controllers/clienteController',
       'restService' : 'app/services/restService',
       'clienteService' : 'app/services/clienteService',
+      'tipoDocumentoService' : 'app/services/tipoDocumentoService',
       'sweetService' : 'app/services/util/sweetService',
+      'numberDirective' : 'app/directives/numberDirective'
     },
     shim: {
     	'angular' : ['jquery'],
@@ -24,5 +26,5 @@ requirejs.config({
     	'app-module' : ['angular']
     },
     deps: [
-      'app-module', 'sweetService', 'clienteController']
+      'app-module', 'sweetService', 'clienteController', 'numberDirective']
 });

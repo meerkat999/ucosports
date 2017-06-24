@@ -50,13 +50,17 @@ public class ClienteLogicalImpl extends LogicalCommonImpl<Cliente, ClienteDTO> i
 		ClienteKey keyEntity = new ClienteKey();
 		keyEntity.setId(key.getId());
 		keyEntity.setTipoDocumento(key.getTipodocumento());
-		Cliente cliente = repository.findOne(keyEntity);
+		Cliente cliente = getById(keyEntity);
 		return buildDTO(cliente);
+	}
+	
+	private Cliente getById(ClienteKey key){
+		return repository.findOne(key);
 	}
 
 	@Override
 	@Transactional(value=TxType.REQUIRED, rollbackOn=Exception.class)
-	public ClienteDTO add(ClienteDTO clientedto) {
+	public ClienteDTO add(ClienteDTO clientedto) throws Exception {
 		Cliente cliente = new Cliente();
 		cliente.setApellidoUno(clientedto.getApellidoUno());
 		cliente.setCelular(clientedto.getCelular());
@@ -64,6 +68,9 @@ public class ClienteLogicalImpl extends LogicalCommonImpl<Cliente, ClienteDTO> i
 		ClienteKey id = new ClienteKey();
 		id.setId(clientedto.getId().getId());
 		id.setTipoDocumento(clientedto.getId().getTipodocumento());
+		if(repository.findOne(id) != null){
+			throw new Exception("Ya existe un cliente con esa cédula.");
+		}
 		cliente.setId(id);
 		cliente.setFechaRegistro(new Date());
 		cliente.setNombreCompleto(clientedto.getNombreUno() + " " + clientedto.getApellidoUno());	
