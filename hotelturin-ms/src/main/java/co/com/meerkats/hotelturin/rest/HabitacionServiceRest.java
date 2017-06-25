@@ -35,8 +35,7 @@ public class HabitacionServiceRest {
 	public HabitacionDTO getbyState (Integer estado_id){
 			HabitacionDTO habitaciondto=null;
 			if (estado_id!=null) {
-				habitaciondto=logical.getbyEstate(estado_id);
-			}
+				habitaciondto=logical.getbyEstate(estado_id);}
 			return habitaciondto;
 	}
 	

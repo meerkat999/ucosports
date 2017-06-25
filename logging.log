@@ -656,3 +656,14 @@
 2017-06-25 13:09:22 ERROR CORSFilter:33 - http://localhost:8081/rest/habitacionService/getAll: POST - Method Not Allowed
 2017-06-25 13:09:22 ERROR CORSFilter:33 - http://localhost:8081/rest/habitacionService/getAll: POST - Method Not Allowed
 2017-06-25 13:09:30 INFO  CORSFilter:35 - http://localhost:8081/rest/habitacionService/getAll: GET
+2017-06-25 13:58:06 INFO  CORSFilter:35 - http://localhost:8081/rest/clienteService/getAll: GET
+2017-06-25 13:58:38 INFO  CORSFilter:35 - http://localhost:8081/rest/clienteService/getAll: GET
+2017-06-25 13:58:38 INFO  CORSFilter:35 - http://localhost:8081/rest/tipoDocumentoService/getAll: GET
+2017-06-25 13:58:38 INFO  CORSFilter:35 - http://localhost:8081/rest/clienteService/getAll: GET
+2017-06-25 13:58:38 INFO  CORSFilter:35 - http://localhost:8081/rest/tipoDocumentoService/getAll: GET
+2017-06-25 14:02:37 INFO  CORSFilter:35 - http://localhost:8081/rest/clienteService/getAll: GET
+2017-06-25 14:02:37 INFO  CORSFilter:35 - http://localhost:8081/rest/tipoDocumentoService/getAll: GET
+2017-06-25 14:02:38 INFO  CORSFilter:35 - http://localhost:8081/rest/tipoDocumentoService/getAll: GET
+2017-06-25 14:02:38 INFO  CORSFilter:35 - http://localhost:8081/rest/clienteService/getAll: GET
+2017-06-25 14:02:53 INFO  CORSFilter:35 - http://localhost:8081/rest/clienteService/getById: OPTIONS
+2017-06-25 14:02:54 INFO  CORSFilter:35 - http://localhost:8081/rest/clienteService/getById: POST
