@@ -2,15 +2,15 @@ package co.com.meerkats.hotelturin.domain.constants;
 
 public enum StatesEnum {
 
-	ACTIVO("A"), INACTIVO("I");
+	ACTIVO(1), INACTIVO(2);
 	
-	private String value;
+	private Integer value;
 	
-	StatesEnum(String a){
+	StatesEnum(Integer a){
 		this.value = a;
 	}
 	
-	public String getValue() {
+	public Integer getValue() {
 		return value;
 	}	
 	

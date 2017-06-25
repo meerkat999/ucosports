@@ -2,8 +2,6 @@ package co.com.meerkats.hotelturin.dto;
 
 import java.io.Serializable;
 
-import co.com.meerkats.hotelturin.domain.Estado;
-
 public class HabitacionDTO implements Serializable {
 	
 	private static final long serialVersionUID = 1L;

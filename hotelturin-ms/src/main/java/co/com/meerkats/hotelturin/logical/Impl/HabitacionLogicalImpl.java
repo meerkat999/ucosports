@@ -6,6 +6,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 
 import co.com.meerkats.hotelturin.domain.Habitacion;
+import co.com.meerkats.hotelturin.dto.EstadoDTO;
 import co.com.meerkats.hotelturin.dto.HabitacionDTO;
 import co.com.meerkats.hotelturin.logical.IHabitacionLogical;
 import co.com.meerkats.hotelturin.repository.IHabitacionRepository;
@@ -23,17 +24,19 @@ public class HabitacionLogicalImpl extends LogicalCommonImpl<Habitacion,Habitaci
 	}
 
 	@Override
-	public HabitacionDTO getbyEstate(Integer estado_id) {
-		Habitacion habitacion=null;;
-		if(estado_id!=null){
-		habitacion= repository.findByEstado(estado_id);}	
+	public HabitacionDTO getbyEstate(EstadoDTO estado) {
+		Habitacion habitacion = null;
+		Integer estado_id = estado.getId();
+		if(estado_id !=null){
+			habitacion= repository.findByEstado(estado_id);
+		}	
 		return buildDTO(habitacion);
-		}
+	}
 
 	@Override
 	public HabitacionDTO buildDTO(Habitacion entity) {
 		HabitacionDTO  habitacionDTO = null;
-		if(entity != null&& entity.getId()!=null){
+		if(entity != null && entity.getId() != null){
 			habitacionDTO = new HabitacionDTO();				
 			habitacionDTO.setId(entity.getId());
 			habitacionDTO.setPrecio(entity.getPrecio());
@@ -43,10 +46,5 @@ public class HabitacionLogicalImpl extends LogicalCommonImpl<Habitacion,Habitaci
 		}
 		return habitacionDTO;
 	
-}
-	
-
-
-		
-
+	}
 }
