@@ -10,11 +10,9 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-<<<<<<< Updated upstream
+
 import co.com.meerkats.hotelturin.dto.EstadoDTO;
-=======
 import co.com.meerkats.hotelturin.dto.ClienteDTO;
->>>>>>> Stashed changes
 import co.com.meerkats.hotelturin.dto.HabitacionDTO;
 import co.com.meerkats.hotelturin.logical.IHabitacionLogical;
 

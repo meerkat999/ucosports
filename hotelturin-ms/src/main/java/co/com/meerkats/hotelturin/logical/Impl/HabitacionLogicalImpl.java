@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 
 import co.com.meerkats.hotelturin.domain.Habitacion;
 import co.com.meerkats.hotelturin.dto.EstadoDTO;
@@ -47,4 +48,22 @@ public class HabitacionLogicalImpl extends LogicalCommonImpl<Habitacion,Habitaci
 		return habitacionDTO;
 	
 	}
-}
+	
+	@Transactional
+	@Override
+	public HabitacionDTO add(HabitacionDTO habitaciondto) throws Exception {
+		Habitacion habitacion = new Habitacion();		
+		if(repository.findOne(habitacion.getId()) != null){
+			throw new Exception("Ya existe una Habitacion con ese Numero.");
+		}
+		habitacion.setCapacidad(habitaciondto.getCapacidad());;
+		habitacion.setDescripcion(habitaciondto.getDescripcion());		
+		habitacion.setEstado(habitaciondto.getEstado());
+		habitacion.setPrecio(habitaciondto.getPrecio());		
+		habitaciondto.setId(habitaciondto.getId());		
+		return buildDTO(repository.save(habitacion));
+		
+	}
+
+		}
+

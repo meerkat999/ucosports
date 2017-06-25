@@ -11,6 +11,7 @@ public class HabitacionDTO implements Serializable {
 	private Double precio;
 	private Integer capacidad;
 	private Integer estado;
+	
 	public String getId() {
 		return id;
 	}
