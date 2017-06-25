@@ -1,19 +1,21 @@
-<div>Formulario</div>
+<div>Registrar Cliente</div>
 <form style="display: inline-grid;">
 
-  <label style="color: red;" ng-if="erroresFormularioRegistro[0]">Falta escoger el tipo de documento.</label>
-  <label>Tipo de Documento:</label>
-  <select id="tipoDocumento"
-    ng-model="nuevoCliente.id.tipodocumento" ng-change="validarEnTiempoRealCamposCedula()" ng-options="tipo.id as tipo.nombre for tipo in listaTiposDocumentos"
-  ></select>
+  <fieldset ng-disabled="seBloqueanLosCamposDeCedula" style="display : flex;">
+    <label style="color: red;" ng-if="erroresFormularioRegistro[0]">Falta escoger el tipo de documento.</label>
+    <label>Tipo de Documento:</label>
+    <select id="tipoDocumento"
+      ng-model="nuevoCliente.id.tipodocumento" ng-change="validarEnTiempoRealCamposCedula()" ng-options="tipo.id as tipo.nombre for tipo in listaTiposDocumentos"
+    ></select>
 
-  <label style="color: red;"  ng-if="erroresFormularioRegistro[1]">Falta digelenciar la cédula</label>
-  <label>Número de Identificación:</label>
-  <input maxlength="10" ng-change="validarEnTiempoRealCamposCedula()" number type="text" ng-model="nuevoCliente.id.id" ></input>
+    <label style="color: red;"  ng-if="erroresFormularioRegistro[1]">Falta digelenciar la cédula</label>
+    <label>Número de Identificación:</label>
+    <input maxlength="10" ng-change="validarEnTiempoRealCamposCedula()" number type="text" ng-model="nuevoCliente.id.id" ></input>
 
-  <label style="color: red;"  ng-if="erroresFormularioRegistro[2]">El número de cédula no coincide con el ingresado.</label>
-  <label>Confirmar Número de Identificación</label>
-  <input maxlength="10" ng-change="validarEnTiempoRealCamposCedula()" number type="text" ng-model="confirmacionCedula"></input>
+    <label style="color: red;"  ng-if="erroresFormularioRegistro[2]">El número de cédula no coincide con el ingresado.</label>
+    <label>Confirmar Número de Identificación</label>
+    <input maxlength="10" ng-change="validarEnTiempoRealCamposCedula()" number type="text" ng-model="confirmacionCedula"></input>
+  </fieldset>
 
   <label style="color: red;"  ng-if="erroresFormularioRegistro[3]">Falta digilenciar el nombre.</label>
   <label>Primer Nombre:</label>

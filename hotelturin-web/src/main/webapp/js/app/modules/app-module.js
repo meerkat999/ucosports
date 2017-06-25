@@ -29,20 +29,11 @@ define(['angularAMD', 'angular-ui-router', 'angular-resource'], function (angula
           })
         }
       })
-      .state('app.registrarCliente', {
-        url: '/registrarCliente',
+      .state('app.checkin.registro', {
+        url: '/registro',
         views: {
-          'content@app': angularAMD.route({
+          'registro@app.checkin': angularAMD.route({
             templateUrl : 'resources/partials/cliente/registrarCliente.html',
-            controller : 'clienteController'
-          })
-        }
-      })
-      .state('app.registrarCliente.listar', {
-        url: '/listar',
-        views: {
-          'content2@app': angularAMD.route({
-            templateUrl : 'resources/partials/cliente/listClientes.html',
             controller : 'clienteController'
           })
         }

@@ -2,18 +2,14 @@ define(['app-module', 'sweetService', 'clienteService', 'tipoDocumentoService'],
     app.controller('clienteController',['$scope','$state', 'sweetService', 'clienteService', 'tipoDocumentoService', '$filter',
         function ($scope, $state, sweetService, clienteService, tipoDocumentoService, $filter) {
 
-      $scope.listClientes = [];
-      $scope.listaTiposDocumentos = [];
-      $scope.nuevoCliente = {
-        id : {}
-      };
-
       $scope.agregar = function(){
         clienteService.add($scope.nuevoCliente).then(function(data){
           if(data !== null){
             var fecha = $filter('date')(new Date(data.fechaRegistro), "yyyy/MM/dd 'a las' h:mma")
             sweetService.success("Cliente " + data.nombreCompleto + " fue registrado satisfactoriamente en la fecha " + fecha);
+            $scope.registroExitoso = true;
             $state.reload();
+            $scope.cliente = data;
           }
         },function(error){
           sweetService.error("Ha ocurrido un error al intentar añadir al cliente. Si el problema persiste, comúniquese con el área de sistemas.");
@@ -97,7 +93,7 @@ define(['app-module', 'sweetService', 'clienteService', 'tipoDocumentoService'],
         })
       }
 
-      $scope.init = function(){
+      $scope.obtenerTipoDocumentos = function(){
         tipoDocumentoService.getAll().then(function(lista){
           if(lista !== null && lista !== undefined){
             $scope.listaTiposDocumentos = lista;
@@ -105,6 +101,17 @@ define(['app-module', 'sweetService', 'clienteService', 'tipoDocumentoService'],
         }, function(error){
           sweetService.error("No se pudieron obtener los tipos de documento.");
         })
+      }
+
+      $scope.init = function(){
+        $scope.listClientes = [];
+        $scope.listaTiposDocumentos = [];
+        if($scope.nuevoCliente === null){
+          $scope.nuevoCliente = {
+            id : {}
+          };
+        }
+        $scope.obtenerTipoDocumentos();
         $scope.obtenerClientes();
       }
 

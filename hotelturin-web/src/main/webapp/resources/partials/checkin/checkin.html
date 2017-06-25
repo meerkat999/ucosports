@@ -1,14 +1,24 @@
 <div style="display: inline-grid;">
 
-  <label>Verificar registro</label>
-  <select id="tipoDocumento"
-    ng-model="tipodocumento" ng-change="validarEnTiempoRealCamposCedula()" ng-options="tipo.id as tipo.nombre for tipo in listaTiposDocumentos"
-    ></select>
-  <input type="text" ng-change="validarEnTiempoRealCamposCedula()" maxlength="10" number ng-model="cedulaVerificar" ></input>
-  <input type="text" ng-change="validarEnTiempoRealCamposCedula()"  maxlength="10" number  ng-model="confirmacionCedula"></input>
-  <button ng-if="esNecesarioRegistrar">Registrar</button>
+  <div>Verificar Registro del Cliente<div>
+  <fieldset ng-disabled="seBloqueanLosCamposDeCedula">
+    <label>Tipo de Documento:</label>
+    <select ng-model="tipodocumento" ng-change="validarEnTiempoRealCamposCedula()" ng-options="tipo.id as tipo.nombre for tipo in listaTiposDocumentos"
+      ></select>
+    <input placeholder="Número de Identificación" type="text" ng-change="validarEnTiempoRealCamposCedula()" maxlength="10" number ng-model="cedulaVerificar" ></input>
+    <input placeholder="Confirmación de Número" type="text" ng-change="validarEnTiempoRealCamposCedula()"  maxlength="10" number  ng-model="confirmacionCedula"></input>
+  </fieldset>
 
-  <label>Habitacion Ejemplo</label>
-  <input type="text" maxlength="10"></input>
+  <button ng-if="seBloqueanLosCamposDeCedula" ng-click="reset()">Nueva Verificación</button>
+
+  <div ng-if="mostrarVistaRegistro()">
+    <div ui-view="registro"></div>
+  </div>
+
+  <div ng-if="mostrarVistaCheckIn()">
+    <div>{{}}</div>
+    <label>Habitacion Ejemplo</label>
+    <input type="text" maxlength="10"></input>
+  </div>
 
 </div>
