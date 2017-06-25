@@ -3,10 +3,10 @@
   <div>Verificar Registro del Cliente<div>
   <fieldset ng-disabled="seBloqueanLosCamposDeCedula">
     <label>Tipo de Documento:</label>
-    <select ng-model="tipodocumento" ng-change="validarEnTiempoRealCamposCedula()" ng-options="tipo.id as tipo.nombre for tipo in listaTiposDocumentos"
-      ></select>
-    <input placeholder="Número de Identificación" type="text" ng-change="validarEnTiempoRealCamposCedula()" maxlength="10" number ng-model="cedulaVerificar" ></input>
-    <input placeholder="Confirmación de Número" type="text" ng-change="validarEnTiempoRealCamposCedula()"  maxlength="10" number  ng-model="confirmacionCedula"></input>
+    <select ng-model="tipodocumento" ng-change="validarEnTiempoRealCamposCedula()"
+      ng-options="tipo.id as tipo.nombre for tipo in listaTiposDocumentos"></select>
+    <input number placeholder="Número de Identificación" type="text" ng-change="validarEnTiempoRealCamposCedula()" maxlength="10" number ng-model="cedulaVerificar" ></input>
+    <input number placeholder="Confirmación de Número" type="text" ng-change="validarEnTiempoRealCamposCedula()"  maxlength="10" number  ng-model="confirmacionCedula"></input>
   </fieldset>
 
   <button ng-if="seBloqueanLosCamposDeCedula" ng-click="reset()">Nueva Verificación</button>
@@ -16,9 +16,9 @@
   </div>
 
   <div ng-if="mostrarVistaCheckIn()">
-    <div>{{}}</div>
-    <label>Habitacion Ejemplo</label>
-    <input type="text" maxlength="10"></input>
+    <div>Se realizará el check-in para el/la señor/a {{cliente.nombreCompleto}}</div>
+    <label>Habitaciones Disponibles</label>
+    <button ng-repeat="habitacion in habitacionesDisponibles">{{habitacion.id}}</button>
   </div>
 
 </div>

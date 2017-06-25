@@ -1,15 +1,17 @@
 define(['app-module', 'sweetService', 'clienteService', 'tipoDocumentoService'], function (app) {
-    app.controller('clienteController',['$scope','$state', 'sweetService', 'clienteService', 'tipoDocumentoService', '$filter',
-        function ($scope, $state, sweetService, clienteService, tipoDocumentoService, $filter) {
+    app.controller('clienteController',['$scope','$state', 'sweetService', 'clienteService', 'tipoDocumentoService', '$filter', '$rootScope',
+        function ($scope, $state, sweetService, clienteService, tipoDocumentoService, $filter, $rootScope) {
 
       $scope.agregar = function(){
         clienteService.add($scope.nuevoCliente).then(function(data){
           if(data !== null){
             var fecha = $filter('date')(new Date(data.fechaRegistro), "yyyy/MM/dd 'a las' h:mma")
             sweetService.success("Cliente " + data.nombreCompleto + " fue registrado satisfactoriamente en la fecha " + fecha);
-            $scope.registroExitoso = true;
-            $state.reload();
             $scope.cliente = data;
+            if($scope.checkin == true){
+              $scope.$parent.$parent.cliente = $scope.cliente;
+              $state.go("app.checkin");
+            }
           }
         },function(error){
           sweetService.error("Ha ocurrido un error al intentar añadir al cliente. Si el problema persiste, comúniquese con el área de sistemas.");

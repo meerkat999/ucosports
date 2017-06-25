@@ -48,9 +48,17 @@ define(['app-module','clienteService', 'tipoDocumentoService', 'sweetService'], 
         $scope.tipodocumento = null;
         $scope.cedulaVerificar = null;
         $scope.confirmacionCedula = null;
-        $scope.registroExitoso = false;
         $scope.clienteRegistrado = null;
         $scope.cliente = null;
+        $scope.checkin = true;
+        $scope.habitacionesDisponibles = [
+          {
+            id : "101"
+          },
+          {
+            id : "102"
+          }
+        ];
       }
 
       $scope.buscarTiposDocumento = function(){
@@ -64,8 +72,7 @@ define(['app-module','clienteService', 'tipoDocumentoService', 'sweetService'], 
       }
 
       $scope.mostrarVistaCheckIn = function(){
-        if($scope.esNecesarioRegistrar == false &&
-          $scope.cliente !== null){
+        if($scope.cliente !== null){
           return true;
         }
         return false;
@@ -73,7 +80,6 @@ define(['app-module','clienteService', 'tipoDocumentoService', 'sweetService'], 
 
       $scope.mostrarVistaRegistro = function(){
         if($scope.esNecesarioRegistrar &&
-          $scope.registroExitoso == false &&
           $scope.cliente === null){
           return true;
         }
