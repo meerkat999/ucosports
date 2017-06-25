@@ -621,3 +621,38 @@
 2017-06-24 14:00:34 INFO  CORSFilter:35 - http://localhost:8081/rest/clienteService/getAll: GET
 2017-06-24 14:00:34 INFO  CORSFilter:35 - http://localhost:8081/rest/tipoDocumentoService/getAll: GET
 2017-06-24 14:00:34 INFO  CORSFilter:35 - http://localhost:8081/rest/tipoDocumentoService/getAll: GET
+2017-06-25 10:46:57 ERROR CORSFilter:33 - http://localhost:8081/rest: GET - Not Found
+2017-06-25 10:47:00 ERROR CORSFilter:33 - http://localhost:8081/rest: GET - Not Found
+2017-06-25 10:47:02 ERROR CORSFilter:33 - http://localhost:8081/rest: GET - Not Found
+2017-06-25 12:23:44 ERROR CORSFilter:33 - http://localhost:8081/rest/clienteService/getAll:%20GET: GET - Not Found
+2017-06-25 12:23:47 ERROR CORSFilter:33 - http://localhost:8081/rest/clienteService/getAll:%20GET: GET - Not Found
+2017-06-25 12:23:53 INFO  CORSFilter:35 - http://localhost:8081/rest/clienteService/getAll: GET
+2017-06-25 12:24:08 INFO  CORSFilter:35 - http://localhost:8081/rest/habitacionService/getAll: GET
+2017-06-25 12:30:07 INFO  CORSFilter:35 - http://localhost:8081/rest/habitacionService/getAll: GET
+2017-06-25 12:34:12 INFO  CORSFilter:35 - http://localhost:8081/rest/habitacionService/getAll: GET
+2017-06-25 12:34:55 ERROR CORSFilter:33 - http://localhost:8081/rest/habitacionService/getbyState: GET - Not Found
+2017-06-25 12:34:59 ERROR CORSFilter:33 - http://localhost:8081/rest/habitacionService/getbyState: GET - Not Found
+2017-06-25 12:35:00 ERROR CORSFilter:33 - http://localhost:8081/rest/habitacionService/getbyState: GET - Not Found
+2017-06-25 12:35:01 ERROR CORSFilter:33 - http://localhost:8081/rest/habitacionService/getbyState: GET - Not Found
+2017-06-25 12:35:02 ERROR CORSFilter:33 - http://localhost:8081/rest/habitacionService/getbyState: GET - Not Found
+2017-06-25 12:35:03 ERROR CORSFilter:33 - http://localhost:8081/rest/habitacionService/getbyState: GET - Not Found
+2017-06-25 12:39:51 ERROR CORSFilter:33 - http://localhost:8081/rest/habitacionService/getbyState: GET - Not Found
+2017-06-25 12:39:53 ERROR CORSFilter:33 - http://localhost:8081/rest/habitacionService/getbyState: GET - Not Found
+2017-06-25 12:39:59 ERROR CORSFilter:33 - http://localhost:8081/rest/habitacionService/getbyState: GET - Not Found
+2017-06-25 12:40:58 ERROR CORSFilter:33 - http://localhost:8081/rest/habitacionService/getByState: GET - Unsupported Media Type
+2017-06-25 12:41:01 ERROR CORSFilter:33 - http://localhost:8081/rest/habitacionService/getByState: GET - Unsupported Media Type
+2017-06-25 12:46:19 INFO  CORSFilter:35 - http://localhost:8081/rest/clienteService/getAll: GET
+2017-06-25 12:47:38 ERROR CORSFilter:33 - http://localhost:8081/rest/habitacionService/getByState: GET - Unsupported Media Type
+2017-06-25 12:55:27 ERROR CORSFilter:33 - http://localhost:8081/rest/habitacionService/getByState: POST - Method Not Allowed
+2017-06-25 13:09:13 ERROR CORSFilter:33 - http://localhost:8081/rest/habitacionService/getAll: POST - Method Not Allowed
+2017-06-25 13:09:17 ERROR CORSFilter:33 - http://localhost:8081/rest/habitacionService/getAll: POST - Method Not Allowed
+2017-06-25 13:09:19 ERROR CORSFilter:33 - http://localhost:8081/rest/habitacionService/getAll: POST - Method Not Allowed
+2017-06-25 13:09:20 ERROR CORSFilter:33 - http://localhost:8081/rest/habitacionService/getAll: POST - Method Not Allowed
+2017-06-25 13:09:20 ERROR CORSFilter:33 - http://localhost:8081/rest/habitacionService/getAll: POST - Method Not Allowed
+2017-06-25 13:09:20 ERROR CORSFilter:33 - http://localhost:8081/rest/habitacionService/getAll: POST - Method Not Allowed
+2017-06-25 13:09:21 ERROR CORSFilter:33 - http://localhost:8081/rest/habitacionService/getAll: POST - Method Not Allowed
+2017-06-25 13:09:21 ERROR CORSFilter:33 - http://localhost:8081/rest/habitacionService/getAll: POST - Method Not Allowed
+2017-06-25 13:09:22 ERROR CORSFilter:33 - http://localhost:8081/rest/habitacionService/getAll: POST - Method Not Allowed
+2017-06-25 13:09:22 ERROR CORSFilter:33 - http://localhost:8081/rest/habitacionService/getAll: POST - Method Not Allowed
+2017-06-25 13:09:22 ERROR CORSFilter:33 - http://localhost:8081/rest/habitacionService/getAll: POST - Method Not Allowed
+2017-06-25 13:09:30 INFO  CORSFilter:35 - http://localhost:8081/rest/habitacionService/getAll: GET

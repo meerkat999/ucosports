@@ -12,7 +12,7 @@ public class HabitacionDTO implements Serializable {
 	private String descripcion;
 	private Double precio;
 	private Integer capacidad;
-	private Estado estado;
+	private Integer estado;
 	public String getId() {
 		return id;
 	}
@@ -21,6 +21,10 @@ public class HabitacionDTO implements Serializable {
 	}
 	public String getDescripcion() {
 		return descripcion;
+	}
+	
+	public void setPrecio(Double precio) {
+		this.precio = precio;
 	}
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
@@ -37,11 +41,11 @@ public class HabitacionDTO implements Serializable {
 	public void setCapacidad(Integer capacidad) {
 		this.capacidad = capacidad;
 	}
-	public Estado getEstado() {
+	public Integer getEstado() {
 		return estado;
 	}
-	public void setEstado(Estado estado) {
-		this.estado = estado;
+	public void setEstado(Integer estado_id) {
+		this.estado = estado_id;
 	}
 	
 	

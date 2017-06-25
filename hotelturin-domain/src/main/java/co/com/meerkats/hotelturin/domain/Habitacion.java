@@ -1,11 +1,8 @@
 package co.com.meerkats.hotelturin.domain;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import javax.persistence.Column;
-import javax.persistence.Embedded;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -14,7 +11,6 @@ import javax.persistence.Table;
 @Table(name="habitacion")
 public class Habitacion implements Serializable {
 	
-	
 	private static final long serialVersionUID = 1L;
 	
 	@Id
@@ -22,13 +18,13 @@ public class Habitacion implements Serializable {
 	private String id;
 	
 	@Column(name="habitacion_precio")
-	private double precio;
+	private Double precio;
 	
 	@Column(name="habitacion_capacidad")
 	private Integer capacidad;
 	
 	@Column(name="estado_id")
-	private Estado estado;
+	private Integer estado;
 	
 	
 	@Column(name="habitacion_descripcion")
@@ -64,17 +60,6 @@ public class Habitacion implements Serializable {
 		this.capacidad = capacidad;
 	}
 
-
-	public Estado getEstado() {
-		return estado;
-	}
-
-
-	public void setEstado(Estado estado) {
-		this.estado = estado;
-	}
-
-
 	public String getDescripcion() {
 		return descripcion;
 	}
@@ -82,6 +67,16 @@ public class Habitacion implements Serializable {
 
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
+	}
+
+
+	public Integer getEstado() {
+		return estado;
+	}
+
+
+	public void setEstado(Integer estado) {
+		this.estado = estado;
 	}
 	
 	
