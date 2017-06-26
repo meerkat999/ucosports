@@ -1,0 +1,10 @@
+<div>
+  <a ng-href="http://localhost:8081/rest/clienteService/exportAll"><button>Descargar</button></a>
+</div>
+<div>
+
+  Año:<select ng-model="exportarDate.year" ng-change="yearChange()" ng-options="year.year as year.year for year in $parent.listaYearsConClientes"></select>
+  Mes:<select ng-disabled="exportarDate.year === undefined" ng-model="exportarDate.month" ng-options="mes.month as mes.month for mes in listaMesesConClientes"></select>
+
+
+</div>

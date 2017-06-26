@@ -1,5 +1,9 @@
 package co.com.meerkats.hotelturin.logical.Impl;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -8,10 +12,16 @@ import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.transaction.Transactional.TxType;
 
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 import co.com.meerkats.hotelturin.domain.Cliente;
 import co.com.meerkats.hotelturin.domain.ClienteKey;
 import co.com.meerkats.hotelturin.dto.ClienteDTO;
 import co.com.meerkats.hotelturin.dto.ClienteKeyDTO;
+import co.com.meerkats.hotelturin.dto.utils.DateDTO;
+import co.com.meerkats.hotelturin.dto.utils.ListDateDTO;
 import co.com.meerkats.hotelturin.logical.IClienteLogical;
 import co.com.meerkats.hotelturin.repository.IClienteRepository;
 
@@ -20,12 +30,6 @@ public class ClienteLogicalImpl extends LogicalCommonImpl<Cliente, ClienteDTO> i
 
 	@Inject
 	private IClienteRepository repository;
-
-	@Override
-	public List<ClienteDTO> getAll() {
-		List<Cliente> listaClientes = repository.findAll();
-		return listEntitiesToListDTOs(listaClientes);
-	}
 
 	@Override
 	public ClienteDTO buildDTO(Cliente entity) {
@@ -75,6 +79,64 @@ public class ClienteLogicalImpl extends LogicalCommonImpl<Cliente, ClienteDTO> i
 		cliente.setFechaRegistro(new Date());
 		cliente.setNombreCompleto(clientedto.getNombreUno() + " " + clientedto.getApellidoUno());	
 		return buildDTO(repository.save(cliente));
+	}
+
+	@Override
+	public ListDateDTO getMonthsWithClients(DateDTO date) {
+		List<DateDTO> dateDTOs = new ArrayList<>();
+		if(date != null && date.getYear() != null){
+			List<Integer> listMonthsWithClients = repository.getListMonthsWithClients(date.getYear());
+			if(listMonthsWithClients != null && !listMonthsWithClients.isEmpty()){
+				listMonthsWithClients.stream().forEach(m -> {
+					DateDTO dateDTO = new DateDTO();
+					dateDTO.setMonth(m);
+					dateDTOs.add(dateDTO);
+				});	
+			}
+		}
+		ListDateDTO lista = new ListDateDTO();
+		lista.setListaFechas(dateDTOs);
+		return lista;
+	}
+
+	@Override
+	public List<DateDTO> getYearsWithClients() {
+		List<DateDTO> dateDTOs = new ArrayList<>();
+		List<Integer> listYearsWithClients = repository.getListYearsWithClients();
+		if(listYearsWithClients != null && !listYearsWithClients.isEmpty()){
+			listYearsWithClients.stream().forEach(y -> {
+				DateDTO dateDTO = new DateDTO();
+				dateDTO.setYear(y);
+				dateDTOs.add(dateDTO);
+			});
+		}
+		return dateDTOs;
+	}
+
+	@Override
+	public File exportAll() {
+		File file = null;
+		try {
+			List<Cliente> all = repository.findAll();
+			XSSFWorkbook workbook = new XSSFWorkbook();
+			XSSFSheet sheet = workbook.createSheet();
+			XSSFRow titulos = sheet.createRow(0);
+			titulos.createCell(0).setCellValue("Cedula");
+			titulos.createCell(0).setCellValue("Nombre Uno");
+			all.stream().forEach(c -> {
+				XSSFRow row = sheet.createRow(all.indexOf(c) + 1);
+				row.createCell(0).setCellValue(c.getId().getId());
+				row.createCell(1).setCellValue(c.getNombreUno());
+			});
+			file = new File("prueba.xlsx");
+			FileOutputStream fileOutputStream = new FileOutputStream(file);
+			workbook.write(fileOutputStream);
+			workbook.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return file;
 	}
 	
 	

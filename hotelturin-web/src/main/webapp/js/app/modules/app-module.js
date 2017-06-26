@@ -38,6 +38,24 @@ define(['angularAMD', 'angular-ui-router', 'angular-resource'], function (angula
           })
         }
       })
+      .state('app.administracion', {
+        url: '/administracion',
+        views: {
+          'content@app': angularAMD.route({
+            templateUrl : 'resources/partials/administracion/administracion.html',
+            controller : 'administracionController'
+          })
+        }
+      })
+      .state('app.administracion.adminClientes', {
+        url: '/adminClientes',
+        views: {
+          'content@app.administracion': angularAMD.route({
+            templateUrl : 'resources/partials/administracion/adminClientes.html',
+            controller : 'clienteController'
+          })
+        }
+      })
     });
 
     app.run(function($state, $rootScope){

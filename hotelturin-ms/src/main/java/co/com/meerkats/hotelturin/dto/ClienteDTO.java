@@ -11,7 +11,7 @@ public class ClienteDTO implements Serializable {
 	
 	private ClienteKeyDTO id;
 	
-	private Integer celular;
+	private Long celular;
 	
 	private String apellidoUno;
 	
@@ -37,11 +37,11 @@ public class ClienteDTO implements Serializable {
 		this.id = id;
 	}
 
-	public Integer getCelular() {
+	public Long getCelular() {
 		return celular;
 	}
 
-	public void setCelular(Integer celular) {
+	public void setCelular(Long celular) {
 		this.celular = celular;
 	}
 
