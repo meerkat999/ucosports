@@ -70,6 +70,8 @@ public class ClienteLogicalImpl extends LogicalCommonImpl<Cliente, ClienteDTO> i
 		cliente.setApellidoUno(clientedto.getApellidoUno());
 		cliente.setCelular(clientedto.getCelular());
 		cliente.setNombreUno(clientedto.getNombreUno());
+		cliente.setNombreDos(clientedto.getNombreDos());
+		cliente.setApellidoDos(clientedto.getApellidoDos());
 		ClienteKey id = new ClienteKey();
 		id.setId(clientedto.getId().getId());
 		id.setTipoDocumento(clientedto.getId().getTipodocumento());
@@ -78,7 +80,13 @@ public class ClienteLogicalImpl extends LogicalCommonImpl<Cliente, ClienteDTO> i
 		}
 		cliente.setId(id);
 		cliente.setFechaRegistro(new Date());
-		cliente.setNombreCompleto(clientedto.getNombreUno() + " " + clientedto.getApellidoUno());	
+		String nombreCompleto = clientedto.getNombreUno() + " " + clientedto.getApellidoUno() + " " + clientedto.getApellidoDos();
+		if(clientedto.getNombreDos() != null){
+			nombreCompleto = clientedto.getNombreUno() + " " + clientedto.getNombreDos() + " " + clientedto.getApellidoUno() + " " + clientedto.getApellidoDos();
+		}
+		cliente.setNombreCompleto(nombreCompleto);
+		cliente.setCorreo(clientedto.getCorreo());
+		cliente.setFechaNacimiento(clientedto.getFechaNacimiento());
 		return buildDTO(repository.save(cliente));
 	}
 
@@ -121,7 +129,7 @@ public class ClienteLogicalImpl extends LogicalCommonImpl<Cliente, ClienteDTO> i
 			List<Cliente> all = repository.findAll();
 			XSSFWorkbook workbook = new XSSFWorkbook();
 			XSSFSheet sheet = workbook.createSheet();
-			sheet.setDefaultColumnWidth(400);
+			sheet.setDefaultColumnWidth(80);
 			createHeaders(sheet);
 			all.stream().forEach(c -> {
 				buildRows(all, sheet, c);

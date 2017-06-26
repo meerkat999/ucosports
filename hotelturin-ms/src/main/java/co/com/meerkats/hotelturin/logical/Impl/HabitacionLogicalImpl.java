@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 import javax.transaction.Transactional.TxType;
 
 import co.com.meerkats.hotelturin.domain.Habitacion;
+import co.com.meerkats.hotelturin.domain.constants.StatesEnum;
 import co.com.meerkats.hotelturin.dto.EstadoDTO;
 import co.com.meerkats.hotelturin.dto.HabitacionDTO;
 import co.com.meerkats.hotelturin.dto.ListHabitacionDTO;
@@ -63,7 +64,7 @@ public class HabitacionLogicalImpl extends LogicalCommonImpl<Habitacion,Habitaci
 		}
 		habitacion.setCapacidad(habitaciondto.getCapacidad());;
 		habitacion.setDescripcion(habitaciondto.getDescripcion());		
-		habitacion.setEstado(1);
+		habitacion.setEstado(StatesEnum.ACTIVO.getValue());
 		habitacion.setPrecio(habitaciondto.getPrecio());		
 		habitacion.setId(habitaciondto.getId());		
 		return buildDTO(repository.save(habitacion));

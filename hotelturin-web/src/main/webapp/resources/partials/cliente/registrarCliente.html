@@ -1,7 +1,7 @@
 
 			<h3 class="panel-title">Registar Cliente</h3>
 
-      <div class="panel-body">
+      <div class="panel-body" style="max-width: 600px;">
 
           <div class="input-group">
 					  <label style="color: red;" ng-if="erroresFormularioRegistro[0]">Falta escoger el tipo de documento.</label>
@@ -26,7 +26,12 @@
 					  <label style="color: red;"  ng-if="erroresFormularioRegistro[3]">Falta digilenciar el nombre.</label>
 					  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
 					  <input class="form-control" type="text" placeholder="Primer Nombre" ng-model="nuevoCliente.nombreUno"></input>
-					 </div>
+					</div>
+
+					<div class="input-group">
+					  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+					  <input class="form-control" type="text" placeholder="Segundo Nombre Nombre" ng-model="nuevoCliente.nombreDos"></input>
+					</div>
 
 					<div class="input-group">
 					  <label style="color: red;"  ng-if="erroresFormularioRegistro[4]">Falta digilenciar el apellido.</label>
@@ -34,11 +39,27 @@
 					  <input class="form-control" type="text" placeholder="Primer Apellido" ng-model="nuevoCliente.apellidoUno"></input>
 					 </div>
 
+					 <div class="input-group">
+ 					  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+ 					  <input class="form-control" type="text" placeholder="Segundo Apellido" ng-model="nuevoCliente.apellidoDos"></input>
+ 					 </div>
+
 					<div class="input-group">
 					  <label style="color: red;"  ng-if="erroresFormularioRegistro[5]">Falta digilenciar el celular o el teléfono de contacto.</label>
 					  <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
 					  <input number class="form-control" type="text" maxlength="10" placeholder="Celular o teléfono" ng-model="nuevoCliente.celular"></input>
 					</div>
+
+					<div class="input-group">
+					  <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
+					  <input class="form-control" type="date" placeholder="Fecha Nacimiento" ng-model="nuevoCliente.fechaNacimiento"></input>
+					</div>
+
+					<div class="input-group">
+					  <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
+					  <input class="form-control" type="email" placeholder="Correo" ng-model="nuevoCliente.correo"></input>
+					</div>
+
 			    <div class="form-group">
             <button class="btn btn-lg btn-primary btn-block" ng-click="registrar()">Registrar</button>
 			    </div>

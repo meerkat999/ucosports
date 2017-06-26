@@ -17,9 +17,15 @@ public class ClienteDTO implements Serializable {
 	
 	private String nombreUno;
 	
+	private String nombreDos;
+	
+	private String apellidoDos;
+	
 	private Date fechaNacimiento;
 	
 	private Date fechaRegistro;
+	
+	private String correo;
 
 	public String getNombreCompleto() {
 		return nombreCompleto;
@@ -75,6 +81,30 @@ public class ClienteDTO implements Serializable {
 
 	public void setFechaRegistro(Date fechaRegistro) {
 		this.fechaRegistro = fechaRegistro;
+	}
+
+	public String getCorreo() {
+		return correo;
+	}
+
+	public void setCorreo(String correo) {
+		this.correo = correo;
+	}
+
+	public String getNombreDos() {
+		return nombreDos;
+	}
+
+	public void setNombreDos(String nombreDos) {
+		this.nombreDos = nombreDos;
+	}
+
+	public String getApellidoDos() {
+		return apellidoDos;
+	}
+
+	public void setApellidoDos(String apellidoDos) {
+		this.apellidoDos = apellidoDos;
 	}
 
 	

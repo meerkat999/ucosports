@@ -8,8 +8,12 @@ public class DateUtil {
 	public final static String FORMATO_UNO = "yyyy/MM/dd";
 	
 	public static String dateToString(Date date, String format){
-		SimpleDateFormat dateFormat = new SimpleDateFormat(format);
-		return dateFormat.format(date);
+		String dateString = "";
+		if(date != null){
+			SimpleDateFormat dateFormat = new SimpleDateFormat(format);
+			dateString = dateFormat.format(date);
+		}
+		return dateString;
 	}
 	
 }
