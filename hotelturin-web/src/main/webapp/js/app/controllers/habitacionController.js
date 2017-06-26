@@ -1,24 +1,19 @@
 define(['app-module', 'sweetService', 'habitacionService'], function (app) {
-    app.controller('habitacionController',['$scope','$state', 'sweetService', 'habitacionService', '$filter',
-        function ($scope, $state, sweetService, habitacionService, $filter) {
-
-      $scope.listHabitaciones = [];      
-      $scope.Habitacion={};
-       
+    app.controller('habitacionController',['$scope','$state', 'sweetService', 'habitacionService',
+        function ($scope, $state, sweetService, habitacionService) {
 
       $scope.agregar = function(){
-        habitacionService.add($scope.Habitacion).then(function(data){
-          if(data !== null){
-        	sweetService.success("La Habitacion " + data.id + " fue registrada satisfactoriamente");
-            $state.reload();
-          }
-        },function(error){
-          sweetService.error("Ha ocurrido un error al intentar Registrar la  habitacion. Si el problema persiste, comúniquese con el área de sistemas.");
-        })
+          habitacionService.add($scope.Habitacion).then(function(data){
+            if(data !== null){
+          	   sweetService.success("La Habitacion " + data.id + " fue registrada satisfactoriamente");
+            }
+          },function(error){
+            sweetService.error("Ha ocurrido un error al intentar Registrar la  habitacion. Si el problema persiste, comúniquese con el área de sistemas.");
+          })
       }
 
       $scope.campoVacio = function(campo){
-        return campo == undefined || campo == "";
+          return campo == undefined || campo == "";
       }
 
       $scope.validarFormularioRegistro = function(){
@@ -26,7 +21,7 @@ define(['app-module', 'sweetService', 'habitacionService'], function (app) {
         $scope.erroresFormularioRegistro = [];
         if($scope.campoVacio($scope.Habitacion.id)){
           valido = false;
-          $scope.erroresFormularioRegistro[0] = true;           
+          $scope.erroresFormularioRegistro[0] = true;
         }else if($scope.campoVacio($scope.Habitacion.capacidad)){
           valido = false;
           $scope.erroresFormularioRegistro[1] = true;
@@ -39,11 +34,11 @@ define(['app-module', 'sweetService', 'habitacionService'], function (app) {
         };
         return valido;
       }
-       
+
 
       $scope.registrar = function(){
         if($scope.validarFormularioRegistro() == true){
-          habitacionService.getById($scope.Habitacion.id).then(function(habitacion){
+          habitacionService.getById($scope.Habitacion).then(function(habitacion){
             if(habitacion.id !== undefined){
               sweetService.warning("Ya existe una Habitacion con ese número.");
             }else{
@@ -53,9 +48,10 @@ define(['app-module', 'sweetService', 'habitacionService'], function (app) {
         }
       }
 
-      
+
       $scope.init = function(){
-            
+        $scope.listHabitaciones = [];
+        $scope.Habitacion={};
       }
 
       $scope.init();

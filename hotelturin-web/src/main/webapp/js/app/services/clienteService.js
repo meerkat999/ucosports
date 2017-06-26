@@ -12,6 +12,12 @@ define(['app-module', 'restService'], function (app) {
           },
           add : function(cliente){
             return restService.POST(path + 'add', cliente);
+          },
+          getMonthsWithClients : function(year){
+            return restService.POST(path + 'getMonthsWithClients', year);
+          },
+          getYearsWithClients : function(){
+            return restService.GETArray(path + 'getYearsWithClients');
           }
         }
 

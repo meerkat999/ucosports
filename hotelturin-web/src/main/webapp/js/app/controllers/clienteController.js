@@ -1,19 +1,21 @@
 define(['app-module', 'sweetService', 'clienteService', 'tipoDocumentoService'], function (app) {
-    app.controller('clienteController',['$scope','$state', 'sweetService', 'clienteService', 'tipoDocumentoService', '$filter',
-        function ($scope, $state, sweetService, clienteService, tipoDocumentoService, $filter) {
+    app.controller('clienteController',['$scope','$state', 'sweetService', 'clienteService', 'tipoDocumentoService', '$filter', '$rootScope',
+        function ($scope, $state, sweetService, clienteService, tipoDocumentoService, $filter, $rootScope) {
 
-      $scope.listClientes = [];
-      $scope.listaTiposDocumentos = [];
-      $scope.nuevoCliente = {
-        id : {}
-      };
+      $scope.funcionesCheckin = function() {
+        if($scope.checkin == true){
+          $scope.$parent.$parent.cliente = $scope.cliente;
+          $state.go("app.checkin");
+        }
+      }
 
       $scope.agregar = function(){
         clienteService.add($scope.nuevoCliente).then(function(data){
           if(data !== null){
             var fecha = $filter('date')(new Date(data.fechaRegistro), "yyyy/MM/dd 'a las' h:mma")
             sweetService.success("Cliente " + data.nombreCompleto + " fue registrado satisfactoriamente en la fecha " + fecha);
-            $state.reload();
+            $scope.cliente = data;
+            $scope.funcionesCheckin();
           }
         },function(error){
           sweetService.error("Ha ocurrido un error al intentar añadir al cliente. Si el problema persiste, comúniquese con el área de sistemas.");
@@ -85,19 +87,7 @@ define(['app-module', 'sweetService', 'clienteService', 'tipoDocumentoService'],
         }
       }
 
-      $scope.obtenerClientes = function(){
-        clienteService.getAll().then(function (data){
-          if(data !== null){
-            $scope.listClientes = data;
-          }else{
-            sweetService.warning("Sin información.");
-          }
-        }, function(error){
-          sweetService.error("No se pudieron obtener los clientes");
-        })
-      }
-
-      $scope.init = function(){
+      $scope.obtenerTipoDocumentos = function(){
         tipoDocumentoService.getAll().then(function(lista){
           if(lista !== null && lista !== undefined){
             $scope.listaTiposDocumentos = lista;
@@ -105,7 +95,25 @@ define(['app-module', 'sweetService', 'clienteService', 'tipoDocumentoService'],
         }, function(error){
           sweetService.error("No se pudieron obtener los tipos de documento.");
         })
-        $scope.obtenerClientes();
+      }
+
+      $scope.yearChange = function(){
+        if($scope.exportarDate != undefined){
+          $scope.$parent.getMonthsWithClients($scope.exportarDate);
+          return false;
+        }
+        return true;
+      }
+
+      $scope.init = function(){
+        $scope.listClientes = [];
+        $scope.listaTiposDocumentos = [];
+        if($scope.nuevoCliente === null){
+          $scope.nuevoCliente = {
+            id : {}
+          };
+        }
+        $scope.obtenerTipoDocumentos();
       }
 
       $scope.init();

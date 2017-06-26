@@ -21,7 +21,7 @@ public class Cliente implements Serializable {
 	private String nombreCompleto;
 	
 	@Column(name = "cliente_celular")
-	private Integer celular;
+	private Long celular;
 	
 	@Column(name = "cliente_fecha_registro")
 	private Date fechaRegistro;
@@ -60,11 +60,11 @@ public class Cliente implements Serializable {
 		this.nombreCompleto = nombreCompleto;
 	}
 
-	public Integer getCelular() {
+	public Long getCelular() {
 		return celular;
 	}
 
-	public void setCelular(Integer celular) {
+	public void setCelular(Long celular) {
 		this.celular = celular;
 	}
 
