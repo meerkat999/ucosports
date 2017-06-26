@@ -4,7 +4,12 @@ define(['app-module', 'sweetService', 'clienteService', 'tipoDocumentoService'],
 
       $scope.funcionesCheckin = function() {
         if($scope.checkin == true){
-          $scope.$parent.$parent.cliente = $scope.cliente;
+          if($scope.registarAcompanante == true){
+            $scope.$parent.acompanantes.push($scope.cliente);
+            $scope.$parent.registarAcompanante = false;
+          }else{
+            $scope.$parent.$parent.cliente = $scope.cliente;
+          }
           $state.go("app.checkin");
         }
       }
@@ -35,7 +40,10 @@ define(['app-module', 'sweetService', 'clienteService', 'tipoDocumentoService'],
         }else if($scope.campoVacio($scope.nuevoCliente.id.id)){
           valido = false;
           $scope.erroresFormularioRegistro[1] = true;
-        }else if($scope.nuevoCliente.id.id !== $scope.confirmacionCedula){
+        }else if($scope.confirmacionCedulaAcompanante == undefined && $scope.nuevoCliente.id.id !== $scope.confirmacionCedula){
+          valido = false;
+          $scope.erroresFormularioRegistro[2] = true;
+        }else if($scope.confirmacionCedulaAcompanante && $scope.nuevoCliente.id.id !== $scope.confirmacionCedulaAcompanante){
           valido = false;
           $scope.erroresFormularioRegistro[2] = true;
         }else if($scope.campoVacio($scope.nuevoCliente.nombreUno)){

@@ -38,7 +38,57 @@ define(['app-module','clienteService', 'tipoDocumentoService', 'sweetService', '
         }
       }
 
+      $scope.validarEnTiempoRealCamposCedulaAcompanante = function(){
+        if(!$scope.campoVacio($scope.tipodocumentoAcompanante) &&
+           !$scope.campoVacio($scope.cedulaVerificarAcompanante) &&
+           !$scope.campoVacio($scope.confirmacionCedulaAcompanante) &&
+           $scope.cedulaVerificarAcompanante === $scope.confirmacionCedulaAcompanante
+        ){
+          var id = {
+            tipodocumento : $scope.tipodocumentoAcompanante,
+            id : $scope.cedulaVerificarAcompanante
+          };
+          clienteService.getById(id).then(function(cliente){
+            if(cliente.id !== undefined){
+              if(cliente.id.id === $scope.cliente.id.id){
+                sweetService.warning("No puedes añadir como acompañante al cliente principal.");
+              }else{
+                if($scope.buscarIDenAcompanantes(cliente.id.id)){
+                    sweetService.warning("El acompañante ya ha sido añadido.");
+                }else{
+                  $scope.acompanante = cliente;
+                  sweetService.info("Cliente Registrado","El cliente " + cliente.nombreCompleto + " ya se encuentra registrado. \n Ya puedes agregarlo como acompañante.");
+                  $scope.seBloqueanLosCamposDeCedulaAcompanante = true;
+                }
+              }
+            }else{
+              sweetService.info("Cliente no Registrado","Se te habilitará un módulo para registrar el nuevo cliente.");
+              $scope.esNecesarioRegistrarAcompanante = true;
+              $scope.nuevoCliente = {
+                id : {
+                  id : $scope.cedulaVerificarAcompanante,
+                  tipodocumento : $scope.tipodocumentoAcompanante
+                }
+              };
+              $scope.seBloqueanLosCamposDeCedulaAcompanante = true;
+              $state.go("app.checkin.registroAcompanante")
+            }
+          });
+        }
+      }
+
+      $scope.buscarIDenAcompanantes = function(id){
+        for (acompanante of $scope.acompanantes) {
+          if(acompanante.id.id === id){
+            return true;
+          }
+        }
+        return false;
+      }
+
       $scope.reset = function(){
+        $scope.buscarTiposDocumento();
+        $scope.buscarHabitacionesDisponibles();
         $scope.nuevoCliente = {
           id : {}
         };
@@ -48,7 +98,6 @@ define(['app-module','clienteService', 'tipoDocumentoService', 'sweetService', '
         $scope.tipodocumento = null;
         $scope.cedulaVerificar = null;
         $scope.confirmacionCedula = null;
-        $scope.clienteRegistrado = null;
         $scope.cliente = null;
         $scope.checkin = true;
         $scope.habitacionSeleccionada = {
@@ -60,6 +109,13 @@ define(['app-module','clienteService', 'tipoDocumentoService', 'sweetService', '
           value : "'NO'"
         };
         $scope.numeroNoches = 0;
+        $scope.acompanantes = [];
+        $scope.registarAcompanante = false;
+        $scope.acompanante = null;
+        $scope.seBloqueanLosCamposDeCedulaAcompanante = false;
+        $scope.tipodocumentoAcompanante = null;
+        $scope.confirmacionCedulaAcompanante = null;
+        $scope.cedulaVerificarAcompanante = null;
       }
 
       $scope.buscarTiposDocumento = function(){
@@ -103,16 +159,47 @@ define(['app-module','clienteService', 'tipoDocumentoService', 'sweetService', '
       $scope.openHabitacion = function(habitacion){
         sweetService.question(habitacion.id, habitacion.descripcion, "Seleccionar", "Cancelar", function(esSeleccionada){
           if(esSeleccionada){
-            $scope.habitacionSeleccionada.id = habitacion.id;
+            $scope.habitacionSeleccionada = habitacion;
             $scope.$apply();
           }
         });
       }
 
+      $scope.setRegistarAcompanante = function(){
+        $scope.registarAcompanante = true;
+        $scope.acompanante = null;
+        $scope.seBloqueanLosCamposDeCedulaAcompanante = false;
+        $scope.tipodocumentoAcompanante = null;
+        $scope.confirmacionCedulaAcompanante = null;
+        $scope.cedulaVerificarAcompanante = null;
+      }
+
+      $scope.anadirAcompanante = function(){
+        $scope.acompanantes.push($scope.acompanante);
+        $scope.registarAcompanante = false;
+      }
+
+      $scope.mostrarVistaRegistroAcompanante = function(){
+        return $scope.esNecesarioRegistrarAcompanante;
+      }
+
+      $scope.limpiarAcompanantes = function(){
+        $scope.registarAcompanante = false;
+        $scope.acompanante = null;
+        $scope.seBloqueanLosCamposDeCedulaAcompanante = false;
+        $scope.tipodocumentoAcompanante = null;
+        $scope.confirmacionCedulaAcompanante = null;
+        $scope.cedulaVerificarAcompanante = null;
+        $scope.acompanantes = [];
+        $scope.numeroAcompanantes = 0
+      }
+
+      $scope.cancelarAnadir = function(){
+        $scope.registarAcompanante = false;
+      }
+
       $scope.init = function(){
         $scope.reset();
-        $scope.buscarTiposDocumento();
-        $scope.buscarHabitacionesDisponibles();
       }
 
       $scope.init();

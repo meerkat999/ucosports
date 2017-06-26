@@ -28,11 +28,20 @@ define(['angularAMD', 'angular-ui-router', 'angular-resource'], function (angula
             controller : 'checkinController'
           })
         }
-      })      
+      })
       .state('app.checkin.registro', {
         url: '/registro',
         views: {
           'registro@app.checkin': angularAMD.route({
+            templateUrl : 'resources/partials/cliente/registrarCliente.html',
+            controller : 'clienteController'
+          })
+        }
+      })
+      .state('app.checkin.registroAcompanante', {
+        url: '/registroAcompanante',
+        views: {
+          'registroAcompanante@app.checkin': angularAMD.route({
             templateUrl : 'resources/partials/cliente/registrarCliente.html',
             controller : 'clienteController'
           })
@@ -54,7 +63,7 @@ define(['angularAMD', 'angular-ui-router', 'angular-resource'], function (angula
             templateUrl : 'resources/partials/habitacion/registrarHabitacion.html',
             controller : 'habitacionController'
           })
-        }      
+        }
     })
       .state('app.administracion.adminClientes', {
           url: '/adminClientes',

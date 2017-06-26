@@ -16,10 +16,17 @@
 					  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
 					  <input ng-disabled="seBloqueanLosCamposDeCedula" class="form-control" maxlength="10" placeholder="Número de Identificación" ng-change="validarEnTiempoRealCamposCedula()" number type="text" ng-model="nuevoCliente.id.id" ></input>
 					</div>
-					<div class="input-group">
+
+					<div ng-if="confirmacionCedulaAcompanante == undefined" class="input-group">
 					  <label style="color: red;"  ng-if="erroresFormularioRegistro[2]">El número de cédula no coincide con el ingresado.</label>
 					  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
 						<input ng-disabled="seBloqueanLosCamposDeCedula" class="form-control" maxlength="10" placeholder="Confirmar Número de Identificación" ng-change="validarEnTiempoRealCamposCedula()" number type="text" ng-model="confirmacionCedula"></input>
+					</div>
+
+					<div ng-if="confirmacionCedulaAcompanante" class="input-group">
+					  <label style="color: red;"  ng-if="erroresFormularioRegistro[2]">El número de cédula no coincide con el ingresado.</label>
+					  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+						<input ng-disabled="seBloqueanLosCamposDeCedula" class="form-control" maxlength="10" placeholder="Confirmar Número de Identificación" ng-change="validarEnTiempoRealCamposCedula()" number type="text" ng-model="confirmacionCedulaAcompanante"></input>
 					</div>
 
 					<div class="input-group">
@@ -30,7 +37,7 @@
 
 					<div class="input-group">
 					  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-					  <input class="form-control" type="text" placeholder="Segundo Nombre Nombre" ng-model="nuevoCliente.nombreDos"></input>
+					  <input class="form-control" type="text" placeholder="Segundo Nombre" ng-model="nuevoCliente.nombreDos"></input>
 					</div>
 
 					<div class="input-group">
