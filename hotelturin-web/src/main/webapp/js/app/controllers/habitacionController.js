@@ -26,19 +26,16 @@ define(['app-module', 'sweetService', 'habitacionService'], function (app) {
         $scope.erroresFormularioRegistro = [0];
         if($scope.campoVacio($scope.Habitacion.id)){
           valido = false;
-          $scope.erroresFormularioRegistro[1] = true;
-        }else if($scope.campoVacio($scope.Habitacion.nombre)){
-          valido = false;
-          $scope.erroresFormularioRegistro[2] = true;        
+          $scope.erroresFormularioRegistro[1] = true;           
         }else if($scope.campoVacio($scope.Habitacion.capacidad)){
           valido = false;
-          $scope.erroresFormularioRegistro[3] = true;
+          $scope.erroresFormularioRegistro[2] = true;
         }else if($scope.campoVacio($scope.Habitacion.descripcion)){
           valido = false;
-          $scope.erroresFormularioRegistro[4] = true;
+          $scope.erroresFormularioRegistro[3] = true;
         }else if($scope.campoVacio($scope.Habitacion.precio)){
               valido = false;
-              $scope.erroresFormularioRegistro[5] = true;
+              $scope.erroresFormularioRegistro[4] = true;
         };
         return valido;
       }

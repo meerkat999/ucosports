@@ -78,5 +78,6 @@ public class ClienteLogicalImpl extends LogicalCommonImpl<Cliente, ClienteDTO> i
 	}
 	
 	
+	
 
 }
