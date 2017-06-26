@@ -1,21 +1,48 @@
-<div>Formulario_habitacion</div>
-<form style="display: inline-grid;">
-   
- 
-  <label style="color: red;"  ng-if="erroresFormularioRegistro[0]">Falta diligenciar el Numero</label>
-  <input maxlength="10" type="text" placeholder="Numero de la Habitacion" ng-model="Habitacion.id" ></input>
-
-  
-  
-  <label style="color: red;"  ng-if="erroresFormularioRegistro[1]">Falta diligenciar la Capacidad</label>
-  <input maxlength="10" type="number" placeholder="Capacidad de la Habitacion" ng-model="Habitacion.capacidad" ></input>
-  
-  <label style="color: red;"  ng-if="erroresFormularioRegistro[2]">Falta diligenciar la Descripcion</label>
-  <input maxlength="10" type="text" placeholder="Descripcion de la Habitacion" ng-model="Habitacion.descripcion" ></input>
-  
-  <label style="color: red;"  ng-if="erroresFormularioRegistro[3]">Falta diligenciar el Precio</label>
-  <input maxlength="10" number type="text" placeholder="Precio de la Habitacion" ng-model="Habitacion.precio" ></input>
-  
-  <button ng-click="registrar()">Guardar</button>
-
+    <div align="center">
+    <div class="row">
+		<div class="col-md-8 col-md-offset-8">
+    		<div class="panel panel-default">
+			  	<div class="panel-heading">
+			    	<h3 class="panel-title">Registrar Habitacion</h3>
+			 	</div>
+			  	<div class="panel-body">
+			    	<form accept-charset="UTF-8" role="form">
+                    <fieldset>
+				 
+				 <div class="input-group">
+				  <label style="color: red;"  ng-if="erroresFormularioRegistro[0]">Falta diligenciar el Numero</label>
+				  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+				  <input  class="form-control" maxlength="10" type="text" placeholder="Numero de la Habitacion" ng-model="Habitacion.id" ></input>
+				  </div>
+				  
+				  
+				  <div class="input-group">
+				  <label style="color: red;"  ng-if="erroresFormularioRegistro[1]">Falta diligenciar la Capacidad</label>
+				  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+				  <input  class="form-control" maxlength="10" type="number" placeholder="Capacidad de la Habitacion" ng-model="Habitacion.capacidad" ></input>
+				   </div>
+				  
+				  
+				  <div class="input-group">
+				  <label style="color: red;"  ng-if="erroresFormularioRegistro[2]">Falta diligenciar la Descripcion</label>
+				  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+				  <input  class="form-control" maxlength="10" type="text" placeholder="Descripcion de la Habitacion" ng-model="Habitacion.descripcion" ></input>
+				   </div>
+				  
+				  
+				  <div class="input-group">
+				  <label style="color: red;"  ng-if="erroresFormularioRegistro[3]">Falta diligenciar el Precio</label>
+				  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+				  <input  class="form-control" maxlength="10" number type="text" placeholder="Precio de la Habitacion" ng-model="Habitacion.precio" ></input>
+				   </div>				  
+				  </fieldset>
+				  <div class="form-group">
+				  <button class="btn btn-lg btn-primary btn-block" ng-click="registrar()">Registrar</button>
+</div>
 </form>
+</div>
+</div>
+</div>
+</div>
+</div>
+

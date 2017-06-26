@@ -28,16 +28,7 @@ define(['angularAMD', 'angular-ui-router', 'angular-resource'], function (angula
             controller : 'checkinController'
           })
         }
-      })
-      .state('app.registrarHabitacion', {
-          url: '/registrarHabitacion',
-          views: {
-            'content2@app': angularAMD.route({
-              templateUrl : 'resources/partials/habitacion/registrarHabitacion.html',
-              controller : 'habitacionController'
-            })
-          }
-        })
+      })      
       .state('app.checkin.registro', {
         url: '/registro',
         views: {
@@ -56,16 +47,26 @@ define(['angularAMD', 'angular-ui-router', 'angular-resource'], function (angula
           })
         }
       })
-      .state('app.administracion.adminClientes', {
-        url: '/adminClientes',
+       .state('app.administracion.registrarHabitacion', {
+        url: '/registrarHabitacion',
         views: {
           'content@app.administracion': angularAMD.route({
-            templateUrl : 'resources/partials/administracion/adminClientes.html',
-            controller : 'clienteController'
+            templateUrl : 'resources/partials/habitacion/registrarHabitacion.html',
+            controller : 'habitacionController'
           })
-        }
+        }      
+    })
+      .state('app.administracion.adminClientes', {
+          url: '/adminClientes',
+          views: {
+            'content@app.administracion': angularAMD.route({
+              templateUrl : 'resources/partials/administracion/adminClientes.html',
+              controller : 'clienteController'
+            })
+          }
+        })
       })
-    });
+     ;
 
     app.run(function($state, $rootScope){
       $state.go('login');

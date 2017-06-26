@@ -3,16 +3,11 @@ define(['app-module'], function (app) {
 
       $scope.goCheckin = function(){
         $state.go("app.checkin");
-      }
-      
-      $scope.goRegistrarHabitacion = function(){
-          $state.go("app.registrarHabitacion");
-        }
+      }       
 
       $scope.goAdministracion = function(){
         $state.go("app.administracion");
       }
-
       $scope.goRegistrarCliente = function(){
         $state.go("app.registrarCliente");
         $state.go("app.registrarCliente.listar");
