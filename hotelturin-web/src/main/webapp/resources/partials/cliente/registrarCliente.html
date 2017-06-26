@@ -7,91 +7,45 @@
 			 	</div>
 			  	<div class="panel-body">
 			    	<form accept-charset="UTF-8" role="form">
-<<<<<<< HEAD
-                    <fieldset>                     
-					<div class="input-group">					
+					<div class="input-group">
 					  <label style="color: red;" ng-if="erroresFormularioRegistro[0]">Falta escoger el tipo de documento.</label>
 					  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-					  <select class="form-control" id="tipoDocumento"
+					  <select ng-disabled="seBloqueanLosCamposDeCedula" class="form-control" id="tipoDocumento"
 					    ng-model="nuevoCliente.id.tipodocumento" placeholder="Tipo de Documento" ng-change="validarEnTiempoRealCamposCedula()" ng-options="tipo.id as tipo.nombre for tipo in listaTiposDocumentos"
 					  ></select>
 					  </div>
-					
+
 					  <div class="input-group">
 					  <label style="color: red;"  ng-if="erroresFormularioRegistro[1]">Falta digelenciar la cédula</label>
 					  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-					  <input class="form-control" maxlength="10" placeholder="Número de Identificación" ng-change="validarEnTiempoRealCamposCedula()" number type="text" ng-model="nuevoCliente.id.id" ></input>
+					  <input ng-disabled="seBloqueanLosCamposDeCedula" class="form-control" maxlength="10" placeholder="Número de Identificación" ng-change="validarEnTiempoRealCamposCedula()" number type="text" ng-model="nuevoCliente.id.id" ></input>
 					</div>
 					<div class="input-group">
 					  <label style="color: red;"  ng-if="erroresFormularioRegistro[2]">El número de cédula no coincide con el ingresado.</label>
 					  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-						  <input class="form-control" maxlength="10" placeholder="Confirmar Número de Identificación" ng-change="validarEnTiempoRealCamposCedula()" number type="text" ng-model="confirmacionCedula"></input>
-					 </div>
-					
+						<input ng-disabled="seBloqueanLosCamposDeCedula" class="form-control" maxlength="10" placeholder="Confirmar Número de Identificación" ng-change="validarEnTiempoRealCamposCedula()" number type="text" ng-model="confirmacionCedula"></input>
+					</div>
+
 					<div class="input-group">
-					  <label style="color: red;"  ng-if="erroresFormularioRegistro[3]">Falta digilenciar el nombre.</label>	
-					  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>			 
+					  <label style="color: red;"  ng-if="erroresFormularioRegistro[3]">Falta digilenciar el nombre.</label>
+					  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
 					  <input class="form-control" type="text" placeholder="Primer Nombre" ng-model="nuevoCliente.nombreUno"></input>
 					 </div>
-					
+
 					<div class="input-group">
 					  <label style="color: red;"  ng-if="erroresFormularioRegistro[4]">Falta digilenciar el apellido.</label>
-					  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>				  
+					  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
 					  <input class="form-control" type="text" placeholder="Primer Apellido" ng-model="nuevoCliente.apellidoUno"></input>
 					 </div>
-					
+
 					<div class="input-group">
-					  <label style="color: red;"  ng-if="erroresFormularioRegistro[5]">Falta digilenciar el celular o el teléfono de contacto.</label>	
-					  <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>			  
+					  <label style="color: red;"  ng-if="erroresFormularioRegistro[5]">Falta digilenciar el celular o el teléfono de contacto.</label>
+					  <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
 					  <input number class="form-control" type="text" maxlength="10" placeholder="Celular o teléfono" ng-model="nuevoCliente.celular"></input>
-					 </div>
-				</fieldset>	
-					<div class="form-group">
-					  <button class="btn btn-lg btn-primary btn-block" ng-click="registrar()">Registrar</button>
-					   </div>
-=======
-                    <fieldset>
-
-				<div class="input-group">
-				  <label style="color: red;" ng-if="erroresFormularioRegistro[0]">Falta escoger el tipo de documento.</label>
-				  <select ng-disabled="seBloqueanLosCamposDeCedula" class="form-control" id="tipoDocumento"
-				    ng-model="nuevoCliente.id.tipodocumento" placeholder="Tipo de Documento" ng-change="validarEnTiempoRealCamposCedula()" ng-options="tipo.id as tipo.nombre for tipo in listaTiposDocumentos"
-				  ></select>
-				  </div>
-
-				  <div class="input-group">
-				  <label style="color: red;"  ng-if="erroresFormularioRegistro[1]">Falta digelenciar la cédula</label>
-				  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-				  <input ng-disabled="seBloqueanLosCamposDeCedula" class="form-control" maxlength="10" placeholder="Número de Identificación" ng-change="validarEnTiempoRealCamposCedula()" number type="text" ng-model="nuevoCliente.id.id" ></input>
-				</div>
-				<div class="input-group">
-				  <label style="color: red;"  ng-if="erroresFormularioRegistro[2]">El número de cédula no coincide con el ingresado.</label>
-				  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-					  <input ng-disabled="seBloqueanLosCamposDeCedula" class="form-control" maxlength="10" placeholder="Confirmar Número de Identificación" ng-change="validarEnTiempoRealCamposCedula()" number type="text" ng-model="confirmacionCedula"></input>
-				 </div>
-
-				<div class="input-group">
-				  <label style="color: red;"  ng-if="erroresFormularioRegistro[3]">Falta digilenciar el nombre.</label>
-				  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-				  <input class="form-control" type="text" placeholder="Primer Nombre" ng-model="nuevoCliente.nombreUno"></input>
-				 </div>
-
-				<div class="input-group">
-				  <label style="color: red;"  ng-if="erroresFormularioRegistro[4]">Falta digilenciar el apellido.</label>
-				  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-				  <input class="form-control" type="text" placeholder="Primer Apellido" ng-model="nuevoCliente.apellidoUno"></input>
-				 </div>
-
-				<div class="input-group">
-				  <label style="color: red;"  ng-if="erroresFormularioRegistro[5]">Falta digilenciar el celular o el teléfono de contacto.</label>
-				  <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
-				  <input number class="form-control" type="text" maxlength="10" placeholder="Celular o teléfono" ng-model="nuevoCliente.celular"></input>
-				 </div>
-
-				<div class="form-group">
-				  <button class="btn btn-lg btn-success btn-block" ng-click="registrar()">Registrar</button>
-				   </div>
->>>>>>> ht
+					</div>
+			    <div class="form-group">
+            <button class="btn btn-lg btn-primary btn-block" ng-click="registrar()">Registrar</button>
+			    </div>
 
 </form>
 </div>
