@@ -1,21 +1,17 @@
-    <div align="center">
-    <div class="row">
-		<div class="col-md-8 col-md-offset-8">
-    		<div class="panel panel-default">
-			  	<div class="panel-heading">
-			    	<h3 class="panel-title">Registar Cliente</h3>
-			 	</div>
-			  	<div class="panel-body">
-			    	<form accept-charset="UTF-8" role="form">
-					<div class="input-group">
+
+			<h3 class="panel-title">Registar Cliente</h3>
+
+      <div class="panel-body">
+
+          <div class="input-group">
 					  <label style="color: red;" ng-if="erroresFormularioRegistro[0]">Falta escoger el tipo de documento.</label>
 					  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
 					  <select ng-disabled="seBloqueanLosCamposDeCedula" class="form-control" id="tipoDocumento"
 					    ng-model="nuevoCliente.id.tipodocumento" placeholder="Tipo de Documento" ng-change="validarEnTiempoRealCamposCedula()" ng-options="tipo.id as tipo.nombre for tipo in listaTiposDocumentos"
 					  ></select>
-					  </div>
+				  </div>
 
-					  <div class="input-group">
+				  <div class="input-group">
 					  <label style="color: red;"  ng-if="erroresFormularioRegistro[1]">Falta digelenciar la cédula</label>
 					  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
 					  <input ng-disabled="seBloqueanLosCamposDeCedula" class="form-control" maxlength="10" placeholder="Número de Identificación" ng-change="validarEnTiempoRealCamposCedula()" number type="text" ng-model="nuevoCliente.id.id" ></input>
@@ -46,6 +42,4 @@
 			    <div class="form-group">
             <button class="btn btn-lg btn-primary btn-block" ng-click="registrar()">Registrar</button>
 			    </div>
-
-</form>
-</div>
+      </div>
