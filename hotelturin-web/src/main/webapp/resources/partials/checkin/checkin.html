@@ -81,26 +81,28 @@
         <div class="btn-group" data-toggle="buttons">
           <label ng-repeat="habitacion in habitacionesDisponibles | filter:filtrarPorCapacidad()" class="btn btn-default" ng-class="{active: habitacionSeleccionada.id == habitacion.id}" ng-click="">
             <input type="radio" ng-click="openHabitacion(habitacion)"></input>
-            {{habitacion.id}} <br> {{habitacion.nombre}} <br> Capacidad: {{habitacion.capacidad}} <br> Precio: {{habitacion.Precio}}
+            <label>{{habitacion.id}}</label> <br> {{habitacion.nombre}} <br> Capacidad: {{habitacion.capacidad}} <br> Precio: {{habitacion.precio}}
           </label>
         </div>
       </div>
     </div>
 
-    <div>
-
-      <label>Check-in Resultante</label>
-      Cliente : {{cliente.nombreCompleto}}
-      Habitacion {{habitacionSeleccionada.id}}- {{habitacionSeleccionada.nombre}}
-      {{numeroNoches > 0}}
-      <label ng-if="numeroNoches > 0 && habitacionSeleccionada.precio">
-        {{habitacionSeleccionada.precio}}
-        Valor a pagar en el checkout : {{habitacionSeleccionada.precio * numeroNoches}}
-      </label>
-      <label ng-if="numeroNoches == 0">
-        Valor a pagar en el checkout : El valor dependerá de la fecha de salida.
-      </label>
-
+    <div style="display: grid;">
+        <h3>Check-in</h3>
+        <div style="display: grid;"><label>Cliente:</label> {{cliente.nombreCompleto}}</div>
+        <br>
+        <div style="display: grid;" ng-if="habitacionSeleccionada"><label>Habitacion:</label> {{habitacionSeleccionada.id}}- {{habitacionSeleccionada.nombre}}</div>
+        <br>
+        <div style="display: grid;" ng-show="numeroNoches > 0 && habitacionSeleccionada.precio">
+          <label>Valor a pagar en el checkout:</label> {{habitacionSeleccionada.precio * numeroNoches}}
+        </div>
+        <div style="display: grid;" ng-show="numeroNoches == 0">
+          <label>Valor a pagar en el checkout:</label> El valor dependerá de la fecha de salida.
+        </div>
+        <br>
+        <label class="btn btn-default" ng-click="checkin()">
+          Check-in
+        </label>
     </div>
 
   </div>
