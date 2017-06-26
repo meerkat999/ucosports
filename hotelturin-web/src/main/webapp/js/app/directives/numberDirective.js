@@ -6,11 +6,13 @@ define(['app-module'], function (app) {
       link: function (scope, element, attrs, ngModelCtrl) {
         function fromUser(text) {
           var maxlength = Number(attrs.maxlength);
-          var digits = text.replace(/[^0-9]/g, '');
-          if (String(text).length > maxlength || text !== digits) {
-            ngModelCtrl.$setViewValue(ngModelCtrl.$modelValue);
-            ngModelCtrl.$render();
-            return ngModelCtrl.$modelValue;
+          if(text != null){
+            var digits = text.replace(/[^0-9]/g, '');
+            if (String(text).length > maxlength || text !== digits) {
+              ngModelCtrl.$setViewValue(ngModelCtrl.$modelValue);
+              ngModelCtrl.$render();
+              return ngModelCtrl.$modelValue;
+            }
           }
           return text;
         }
