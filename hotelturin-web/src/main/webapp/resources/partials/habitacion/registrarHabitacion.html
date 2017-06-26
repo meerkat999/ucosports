@@ -5,16 +5,15 @@
   <label style="color: red;"  ng-if="erroresFormularioRegistro[0]">Falta diligenciar el Numero</label>
   <input maxlength="10" type="text" placeholder="Numero de la Habitacion" ng-model="Habitacion.id" ></input>
 
-  <label style="color: red;"  ng-if="erroresFormularioRegistro[1]">Falta diligenciar el Nombre</label>
-  <input maxlength="10" type="text" placeholder="Nombre de la Habitacion" ng-model="Habitacion.nombre" ></input>
   
-  <label style="color: red;"  ng-if="erroresFormularioRegistro[2]">Falta diligenciar la Capacidad</label>
+  
+  <label style="color: red;"  ng-if="erroresFormularioRegistro[1]">Falta diligenciar la Capacidad</label>
   <input maxlength="10" type="number" placeholder="Capacidad de la Habitacion" ng-model="Habitacion.capacidad" ></input>
   
-  <label style="color: red;"  ng-if="erroresFormularioRegistro[3]">Falta diligenciar la Descripcion</label>
+  <label style="color: red;"  ng-if="erroresFormularioRegistro[2]">Falta diligenciar la Descripcion</label>
   <input maxlength="10" type="text" placeholder="Descripcion de la Habitacion" ng-model="Habitacion.descripcion" ></input>
   
-  <label style="color: red;"  ng-if="erroresFormularioRegistro[4]">Falta diligenciar el Precio</label>
+  <label style="color: red;"  ng-if="erroresFormularioRegistro[3]">Falta diligenciar el Precio</label>
   <input maxlength="10" number type="text" placeholder="Precio de la Habitacion" ng-model="Habitacion.precio" ></input>
   
   <button ng-click="registrar()">Guardar</button>

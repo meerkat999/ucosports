@@ -6,7 +6,7 @@ public class HabitacionDTO implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
-	private String id;
+	private String id;	
 	private String descripcion;
 	private Double precio;
 	private Integer capacidad;
