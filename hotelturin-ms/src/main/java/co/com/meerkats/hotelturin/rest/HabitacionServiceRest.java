@@ -44,7 +44,15 @@ public class HabitacionServiceRest {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public HabitacionDTO getbyState (EstadoDTO estado){
-			return logical.getbyEstate(estado);
+			return logical.getbyState(estado);
+	}
+	
+	@POST
+	@Path("/getById")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public HabitacionDTO getbyId (HabitacionDTO habitaciondto){
+			return logical.getbyId(habitaciondto);
 	}
 	
 	

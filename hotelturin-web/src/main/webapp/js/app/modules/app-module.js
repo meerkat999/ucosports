@@ -29,7 +29,16 @@ define(['angularAMD', 'angular-ui-router', 'angular-resource'], function (angula
           })
         }
       })
-      .state('app.registrarCliente', {
+      .state('app.registrarHabitacion', {
+          url: '/registrarHabitacion',
+          views: {
+            'content2@app': angularAMD.route({
+              templateUrl : 'resources/partials/habitacion/registrarHabitacion.html',
+              controller : 'habitacionController'
+            })
+          }
+        })
+       .state('app.registrarCliente', {
         url: '/registrarCliente',
         views: {
           'content@app': angularAMD.route({
@@ -59,5 +68,5 @@ define(['angularAMD', 'angular-ui-router', 'angular-resource'], function (angula
     });
 
     return angularAMD.bootstrap(app);
-
+    
 });

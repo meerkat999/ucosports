@@ -11,7 +11,6 @@ public interface IClienteLogical extends ILogicalCommon<Cliente, ClienteDTO> {
 	List<ClienteDTO> getAll();
 
 	ClienteDTO getById(ClienteKeyDTO key);
-
 	ClienteDTO add(ClienteDTO cliente) throws Exception;
 	
 }

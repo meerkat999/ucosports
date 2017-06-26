@@ -4,6 +4,10 @@ define(['app-module'], function (app) {
       $scope.goCheckin = function(){
         $state.go("app.checkin");
       }
+      
+      $scope.goRegistrarHabitacion = function(){
+          $state.go("app.registrarHabitacion");
+        }
 
       $scope.goRegistrarCliente = function(){
         $state.go("app.registrarCliente");
