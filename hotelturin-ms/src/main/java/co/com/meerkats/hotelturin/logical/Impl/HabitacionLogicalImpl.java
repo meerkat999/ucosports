@@ -5,6 +5,7 @@ import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
+import javax.transaction.Transactional.TxType;
 
 import co.com.meerkats.hotelturin.domain.Habitacion;
 import co.com.meerkats.hotelturin.dto.EstadoDTO;
@@ -49,7 +50,7 @@ public class HabitacionLogicalImpl extends LogicalCommonImpl<Habitacion,Habitaci
 	
 	}
 	
-	@Transactional
+	@Transactional(value=TxType.REQUIRED, rollbackOn=Exception.class)
 	@Override
 	public HabitacionDTO add(HabitacionDTO habitaciondto) throws Exception {
 		Habitacion habitacion = new Habitacion();		
@@ -75,5 +76,5 @@ public class HabitacionLogicalImpl extends LogicalCommonImpl<Habitacion,Habitaci
 		return buildDTO(habitacion);
 	}
 
-		}
+}
 

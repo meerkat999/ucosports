@@ -41,7 +41,7 @@ public class Habitacion implements Serializable {
 	}
 
 
-	public double getPrecio() {
+	public Double getPrecio() {
 		return precio;
 	}
 

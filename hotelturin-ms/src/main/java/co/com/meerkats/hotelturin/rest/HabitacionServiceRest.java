@@ -18,8 +18,6 @@ import co.com.meerkats.hotelturin.logical.IHabitacionLogical;
 @Path("/habitacionService")
 public class HabitacionServiceRest {
 
-
-
 	@Inject
 	private IHabitacionLogical logical;
 	
@@ -53,10 +51,6 @@ public class HabitacionServiceRest {
 	public HabitacionDTO getById(HabitacionDTO habitaciondto){
 			return logical.getById(habitaciondto);
 	}
-	
-	
-	
-	
 	
 }
 
