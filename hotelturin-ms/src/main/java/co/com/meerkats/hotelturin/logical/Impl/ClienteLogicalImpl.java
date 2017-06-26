@@ -24,6 +24,7 @@ import co.com.meerkats.hotelturin.dto.utils.DateDTO;
 import co.com.meerkats.hotelturin.dto.utils.ListDateDTO;
 import co.com.meerkats.hotelturin.logical.IClienteLogical;
 import co.com.meerkats.hotelturin.repository.IClienteRepository;
+import co.com.meerkats.hotelturin.utils.DateUtil;
 
 @RequestScoped
 public class ClienteLogicalImpl extends LogicalCommonImpl<Cliente, ClienteDTO> implements IClienteLogical {
@@ -121,12 +122,30 @@ public class ClienteLogicalImpl extends LogicalCommonImpl<Cliente, ClienteDTO> i
 			XSSFWorkbook workbook = new XSSFWorkbook();
 			XSSFSheet sheet = workbook.createSheet();
 			XSSFRow titulos = sheet.createRow(0);
-			titulos.createCell(0).setCellValue("Cedula");
-			titulos.createCell(0).setCellValue("Nombre Uno");
+			titulos.createCell(0).setCellValue("Fecha Registro");
+			titulos.createCell(1).setCellValue("Tipo Documento");
+			titulos.createCell(2).setCellValue("Cedula");
+			titulos.createCell(3).setCellValue("Nombre Completo");
+			titulos.createCell(4).setCellValue("Primer Nombre");
+			titulos.createCell(5).setCellValue("Segundo Nombre");
+			titulos.createCell(6).setCellValue("Primer Apellido");
+			titulos.createCell(7).setCellValue("Segundo Apellido");
+			titulos.createCell(8).setCellValue("Fecha Nacimiento");
+			titulos.createCell(9).setCellValue("Celular");
+			titulos.createCell(10).setCellValue("Correo");
 			all.stream().forEach(c -> {
 				XSSFRow row = sheet.createRow(all.indexOf(c) + 1);
-				row.createCell(0).setCellValue(c.getId().getId());
-				row.createCell(1).setCellValue(c.getNombreUno());
+				row.createCell(0).setCellValue(DateUtil.dateToString(c.getFechaRegistro(), DateUtil.FORMATO_UNO));
+				row.createCell(1).setCellValue(c.getId().getTipoDocumento());
+				row.createCell(2).setCellValue(c.getId().getId());
+				row.createCell(3).setCellValue(c.getNombreCompleto());
+				row.createCell(4).setCellValue(c.getNombreUno());
+				row.createCell(5).setCellValue(c.getNombreDos());
+				row.createCell(6).setCellValue(c.getApellidoUno());
+				row.createCell(7).setCellValue(c.getApellidoDos());
+				row.createCell(8).setCellValue(DateUtil.dateToString(c.getFechaNacimiento(), DateUtil.FORMATO_UNO));
+				row.createCell(9).setCellValue(c.getCelular());
+				row.createCell(10).setCellValue(c.getCorreo());
 			});
 			file = new File("prueba.xlsx");
 			FileOutputStream fileOutputStream = new FileOutputStream(file);

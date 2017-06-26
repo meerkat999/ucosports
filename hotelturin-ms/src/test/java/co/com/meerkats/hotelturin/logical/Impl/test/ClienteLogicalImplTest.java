@@ -2,6 +2,7 @@ package co.com.meerkats.hotelturin.logical.Impl.test;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.junit.Assert;
@@ -35,6 +36,15 @@ public class ClienteLogicalImplTest {
 		id.setId("123");
 		id.setTipoDocumento(1);
 		cliente.setId(id);
+		cliente.setNombreUno("Crisman");
+		cliente.setNombreDos("Alejandro");
+		cliente.setApellidoUno("Eusse");
+		cliente.setApellidoDos("Valencia");
+		cliente.setNombreCompleto("Crisman Alejandro Eusse Valencia");
+		cliente.setCelular(3116963745L);
+		cliente.setCorreo("cris@car.com");
+		cliente.setFechaNacimiento(new Date());
+		cliente.setFechaRegistro(new Date());
 		lista.add(cliente);
 		Mockito.when(repository.findAll()).thenReturn(lista);
 	}
