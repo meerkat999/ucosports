@@ -14,6 +14,7 @@ requirejs.config({
       'appController' : 'app/controllers/home/appController',
       'clienteController' : 'app/controllers/clienteController',
       'habitacionController' : 'app/controllers/habitacionController',
+      'habitacionService' : 'app/services/habitacionService',
       'checkinController' : 'app/controllers/checkinController',
       'restService' : 'app/services/restService',
       'clienteService' : 'app/services/clienteService',
