@@ -30,5 +30,5 @@ requirejs.config({
     	'app-module' : ['angular']
     },
     deps: [
-      'app-module', 'sweetService', 'clienteController', 'numberDirective', 'checkinController','habitacionController']
+      'app-module', 'sweetService', 'clienteController', 'numberDirective', 'checkinController','habitacionController', 'administracionController']
 });

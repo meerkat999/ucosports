@@ -38,8 +38,6 @@ define(['angularAMD', 'angular-ui-router', 'angular-resource'], function (angula
             })
           }
         })
-       .state('app.registrarCliente', {
-        url: '/registrarCliente',
       .state('app.checkin.registro', {
         url: '/registro',
         views: {
@@ -79,5 +77,5 @@ define(['angularAMD', 'angular-ui-router', 'angular-resource'], function (angula
     });
 
     return angularAMD.bootstrap(app);
-    
+
 });
