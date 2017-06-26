@@ -55,14 +55,14 @@ public class HabitacionLogicalImpl extends LogicalCommonImpl<Habitacion,Habitaci
 	@Override
 	public HabitacionDTO add(HabitacionDTO habitaciondto) throws Exception {
 		Habitacion habitacion = new Habitacion();		
-		if(repository.findOne(habitacion.getId()) != null){
+		if(repository.findOne(habitaciondto.getId()) != null){
 			throw new Exception("Ya existe una Habitacion con ese Numero.");
 		}
 		habitacion.setCapacidad(habitaciondto.getCapacidad());;
 		habitacion.setDescripcion(habitaciondto.getDescripcion());		
 		habitacion.setEstado(habitaciondto.getEstado());
 		habitacion.setPrecio(habitaciondto.getPrecio());		
-		habitaciondto.setId(habitaciondto.getId());		
+		habitacion.setId(habitaciondto.getId());		
 		return buildDTO(repository.save(habitacion));
 		
 	}
