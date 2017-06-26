@@ -50,6 +50,7 @@ public class HabitacionLogicalImpl extends LogicalCommonImpl<Habitacion,Habitaci
 			habitacionDTO.setEstado(entity.getEstado());
 			habitacionDTO.setCapacidad(entity.getCapacidad());
 			habitacionDTO.setDescripcion(entity.getDescripcion());			
+			habitacionDTO.setNombre(entity.getNombre());
 		}
 		return habitacionDTO;
 	
@@ -66,7 +67,8 @@ public class HabitacionLogicalImpl extends LogicalCommonImpl<Habitacion,Habitaci
 		habitacion.setDescripcion(habitaciondto.getDescripcion());		
 		habitacion.setEstado(StatesEnum.ACTIVO.getValue());
 		habitacion.setPrecio(habitaciondto.getPrecio());		
-		habitacion.setId(habitaciondto.getId());		
+		habitacion.setId(habitaciondto.getId());
+		habitacion.setNombre(habitaciondto.getNombre());
 		return buildDTO(repository.save(habitacion));
 		
 	}

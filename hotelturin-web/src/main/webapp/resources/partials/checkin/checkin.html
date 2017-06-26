@@ -9,16 +9,47 @@
     <input number placeholder="Confirmación de Número" type="text" ng-change="validarEnTiempoRealCamposCedula()"  maxlength="10" number  ng-model="confirmacionCedula"></input>
   </fieldset>
 
-  <button ng-if="seBloqueanLosCamposDeCedula" ng-click="reset()">Nueva Verificación</button>
+  <label ng-if="seBloqueanLosCamposDeCedula" class="btn btn-default" ng-click="reset()">
+    Nueva Verificación
+  </label>
 
-  <div ng-if="mostrarVistaRegistro()">
-    <div ui-view="registro" style="display: flex;"></div>
-  </div>
+  <div ng-show="mostrarVistaCheckIn()">
 
-  <div ng-if="mostrarVistaCheckIn()">
     <div>Se realizará el check-in para el/la señor/a {{cliente.nombreCompleto}}</div>
-    <label>Habitaciones Disponibles</label>
-    <button ng-repeat="habitacion in habitacionesDisponibles">{{habitacion.id}}</button>
+
+    <div>
+      <label>
+        ¿Número de noches definidas?:
+        <input type="checkbox" ng-model="conoceElNumeroDeNoches.value"
+           ng-true-value="'SI'" ng-false-value="'NO'">
+      </label>
+      <div ng-show="conoceElNumeroDeNoches.value == 'SI'">
+        <label>Número de Noches:</label>
+        <input number type="text" maxlength="2" ng-model="numeroNoches"></input>
+        <label class="btn btn-default" ng-click="numeroNoches = 0">
+          Limpiar
+        </label>
+      </div>
+    </div>
+
+    <div>
+      <label>Número de Acompañantes:</label>
+      <input number type="text" maxlength="2" ng-model="numeroAcompanantes"></input>
+      <label class="btn btn-default" ng-click="numeroAcompanantes = 0">
+        Limpiar
+      </label>
+    </div>
+
+    <div>
+      <label>Habitaciones Disponibles</label>
+      <div class="btn-group" data-toggle="buttons">
+        <label ng-repeat="habitacion in habitacionesDisponibles | filter:filtrarPorCapacidad()" class="btn btn-default" ng-class="{active: habitacionSeleccionada.id == habitacion.id}" ng-click="">
+          <input type="radio" ng-click="openHabitacion(habitacion)"></input>
+          {{habitacion.id}}
+        </label>
+      </div>
+    </div>
+
   </div>
 
 </div>

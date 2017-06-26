@@ -13,6 +13,9 @@ define(['app-module', 'sweetalert'], function (app) {
           },
           info : function(title, text){
             swal({title: title,text: text, confirmButtonText: "¡Está bien!"});
+          },
+          question : function(title, text, confirmButtonText, cancelButtonText, func){
+            swal({title: title, text: text, showCancelButton: true, confirmButtonText: confirmButtonText, cancelButtonText : cancelButtonText }, func);
           }
         };
 

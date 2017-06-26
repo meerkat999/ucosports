@@ -26,10 +26,11 @@ public class Habitacion implements Serializable {
 	@Column(name="estado_id")
 	private Integer estado;
 	
-	
 	@Column(name="habitacion_descripcion")
 	private String descripcion;
-
+	
+	@Column(name="habitacion_nombre")
+	private String nombre;
 
 	public String getId() {
 		return id;
@@ -78,6 +79,17 @@ public class Habitacion implements Serializable {
 	public void setEstado(Integer estado) {
 		this.estado = estado;
 	}
+
+
+	public String getNombre() {
+		return nombre;
+	}
+
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+	
 	
 	
 	

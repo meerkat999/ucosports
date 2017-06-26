@@ -10,8 +10,8 @@ define(['app-module', 'restService'], function (app) {
           getAll : function(){
             return restService.GETArray(path + 'getAll');
           },
-          getByState : function(){
-              return restService.POST(path + 'getByState',estado);
+          getByState : function(filtro){
+              return restService.POST(path + 'getByState',filtro);
             },
           add : function(habitacion){
             return restService.POST(path + 'add', habitacion);

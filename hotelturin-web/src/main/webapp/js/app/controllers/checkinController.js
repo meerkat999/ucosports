@@ -1,6 +1,6 @@
-define(['app-module','clienteService', 'tipoDocumentoService', 'sweetService'], function (app) {
-    app.controller('checkinController',['$scope','$state', 'clienteService', 'tipoDocumentoService', 'sweetService',
-    function ($scope, $state, clienteService, tipoDocumentoService, sweetService) {
+define(['app-module','clienteService', 'tipoDocumentoService', 'sweetService', 'habitacionService'], function (app) {
+    app.controller('checkinController',['$scope','$state', 'clienteService', 'tipoDocumentoService', 'sweetService', 'habitacionService', '$filter',
+    function ($scope, $state, clienteService, tipoDocumentoService, sweetService, habitacionService, $filter) {
 
       $scope.campoVacio = function(campo){
         return campo == undefined || campo == "";
@@ -23,7 +23,7 @@ define(['app-module','clienteService', 'tipoDocumentoService', 'sweetService'], 
               sweetService.info("Cliente Registrado","El cliente " + cliente.nombreCompleto + " ya se encuentra registrado. \n Puedes continuar con el proceso de check-in.");
               $scope.seBloqueanLosCamposDeCedula = true;
             }else{
-              sweetService.info("Cliente no Registrado","Se te habiitará un módulo para registrar el nuevo cliente.");
+              sweetService.info("Cliente no Registrado","Se te habilitará un módulo para registrar el nuevo cliente.");
               $scope.esNecesarioRegistrar = true;
               $scope.nuevoCliente = {
                 id : {
@@ -51,14 +51,15 @@ define(['app-module','clienteService', 'tipoDocumentoService', 'sweetService'], 
         $scope.clienteRegistrado = null;
         $scope.cliente = null;
         $scope.checkin = true;
-        $scope.habitacionesDisponibles = [
-          {
-            id : "101"
-          },
-          {
-            id : "102"
-          }
-        ];
+        $scope.habitacionSeleccionada = {
+          id : null
+        };
+        $scope.numeroAcompanantes = 0;
+        $scope.habitacionesDisponibles = [];
+        $scope.conoceElNumeroDeNoches = {
+          value : "'NO'"
+        };
+        $scope.numeroNoches = 0;
       }
 
       $scope.buscarTiposDocumento = function(){
@@ -71,24 +72,47 @@ define(['app-module','clienteService', 'tipoDocumentoService', 'sweetService'], 
         })
       }
 
-      $scope.mostrarVistaCheckIn = function(){
-        if($scope.cliente !== null){
-          return true;
-        }
-        return false;
+      $scope.mostrarVistaRegistro = function(){
+        return $scope.esNecesarioRegistrar && $scope.cliente === null;
       }
 
-      $scope.mostrarVistaRegistro = function(){
-        if($scope.esNecesarioRegistrar &&
-          $scope.cliente === null){
-          return true;
+      $scope.mostrarVistaCheckIn = function(){
+        return $scope.cliente !== null;
+      }
+
+      $scope.filtrarPorCapacidad = function(){
+        return function(habitacion){
+          if(habitacion.capacidad >= $scope.numeroAcompanantes){
+            return true;
+          }
+          return false;
         }
-        return false;
+      }
+
+      $scope.buscarHabitacionesDisponibles = function(){
+        var estado = {
+          id : 1
+        }
+        habitacionService.getByState(estado).then(function(data){
+          if(data !== null && data.listaHabitaciones !== null){
+            $scope.habitacionesDisponibles = data.listaHabitaciones;
+          }
+        })
+      }
+
+      $scope.openHabitacion = function(habitacion){
+        sweetService.question(habitacion.id, habitacion.descripcion, "Seleccionar", "Cancelar", function(esSeleccionada){
+          if(esSeleccionada){
+            $scope.habitacionSeleccionada.id = habitacion.id;
+            $scope.$apply();
+          }
+        });
       }
 
       $scope.init = function(){
         $scope.reset();
         $scope.buscarTiposDocumento();
+        $scope.buscarHabitacionesDisponibles();
       }
 
       $scope.init();

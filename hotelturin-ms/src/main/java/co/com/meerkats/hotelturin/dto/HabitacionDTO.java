@@ -11,6 +11,7 @@ public class HabitacionDTO implements Serializable {
 	private Double precio;
 	private Integer capacidad;
 	private Integer estado;
+	private String nombre;
 	
 	public String getId() {
 		return id;
@@ -42,6 +43,12 @@ public class HabitacionDTO implements Serializable {
 	}
 	public void setEstado(Integer estado_id) {
 		this.estado = estado_id;
+	}
+	public String getNombre() {
+		return nombre;
+	}
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
 	
 	

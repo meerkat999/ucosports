@@ -2,20 +2,19 @@ package co.com.meerkats.hotelturin.logical.Impl;
 
 import java.util.List;
 
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.transaction.Transactional.TxType;
 
-import co.com.meerkats.hotelturin.domain.Habitacion;
 import co.com.meerkats.hotelturin.domain.Servicio;
 import co.com.meerkats.hotelturin.dto.EstadoDTO;
-import co.com.meerkats.hotelturin.dto.HabitacionDTO;
-import co.com.meerkats.hotelturin.dto.ListHabitacionDTO;
 import co.com.meerkats.hotelturin.dto.ListServicioDTO;
 import co.com.meerkats.hotelturin.dto.ServicioDTO;
 import co.com.meerkats.hotelturin.logical.IServicioLogical;
 import co.com.meerkats.hotelturin.repository.IServicioRepository;
 
+@RequestScoped
 public class ServicioLogicalImpl extends LogicalCommonImpl<Servicio,ServicioDTO> implements IServicioLogical {
 
 	@Inject

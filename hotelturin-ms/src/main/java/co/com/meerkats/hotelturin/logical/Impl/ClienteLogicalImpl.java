@@ -46,6 +46,9 @@ public class ClienteLogicalImpl extends LogicalCommonImpl<Cliente, ClienteDTO> i
 			clienteDTO.setApellidoUno(entity.getApellidoUno());
 			clienteDTO.setNombreUno(entity.getNombreUno());
 			clienteDTO.setFechaRegistro(entity.getFechaRegistro());
+			clienteDTO.setNombreDos(entity.getNombreDos());
+			clienteDTO.setApellidoDos(entity.getApellidoDos());
+			clienteDTO.setFechaNacimiento(entity.getFechaNacimiento());
 		}
 		return clienteDTO;
 	}
