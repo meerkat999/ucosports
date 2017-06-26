@@ -6,8 +6,6 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 
-import co.com.meerkats.hotelturin.domain.Cliente;
-import co.com.meerkats.hotelturin.domain.ClienteKey;
 import co.com.meerkats.hotelturin.domain.Habitacion;
 import co.com.meerkats.hotelturin.dto.EstadoDTO;
 import co.com.meerkats.hotelturin.dto.HabitacionDTO;
@@ -27,7 +25,7 @@ public class HabitacionLogicalImpl extends LogicalCommonImpl<Habitacion,Habitaci
 	}
 
 	@Override
-	public HabitacionDTO getbyState(EstadoDTO estado) {
+	public HabitacionDTO getByState(EstadoDTO estado) {
 		Habitacion habitacion = null;
 		Integer estado_id = estado.getId();
 		if(estado_id !=null){
@@ -60,7 +58,7 @@ public class HabitacionLogicalImpl extends LogicalCommonImpl<Habitacion,Habitaci
 		}
 		habitacion.setCapacidad(habitaciondto.getCapacidad());;
 		habitacion.setDescripcion(habitaciondto.getDescripcion());		
-		habitacion.setEstado(habitaciondto.getEstado());
+		habitacion.setEstado(1);
 		habitacion.setPrecio(habitaciondto.getPrecio());		
 		habitacion.setId(habitaciondto.getId());		
 		return buildDTO(repository.save(habitacion));
@@ -68,11 +66,13 @@ public class HabitacionLogicalImpl extends LogicalCommonImpl<Habitacion,Habitaci
 	}
 
 	@Override
-	public HabitacionDTO getbyId(HabitacionDTO habitaciondto) {
-		Habitacion habitacion=new Habitacion();
-		habitacion.setId(habitaciondto.getId());
+	public HabitacionDTO getById(HabitacionDTO habitaciondto) {
+		Habitacion habitacion=null;
+		String habitacion_id=habitaciondto.getId();
+		if(habitacion_id != null){
+			habitacion= repository.getOne(habitacion_id);
+		}	
 		return buildDTO(habitacion);
-		
 	}
 
 		}

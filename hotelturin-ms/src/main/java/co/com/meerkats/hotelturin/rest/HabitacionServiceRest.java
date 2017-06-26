@@ -12,7 +12,6 @@ import javax.ws.rs.core.MediaType;
 
 
 import co.com.meerkats.hotelturin.dto.EstadoDTO;
-import co.com.meerkats.hotelturin.dto.ClienteDTO;
 import co.com.meerkats.hotelturin.dto.HabitacionDTO;
 import co.com.meerkats.hotelturin.logical.IHabitacionLogical;
 
@@ -43,16 +42,16 @@ public class HabitacionServiceRest {
 	@Path("/getByState")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public HabitacionDTO getbyState (EstadoDTO estado){
-			return logical.getbyState(estado);
+	public HabitacionDTO getByState (EstadoDTO estado){
+			return logical.getByState(estado);
 	}
 	
 	@POST
 	@Path("/getById")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public HabitacionDTO getbyId (HabitacionDTO habitaciondto){
-			return logical.getbyId(habitaciondto);
+	public HabitacionDTO getById(HabitacionDTO habitaciondto){
+			return logical.getById(habitaciondto);
 	}
 	
 	

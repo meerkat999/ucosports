@@ -9,7 +9,7 @@ import co.com.meerkats.hotelturin.dto.HabitacionDTO;
 public interface IHabitacionLogical extends ILogicalCommon<Habitacion,HabitacionDTO> {
 	
 	List<HabitacionDTO> getAll();
-	HabitacionDTO getbyState(EstadoDTO estado);	
+	HabitacionDTO getByState(EstadoDTO estado);	
 	HabitacionDTO add(HabitacionDTO habitacion) throws Exception;
-	HabitacionDTO getbyId(HabitacionDTO id);
+	HabitacionDTO getById(HabitacionDTO habitacion);
 }

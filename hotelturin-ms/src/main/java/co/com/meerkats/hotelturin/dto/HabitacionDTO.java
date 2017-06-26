@@ -30,10 +30,7 @@ public class HabitacionDTO implements Serializable {
 	}
 	public double getPrecio() {
 		return precio;
-	}
-	public void setPrecio(double precio) {
-		this.precio = precio;
-	}
+	}	
 	public Integer getCapacidad() {
 		return capacidad;
 	}
