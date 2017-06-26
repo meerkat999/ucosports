@@ -93,7 +93,10 @@ figure {
   margin: 1em 40px;
 }
 hr {
-  height: 0;
+ height:5px;
+ background-color:#daa520;	
+  
+  color:#daa520;
   -webkit-box-sizing: content-box;
      -moz-box-sizing: content-box;
           box-sizing: content-box;
@@ -1144,10 +1147,13 @@ img {
   border-radius: 50%;
 }
 hr {
-  margin-top: 20px;
-  margin-bottom: 20px;
-  border: 0;
-  border-top: 1px solid #eee;
+	height: 5px;
+	background-color: #daa520;	
+	  color: #daa520;
+	  margin-top: 20px;
+	  margin-bottom: 20px;
+	  border: 0;
+	  border-top: 1px solid #eee;
 }
 .sr-only {
   position: absolute;

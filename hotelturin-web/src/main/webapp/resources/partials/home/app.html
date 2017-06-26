@@ -1,10 +1,11 @@
 <div>app</div>
-<div id="header">
-<button ng-click="goCheckin()">Check-in</button>
-<button ng-click="">Check-out</button>
-<button ng-click="goAdministracion()">Administración</button>
-<button ng-click="goRegistrarHabitacion()">Registrar Habitacion</button>
-
+<div align="center" id="header">
+<div class="btn-group btn-group-lg">
+<button class="btn btn-default" ng-click="goCheckin()">Check-in</button>
+<button class="btn btn-default" ng-click="">Check-out</button>
+<button class="btn btn-default" ng-click="goAdministracion()">Administración</button>
+<button class="btn btn-default" ng-click="goRegistrarHabitacion()">Registrar Habitacion</button>
+</div>
 <div id="content" style="display: flex">
   <div ui-view="content">Aquí se cargará según el botón que se ejecute</div>
 </div>
