@@ -8,5 +8,7 @@ import co.com.meerkats.hotelturin.dto.TipoDocumentoDTO;
 public interface ITipoDocumentoLogical extends ILogicalCommon<TipoDocumento, TipoDocumentoDTO> {
 
 	List<TipoDocumentoDTO> getAll();
+
+	TipoDocumentoDTO getById(TipoDocumentoDTO documentoDTO);
 	
 }

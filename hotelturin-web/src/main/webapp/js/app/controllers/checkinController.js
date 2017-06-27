@@ -1,6 +1,7 @@
-define(['app-module','clienteService', 'tipoDocumentoService', 'sweetService', 'habitacionService'], function (app) {
-    app.controller('checkinController',['$scope','$state', 'clienteService', 'tipoDocumentoService', 'sweetService', 'habitacionService', '$filter',
-    function ($scope, $state, clienteService, tipoDocumentoService, sweetService, habitacionService, $filter) {
+define(['app-module','clienteService', 'tipoDocumentoService', 'sweetService', 'habitacionService', 'arriendoService'], function (app) {
+    app.controller('checkinController',['$scope','$state', 'clienteService', 'tipoDocumentoService',
+    'sweetService', 'habitacionService', '$filter', 'arriendoService',
+    function ($scope, $state, clienteService, tipoDocumentoService, sweetService, habitacionService, $filter, arriendoService) {
 
       $scope.campoVacio = function(campo){
         return campo == undefined || campo == "";
@@ -196,6 +197,37 @@ define(['app-module','clienteService', 'tipoDocumentoService', 'sweetService', '
 
       $scope.cancelarAnadir = function(){
         $scope.registarAcompanante = false;
+      }
+
+      $scope.realizarCheckIn = function(){
+        $scope.arriendo = {
+          habitacionId : $scope.habitacionSeleccionada.id,
+          clienteId : $scope.cliente.id.id,
+          tipodocumentoId : $scope.cliente.id.tipodocumento,
+          numeroNoches : $scope.numeroNoches,
+          acompanantes : $scope.acompanantes
+        }
+        arriendoService.add($scope.arriendo).then(function(arriendo){
+          if(arriendo !== null && arriendo.id !== null){
+            var fecha = $filter('date')(new Date(arriendo.dateCheckin), "yyyy/MM/dd 'a las' h:mma")
+            sweetService.success("El check-in se registró correctamente el " + fecha)
+          }
+        }, function(error){
+          sweetService.error("El check-in no se registró correctamente.")
+        })
+      }
+
+      $scope.finishCheckIn = function(){
+        if($scope.cliente === null || $scope.cliente.id.id === null || $scope.habitacionSeleccionada.id === null || $scope.numeroAcompanantes != $scope.acompanantes.length){
+          sweetService.warning("Falta información para realizar el check-in.");
+        }else{
+          sweetService.question("Finalizar Check-in", "¿Está seguro que desea realizar el check-in?", "Realizar", "Cancelar",
+            function(confirm){
+              if(confirm){
+                $scope.realizarCheckIn();
+              }
+            })
+        }
       }
 
       $scope.init = function(){

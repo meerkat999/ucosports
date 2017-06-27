@@ -32,4 +32,13 @@ public class TipoDocumentoLogicalImpl extends LogicalCommonImpl<TipoDocumento, T
 		return documentoDTO;
 	}
 
+	@Override
+	public TipoDocumentoDTO getById(TipoDocumentoDTO documentoDTO) {
+		TipoDocumentoDTO dto = null;
+		if(documentoDTO != null && documentoDTO.getId() != null){
+			dto = buildDTO(repository.findOne(documentoDTO.getId()));
+		}
+		return dto;
+	}
+
 }

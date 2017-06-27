@@ -19,6 +19,7 @@ requirejs.config({
       'administracionController' : 'app/controllers/administracionController',
       'restService' : 'app/services/restService',
       'clienteService' : 'app/services/clienteService',
+      'arriendoService' : 'app/services/arriendoService',
       'tipoDocumentoService' : 'app/services/tipoDocumentoService',
       'sweetService' : 'app/services/util/sweetService',
       'numberDirective' : 'app/directives/numberDirective'

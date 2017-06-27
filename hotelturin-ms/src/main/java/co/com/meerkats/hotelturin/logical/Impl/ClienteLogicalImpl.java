@@ -20,9 +20,11 @@ import co.com.meerkats.hotelturin.domain.Cliente;
 import co.com.meerkats.hotelturin.domain.ClienteKey;
 import co.com.meerkats.hotelturin.dto.ClienteDTO;
 import co.com.meerkats.hotelturin.dto.ClienteKeyDTO;
+import co.com.meerkats.hotelturin.dto.TipoDocumentoDTO;
 import co.com.meerkats.hotelturin.dto.utils.DateDTO;
 import co.com.meerkats.hotelturin.dto.utils.ListDateDTO;
 import co.com.meerkats.hotelturin.logical.IClienteLogical;
+import co.com.meerkats.hotelturin.logical.ITipoDocumentoLogical;
 import co.com.meerkats.hotelturin.repository.IClienteRepository;
 import co.com.meerkats.hotelturin.utils.DateUtil;
 
@@ -31,6 +33,9 @@ public class ClienteLogicalImpl extends LogicalCommonImpl<Cliente, ClienteDTO> i
 
 	@Inject
 	private IClienteRepository repository;
+	
+	@Inject
+	private ITipoDocumentoLogical tipoDocumentoLogical;
 
 	@Override
 	public ClienteDTO buildDTO(Cliente entity) {
@@ -69,28 +74,51 @@ public class ClienteLogicalImpl extends LogicalCommonImpl<Cliente, ClienteDTO> i
 	@Override
 	@Transactional(value=TxType.REQUIRED, rollbackOn=Exception.class)
 	public ClienteDTO add(ClienteDTO clientedto) throws Exception {
+		
 		Cliente cliente = new Cliente();
 		cliente.setApellidoUno(clientedto.getApellidoUno());
 		cliente.setCelular(clientedto.getCelular());
 		cliente.setNombreUno(clientedto.getNombreUno());
 		cliente.setNombreDos(clientedto.getNombreDos());
 		cliente.setApellidoDos(clientedto.getApellidoDos());
+		
+		validarTipoDocumento(clientedto);
+		
 		ClienteKey id = new ClienteKey();
 		id.setId(clientedto.getId().getId());
 		id.setTipoDocumento(clientedto.getId().getTipodocumento());
-		if(repository.findOne(id) != null){
-			throw new Exception("Ya existe un cliente con esa cédula.");
-		}
+		
+		validarExistenciaUsuario(id);
+		
 		cliente.setId(id);
 		cliente.setFechaRegistro(new Date());
+		cliente.setNombreCompleto(buildNombreCompleto(clientedto));
+		cliente.setCorreo(clientedto.getCorreo());
+		cliente.setFechaNacimiento(clientedto.getFechaNacimiento());
+		
+		return buildDTO(repository.save(cliente));
+	}
+
+	private String buildNombreCompleto(ClienteDTO clientedto) {
 		String nombreCompleto = clientedto.getNombreUno() + " " + clientedto.getApellidoUno() + " " + clientedto.getApellidoDos();
 		if(clientedto.getNombreDos() != null){
 			nombreCompleto = clientedto.getNombreUno() + " " + clientedto.getNombreDos() + " " + clientedto.getApellidoUno() + " " + clientedto.getApellidoDos();
 		}
-		cliente.setNombreCompleto(nombreCompleto);
-		cliente.setCorreo(clientedto.getCorreo());
-		cliente.setFechaNacimiento(clientedto.getFechaNacimiento());
-		return buildDTO(repository.save(cliente));
+		return nombreCompleto;
+	}
+
+	private void validarExistenciaUsuario(ClienteKey id) throws Exception {
+		if(repository.findOne(id) != null){
+			throw new Exception("Ya existe un cliente con esa cédula.");
+		}
+	}
+
+	private void validarTipoDocumento(ClienteDTO clientedto) throws Exception {
+		TipoDocumentoDTO documentoDTO = new TipoDocumentoDTO();
+		documentoDTO.setId(clientedto.getId().getTipodocumento());
+		if(tipoDocumentoLogical.getById(documentoDTO) == null){
+			throw new Exception("No se puede registrar un cliente con un tipo de documento inexistente.");
+		}
 	}
 
 	@Override
