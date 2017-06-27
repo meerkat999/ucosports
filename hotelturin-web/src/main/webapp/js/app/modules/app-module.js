@@ -65,6 +65,15 @@ define(['angularAMD', 'angular-ui-router', 'angular-resource'], function (angula
           })
         }
     })
+       .state('app.administracion.registrarServicio', {
+        url: '/registrarServicio',
+        views: {
+          'content@app.administracion': angularAMD.route({
+            templateUrl : 'resources/partials/servicio/registrarServicio.html',
+            controller : 'servicioController'
+          })
+        }
+    })
       .state('app.administracion.adminClientes', {
           url: '/adminClientes',
           views: {

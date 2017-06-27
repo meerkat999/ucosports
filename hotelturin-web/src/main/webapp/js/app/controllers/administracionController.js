@@ -1,6 +1,6 @@
-define(['app-module', 'clienteService','habitacionService'], function (app) {
-    app.controller('administracionController',['$scope','$state', 'clienteService','habitacionService',
-     function ($scope, $state, clienteService,habitacionService) {
+define(['app-module', 'clienteService','habitacionService','servicioService'], function (app) {
+    app.controller('administracionController',['$scope','$state', 'clienteService','habitacionService','servicioService',
+     function ($scope, $state, clienteService,habitacionService,servicioService) {
 
         $scope.goAdminClientes = function(){
           $state.go("app.administracion.adminClientes")
@@ -8,7 +8,10 @@ define(['app-module', 'clienteService','habitacionService'], function (app) {
         $scope.goRegistrarHabitacion = function(){
             $state.go("app.administracion.registrarHabitacion")
        }
-
+        $scope.goRegistrarServicio = function(){
+            $state.go("app.administracion.registrarServicio")
+       }
+        
         $scope.getMonthsWithClients = function(year){
           clienteService.getMonthsWithClients(year).then(function(listafechas){
             $scope.listaMesesConClientes = listafechas.listaFechas;
