@@ -1,9 +1,9 @@
 define(['app-module', 'sweetService', 'servicioService'], function (app) {
-    app.controller('habitacionController',['$scope','$state', 'sweetService', 'servicioService',
+    app.controller('servicioController',['$scope','$state', 'sweetService', 'servicioService',
         function ($scope, $state, sweetService, servicioService) {
 
       $scope.agregar = function(){
-          servicioService.add($scope.Habitacion).then(function(data){
+          servicioService.add($scope.Servicio).then(function(data){
             if(data !== null){
           	   sweetService.success("El Servicio adicional " + data.nombre + " fue registrado satisfactoriamente");
             }
@@ -22,7 +22,7 @@ define(['app-module', 'sweetService', 'servicioService'], function (app) {
         if($scope.campoVacio($scope.Servicio.nombre)){
           valido = false;
           $scope.erroresFormularioRegistro[0] = true;
-        }else if($scope.campoVacio($scope.Servicio.precio)){
+        }else if($scope.campoVacio($scope.Servicio.valor)){
           valido = false;
           $scope.erroresFormularioRegistro[1] = true;           
         }

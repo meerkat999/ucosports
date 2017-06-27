@@ -63,7 +63,7 @@ public class HabitacionLogicalImpl extends LogicalCommonImpl<Habitacion,Habitaci
 		if(repository.findOne(habitaciondto.getId()) != null){
 			throw new Exception("Ya existe una Habitacion con ese Numero.");
 		}
-		habitacion.setCapacidad(habitaciondto.getCapacidad());;
+		habitacion.setCapacidad(habitaciondto.getCapacidad());
 		habitacion.setDescripcion(habitaciondto.getDescripcion());		
 		habitacion.setEstado(StatesEnum.ACTIVO.getValue());
 		habitacion.setPrecio(habitaciondto.getPrecio());		

@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 import javax.transaction.Transactional.TxType;
 
 import co.com.meerkats.hotelturin.domain.Servicio;
+import co.com.meerkats.hotelturin.domain.constants.StatesEnum;
 import co.com.meerkats.hotelturin.dto.EstadoDTO;
 import co.com.meerkats.hotelturin.dto.ListServicioDTO;
 import co.com.meerkats.hotelturin.dto.ServicioDTO;
@@ -53,13 +54,16 @@ public class ServicioLogicalImpl extends LogicalCommonImpl<Servicio,ServicioDTO>
 		return servicioDTO;
 	
 	}
-	
+
 	@Transactional(value=TxType.REQUIRED, rollbackOn=Exception.class)
 	@Override
 	public ServicioDTO add(ServicioDTO serviciodto) throws Exception {
-		Servicio servicio = new Servicio();			
+		Servicio servicio = new Servicio();	
+		if(repository.findOne(serviciodto.getId()) != null){
+			throw new Exception("Ya existe un Servicio Adicional con ese Id.");
+		}
 		servicio.setId(serviciodto.getId());		
-		servicio.setEstado(1);
+		servicio.setEstado(StatesEnum.ACTIVO.getValue());
 		servicio.setValor(serviciodto.getValor());		
 		servicio.setNombre(serviciodto.getNombre());		
 		return buildDTO(repository.save(servicio));
@@ -75,11 +79,7 @@ public class ServicioLogicalImpl extends LogicalCommonImpl<Servicio,ServicioDTO>
 		return buildDTO(servicio);
 	}
 
-	@Override
-	public List<ServicioDTO> listEntitiesToListDTOs(List<Servicio> listEntities) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 
 
 
