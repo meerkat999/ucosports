@@ -74,54 +74,62 @@ public class ArriendoLogicalImpl extends LogicalCommonImpl<Arriendo, ArriendoDTO
 	public ArriendoDTO add(ArriendoDTO arriendoDTO) throws Exception {
 		ArriendoDTO respuesta = null;
 		if(arriendoDTO == null){
-			throw new Exception("Error al intentar guardar un arriendo teniendo el dto nulo");
-		}else{
-			String cedula = arriendoDTO.getClienteId();
-			Integer tipodocumentoId = arriendoDTO.getTipodocumentoId();
-			String habitacionId = arriendoDTO.getHabitacionId();
-			List<ClienteDTO> acompanantes = arriendoDTO.getAcompanantes();
-			
-			validarHabitacion(habitacionId);
-			validarTipoDocumentoYCliente(cedula, tipodocumentoId);
-
-			Arriendo arriendo = new Arriendo();
-			arriendo.setClienteId(cedula);
-			arriendo.setTipodocumentoId(tipodocumentoId);
-			arriendo.setEstadoId(StatesEnum.ACTIVO.getValue());
-			arriendo.setHabitacionId(habitacionId);
-			arriendo.setDateCheckin(new Date());
-			arriendo.setFecha(new Date());
-			arriendo.setNumeroNoches(arriendoDTO.getNumeroNoches());
-			arriendo.setNumeroAcompanantes(acompanantes.size());
-			arriendo.setDateCheckout(null);
-			
-			arriendo = repository.save(arriendo);
-			
-			for (ClienteDTO cliente : acompanantes) {
-				AcompananteDTO acompananteDTO = new AcompananteDTO();
-				acompananteDTO.setCedulaId(cliente.getId().getId());
-				acompananteDTO.setTipoDocumentoId(cliente.getId().getTipodocumento());
-				acompananteDTO.setArriendoId(arriendo.getId());
-				acompananteLogical.add(acompananteDTO);
-			}
-			
-			respuesta = buildDTO(arriendo);
-			
+			throw new Exception("Error al intentar guardar un arriendo teniendo el dto nulo.");
 		}
+		String cedula = arriendoDTO.getClienteId();
+		Integer tipodocumentoId = arriendoDTO.getTipodocumentoId();
+		String habitacionId = arriendoDTO.getHabitacionId();
+		List<ClienteDTO> acompanantes = arriendoDTO.getAcompanantes();
+		
+		validarHabitacion(habitacionId);
+		validarTipoDocumentoYCliente(cedula, tipodocumentoId);
+		validarCheckInActivoCliente(cedula, tipodocumentoId);
+
+		Arriendo arriendo = new Arriendo();
+		arriendo.setClienteId(cedula);
+		arriendo.setTipodocumentoId(tipodocumentoId);
+		arriendo.setEstadoId(StatesEnum.ACTIVO.getValue());
+		arriendo.setHabitacionId(habitacionId);
+		arriendo.setDateCheckin(new Date());
+		arriendo.setFecha(new Date());
+		arriendo.setNumeroNoches(arriendoDTO.getNumeroNoches());
+		arriendo.setNumeroAcompanantes(acompanantes.size());
+		arriendo.setDateCheckout(null);
+		
+		arriendo = repository.save(arriendo);
+		
+		for (ClienteDTO cliente : acompanantes) {
+			AcompananteDTO acompananteDTO = new AcompananteDTO();
+			acompananteDTO.setCedulaId(cliente.getId().getId());
+			acompananteDTO.setTipoDocumentoId(cliente.getId().getTipodocumento());
+			acompananteDTO.setArriendoId(arriendo.getId());
+			acompananteLogical.add(acompananteDTO);
+		}
+		
+		respuesta = buildDTO(arriendo);
 		return respuesta;
+	}
+
+	private void validarCheckInActivoCliente(String cedula, Integer tipodocumentoId) throws Exception {
+		ClienteKeyDTO keyDto = new ClienteKeyDTO();
+		keyDto.setId(cedula);
+		keyDto.setTipodocumento(tipodocumentoId);
+		if(getByClienteKeyCheckInActive(keyDto) != null){
+			throw new Exception("Error al intentar guardar un arriendo a un cliente con checkin aún activo.");
+		};
 	}
 
 	private void validarTipoDocumentoYCliente(String cedula, Integer tipodocumentoId) throws Exception {
 		TipoDocumentoDTO documentoDTO = new TipoDocumentoDTO();
 		documentoDTO.setId(tipodocumentoId);
 		if(tipoDocumentoLogical.getById(documentoDTO) == null){
-			throw new Exception("Error al intentar guardar un arriendo con un cliente con tipo de identificación inválido.");
+			throw new Exception("Error al intentar obtener un tipo documento inexistente.");
 		}
 		ClienteKeyDTO keyDto = new ClienteKeyDTO();
 		keyDto.setId(cedula);
 		keyDto.setTipodocumento(tipodocumentoId);
 		if(clienteLogical.getById(keyDto) == null){
-			throw new Exception("Error al intentar guardar un arriendo con un cliente inexistente.");
+			throw new Exception("Error al intentar obtener un cliente inexistente.");
 		}
 	}
 
@@ -131,9 +139,21 @@ public class ArriendoLogicalImpl extends LogicalCommonImpl<Arriendo, ArriendoDTO
 		HabitacionDTO habitacionEncontrada = habitacionLogical.getById(habitacionDTO);
 		if(habitacionEncontrada == null){
 			throw new Exception("Error al intentar guardar un arriendo con una habitación inexistente.");
-		}else if(habitacionEncontrada.getEstado() != StatesEnum.ACTIVO.getValue()){
+		}
+		if(habitacionEncontrada.getEstado() != StatesEnum.ACTIVO.getValue()){
 			throw new Exception("Error al intentar guardar un arriendo con una habitación que no está activa.");
-		};
+		}
 	}
+
+	@Override
+	public ArriendoDTO getByClienteKeyCheckInActive(ClienteKeyDTO clienteKeyDTO) throws Exception {
+		ArriendoDTO dto = null;
+		if(clienteKeyDTO != null && clienteKeyDTO.getId() != null && clienteKeyDTO.getTipodocumento() != null){
+			validarTipoDocumentoYCliente(clienteKeyDTO.getId() , clienteKeyDTO.getTipodocumento());
+			dto = buildDTO(repository.findByClienteIdAndTipodocumentoIdAndEstadoId(clienteKeyDTO.getId(), clienteKeyDTO.getTipodocumento(), StatesEnum.ACTIVO.getValue()));
+		}
+		return dto;
+	}
+
 
 }

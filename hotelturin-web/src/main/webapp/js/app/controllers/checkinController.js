@@ -19,10 +19,15 @@ define(['app-module','clienteService', 'tipoDocumentoService', 'sweetService', '
           };
           clienteService.getById(id).then(function(cliente){
             if(cliente.id !== undefined){
-              $scope.cliente = cliente;
-              $scope.puedeHacerCheckin = true;
-              sweetService.info("Cliente Registrado","El cliente " + cliente.nombreCompleto + " ya se encuentra registrado. \n Puedes continuar con el proceso de check-in.");
-              $scope.seBloqueanLosCamposDeCedula = true;
+              arriendoService.getByClienteKeyCheckInActive(cliente.id).then(function(arriendo){
+                if(arriendo !== undefined && arriendo.id !== undefined){
+                  sweetService.warning("No puedes generar un checkin a un cliente que ya tiene uno activo.");
+                }else{
+                  $scope.cliente = cliente;
+                  sweetService.info("Cliente Registrado","El cliente " + cliente.nombreCompleto + " ya se encuentra registrado. \n Puedes continuar con el proceso de check-in.");
+                  $scope.seBloqueanLosCamposDeCedula = true;
+                }
+              })
             }else{
               sweetService.info("Cliente no Registrado","Se te habilitará un módulo para registrar el nuevo cliente.");
               $scope.esNecesarioRegistrar = true;
@@ -54,13 +59,19 @@ define(['app-module','clienteService', 'tipoDocumentoService', 'sweetService', '
               if(cliente.id.id === $scope.cliente.id.id){
                 sweetService.warning("No puedes añadir como acompañante al cliente principal.");
               }else{
-                if($scope.buscarIDenAcompanantes(cliente.id.id)){
-                    sweetService.warning("El acompañante ya ha sido añadido.");
-                }else{
-                  $scope.acompanante = cliente;
-                  sweetService.info("Cliente Registrado","El cliente " + cliente.nombreCompleto + " ya se encuentra registrado. \n Ya puedes agregarlo como acompañante.");
-                  $scope.seBloqueanLosCamposDeCedulaAcompanante = true;
-                }
+                arriendoService.getByClienteKeyCheckInActive(cliente.id).then(function(arriendo){
+                  if(arriendo !== undefined && arriendo.id !== undefined){
+                    sweetService.warning("No puedes generar un checkin con un acompañante que ya tiene uno activo.");
+                  }else{
+                    if($scope.buscarIDenAcompanantes(cliente.id.id)){
+                        sweetService.warning("El acompañante ya ha sido añadido.");
+                    }else{
+                      $scope.acompanante = cliente;
+                      sweetService.info("Cliente Registrado","El cliente " + cliente.nombreCompleto + " ya se encuentra registrado. \n Ya puedes agregarlo como acompañante.");
+                      $scope.seBloqueanLosCamposDeCedulaAcompanante = true;
+                    }
+                  }
+                })
               }
             }else{
               sweetService.info("Cliente no Registrado","Se te habilitará un módulo para registrar el nuevo cliente.");
@@ -85,38 +96,6 @@ define(['app-module','clienteService', 'tipoDocumentoService', 'sweetService', '
           }
         }
         return false;
-      }
-
-      $scope.reset = function(){
-        $scope.buscarTiposDocumento();
-        $scope.buscarHabitacionesDisponibles();
-        $scope.nuevoCliente = {
-          id : {}
-        };
-        $scope.esNecesarioRegistrar = false;
-        $scope.puedeHacerCheckin = false;
-        $scope.seBloqueanLosCamposDeCedula = false;
-        $scope.tipodocumento = null;
-        $scope.cedulaVerificar = null;
-        $scope.confirmacionCedula = null;
-        $scope.cliente = null;
-        $scope.checkin = true;
-        $scope.habitacionSeleccionada = {
-          id : null
-        };
-        $scope.numeroAcompanantes = 0;
-        $scope.habitacionesDisponibles = [];
-        $scope.conoceElNumeroDeNoches = {
-          value : "'NO'"
-        };
-        $scope.numeroNoches = 0;
-        $scope.acompanantes = [];
-        $scope.registarAcompanante = false;
-        $scope.acompanante = null;
-        $scope.seBloqueanLosCamposDeCedulaAcompanante = false;
-        $scope.tipodocumentoAcompanante = null;
-        $scope.confirmacionCedulaAcompanante = null;
-        $scope.cedulaVerificarAcompanante = null;
       }
 
       $scope.buscarTiposDocumento = function(){
@@ -210,7 +189,12 @@ define(['app-module','clienteService', 'tipoDocumentoService', 'sweetService', '
         arriendoService.add($scope.arriendo).then(function(arriendo){
           if(arriendo !== null && arriendo.id !== null){
             var fecha = $filter('date')(new Date(arriendo.dateCheckin), "yyyy/MM/dd 'a las' h:mma")
-            sweetService.success("El check-in se registró correctamente el " + fecha)
+            sweetService.success("El check-in se registró correctamente el "
+              + fecha + ". /n Para el cliente " + $scope.cliente.nombreCompleto + " en la habitación " + $scope.habitacionSeleccionada.id + ".",
+              function(){
+                $scope.print();
+                $scope.reset();
+              });
           }
         }, function(error){
           sweetService.error("El check-in no se registró correctamente.")
@@ -228,6 +212,62 @@ define(['app-module','clienteService', 'tipoDocumentoService', 'sweetService', '
               }
             })
         }
+      }
+
+      $scope.print = function(){
+        printElement(document.getElementById("printThis"));
+
+        var modThis = document.querySelector("#printSection");
+        modThis.appendChild(document.createTextNode(" new"));
+
+        window.print();
+      }
+
+      function printElement(elem) {
+          var domClone = elem.cloneNode(true);
+
+          var $printSection = document.getElementById("printSection");
+
+          if (!$printSection) {
+              var $printSection = document.createElement("div");
+              $printSection.id = "printSection";
+              document.body.appendChild($printSection);
+          }
+
+          $printSection.innerHTML = "";
+
+          $printSection.appendChild(domClone);
+      }
+
+      $scope.reset = function(){
+        $scope.buscarTiposDocumento();
+        $scope.buscarHabitacionesDisponibles();
+        $scope.nuevoCliente = {
+          id : {}
+        };
+        $scope.esNecesarioRegistrar = false;
+        $scope.seBloqueanLosCamposDeCedula = false;
+        $scope.tipodocumento = null;
+        $scope.cedulaVerificar = null;
+        $scope.confirmacionCedula = null;
+        $scope.cliente = null;
+        $scope.checkin = true;
+        $scope.habitacionSeleccionada = {
+          id : null
+        };
+        $scope.numeroAcompanantes = 0;
+        $scope.habitacionesDisponibles = [];
+        $scope.conoceElNumeroDeNoches = {
+          value : "'NO'"
+        };
+        $scope.numeroNoches = 0;
+        $scope.acompanantes = [];
+        $scope.registarAcompanante = false;
+        $scope.acompanante = null;
+        $scope.seBloqueanLosCamposDeCedulaAcompanante = false;
+        $scope.tipodocumentoAcompanante = null;
+        $scope.confirmacionCedulaAcompanante = null;
+        $scope.cedulaVerificarAcompanante = null;
       }
 
       $scope.init = function(){

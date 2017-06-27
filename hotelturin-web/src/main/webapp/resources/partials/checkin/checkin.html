@@ -87,28 +87,34 @@
       </div>
     </div>
 
-    <div style="display: grid;">
+    <div style="display: grid;" id="printThis">
         <h3>Check-in</h3>
         <div style="display: grid;"><label>Cliente:</label> {{cliente.nombreCompleto}}</div>
         <br>
         <div style="display: grid;" ng-if="habitacionSeleccionada"><label>Habitacion:</label> {{habitacionSeleccionada.id}}- {{habitacionSeleccionada.nombre}}</div>
         <br>
         <div style="display: grid;" ng-show="numeroNoches > 0 && habitacionSeleccionada.precio">
-          <label>Valor a pagar en el checkout:</label> {{habitacionSeleccionada.precio * numeroNoches}}
+          <label>Valor a pagar en el checkout:</label> {{habitacionSeleccionada.precio * numeroNoches | currency}}
         </div>
         <div style="display: grid;" ng-show="numeroNoches == 0">
           <label>Valor a pagar en el checkout:</label> El valor dependerá de la fecha de salida.
         </div>
         <br>
-        <div style="display: grid;"><label>Acompañantes:</label>
-          <div ng-repeat="acompanante in acompanantes">
+        <div  style="display: grid;"><label>Acompañantes:</label>
+          <div ng-show="acompanantes.length > 0 "ng-repeat="acompanante in acompanantes">
             {{acompanante.id.id}} - {{acompanante.nombreCompleto}}
+          </div>
+          <div ng-show="acompanantes.length == 0 ">
+            Sin Acompañantes
           </div>
         </div>
         <br>
-        <label class="btn btn-default" ng-click="finishCheckIn()">
-          Check-in
-        </label>
+    </div>
+
+    <div>
+      <label class="btn btn-default" ng-click="finishCheckIn()">
+        Check-in
+      </label>
     </div>
 
   </div>

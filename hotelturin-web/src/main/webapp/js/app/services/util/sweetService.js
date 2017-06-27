@@ -8,8 +8,8 @@ define(['app-module', 'sweetalert'], function (app) {
           warning : function(text){
             swal({title: "¡Cuidado!",text: text,type: "warning", confirmButtonText: "¡Está bien!"});
           },
-          success : function(text){
-            swal({title: "¡Excelente!",text: text,type: "success", confirmButtonText: "¡Está bien!"});
+          success : function(text, func){
+            swal({title: "¡Excelente!",text: text,type: "success", confirmButtonText: "¡Está bien!"}, func);
           },
           info : function(title, text){
             swal({title: title,text: text, confirmButtonText: "¡Está bien!"});
