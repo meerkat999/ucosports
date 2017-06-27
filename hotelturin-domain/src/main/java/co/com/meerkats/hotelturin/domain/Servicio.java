@@ -22,7 +22,7 @@ public class Servicio implements Serializable {
 	@Column(name="servicioadicional_nombre")
 	private String nombre;
 	
-	@Column(name="servicioadicional_valor")
+	@Column(name="servicioadicional_precio")
 	private Double valor;
 	
 	@Column(name="estado_id")

@@ -38,6 +38,27 @@ define(['app-module', 'sweetService', 'habitacionService'], function (app) {
         return valido;
       }
 
+      $scope.llenarFormularioRegistro = function(){
+          var valido = true;
+          $scope.erroresFormularioRegistro = [];
+          if($scope.campoVacio($scope.Habitacion.id)){
+            valido = false;
+            $scope.erroresFormularioRegistro[0] = true;
+          }else if($scope.campoVacio($scope.Habitacion.nombre)){
+            valido = false;
+            $scope.erroresFormularioRegistro[1] = true;
+          }else if($scope.campoVacio($scope.Habitacion.capacidad)){
+            valido = false;
+            $scope.erroresFormularioRegistro[2] = true;
+          }else if($scope.campoVacio($scope.Habitacion.descripcion)){
+            valido = false;
+            $scope.erroresFormularioRegistro[3] = true;
+          }else if($scope.campoVacio($scope.Habitacion.precio)){
+            valido = false;
+            $scope.erroresFormularioRegistro[4] = true;
+          }
+          return valido;
+        }
 
       $scope.registrar = function(){
         if($scope.validarFormularioRegistro() == true){
@@ -50,11 +71,25 @@ define(['app-module', 'sweetService', 'habitacionService'], function (app) {
           });
         }
       }
-
-
+      
+      $scope.buscarhabitaciones = function(){          
+    	  habitacionService.getAll().then(function(lista){
+              if(lista !== null && lista !== undefined){
+                $scope.listHabitaciones = lista;
+              }
+            }, function(error){
+              sweetService.error("No se pudieron obtener las Habitaciones.");
+            })
+          }
+      $scope.edit = function(Habitacion){          
+    	 
+          }
+    
       $scope.init = function(){
+    	$scope.buscarhabitaciones();    
         $scope.listHabitaciones = [];
         $scope.Habitacion={};
+                      
       }
 
       $scope.init();

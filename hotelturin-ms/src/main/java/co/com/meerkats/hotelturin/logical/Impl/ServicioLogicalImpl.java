@@ -58,11 +58,7 @@ public class ServicioLogicalImpl extends LogicalCommonImpl<Servicio,ServicioDTO>
 	@Transactional(value=TxType.REQUIRED, rollbackOn=Exception.class)
 	@Override
 	public ServicioDTO add(ServicioDTO serviciodto) throws Exception {
-		Servicio servicio = new Servicio();	
-		if(repository.findOne(serviciodto.getId()) != null){
-			throw new Exception("Ya existe un Servicio Adicional con ese Id.");
-		}
-		servicio.setId(serviciodto.getId());		
+		Servicio servicio = new Servicio();			
 		servicio.setEstado(StatesEnum.ACTIVO.getValue());
 		servicio.setValor(serviciodto.getValor());		
 		servicio.setNombre(serviciodto.getNombre());		

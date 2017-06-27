@@ -19,3 +19,15 @@
   </div>
   
 </div>
+
+<div>
+      <label>Servicios</label>
+      <div>
+        <div class="btn-group" data-toggle="buttons">
+          <label ng-repeat="Servicio in serviciosDisponibles" class="btn btn-default" ng-class="{active: servicioSeleccionado.id == Servicio.id}" ng-click="">
+            <input type="radio" ng-click="openServicio(Servicio)"></input>
+            <label>{{Servicio.nombre}}</label> <br> {{Servicio.valor}} <br> 
+          </label>
+        </div>
+      </div>
+    </div>

@@ -22,9 +22,8 @@ public class HabitacionLogicalImpl extends LogicalCommonImpl<Habitacion,Habitaci
 	private IHabitacionRepository repository;
 
 	@Override
-	public List<HabitacionDTO> getAll() {
-		List<Habitacion> listaHabitaciones = repository.findAll();
-		return listEntitiesToListDTOs(listaHabitaciones);
+	public List<HabitacionDTO> getAll() {		
+		return listEntitiesToListDTOs(repository.findAll());
 	}
 
 	@Override
