@@ -19,10 +19,17 @@ define(['app-module','clienteService', 'tipoDocumentoService', 'sweetService', '
           };
           clienteService.getById(id).then(function(cliente){
             if(cliente.id !== undefined){
-              $scope.cliente = cliente;
-              $scope.puedeHacerCheckin = true;
-              sweetService.info("Cliente Registrado","El cliente " + cliente.nombreCompleto + " ya se encuentra registrado. \n Puedes continuar con el proceso de check-in.");
-              $scope.seBloqueanLosCamposDeCedula = true;
+              arriendoService.getByClienteKeyCheckInActive(cliente.id).then(function(arriendo){
+                if(arriendo !== undefined && arriendo.id !== undefined){
+                  sweetService.warning("No puedes generar un checkin a un cliente que ya tiene uno activo.");
+                }else{
+                  $scope.cliente = cliente;
+                  sweetService.info("Cliente Registrado","El cliente " + cliente.nombreCompleto + " ya se encuentra registrado. \n Puedes continuar con el proceso de check-in.");
+                  $scope.seBloqueanLosCamposDeCedula = true;
+                }
+              }, function(error){
+                sweetService.error("Se ha producido un error al intentar validar el estado de checkin del cliente. Comuníquese con el área de sistemas.")
+              })
             }else{
               sweetService.info("Cliente no Registrado","Se te habilitará un módulo para registrar el nuevo cliente.");
               $scope.esNecesarioRegistrar = true;
@@ -54,13 +61,21 @@ define(['app-module','clienteService', 'tipoDocumentoService', 'sweetService', '
               if(cliente.id.id === $scope.cliente.id.id){
                 sweetService.warning("No puedes añadir como acompañante al cliente principal.");
               }else{
-                if($scope.buscarIDenAcompanantes(cliente.id.id)){
-                    sweetService.warning("El acompañante ya ha sido añadido.");
-                }else{
-                  $scope.acompanante = cliente;
-                  sweetService.info("Cliente Registrado","El cliente " + cliente.nombreCompleto + " ya se encuentra registrado. \n Ya puedes agregarlo como acompañante.");
-                  $scope.seBloqueanLosCamposDeCedulaAcompanante = true;
-                }
+                arriendoService.getByClienteKeyCheckInActive(cliente.id).then(function(arriendo){
+                  if(arriendo !== undefined && arriendo.id !== undefined){
+                    sweetService.warning("No puedes generar un checkin con un acompañante que ya tiene uno activo.");
+                  }else{
+                    if($scope.buscarIDenAcompanantes(cliente.id.id)){
+                        sweetService.warning("El acompañante ya ha sido añadido.");
+                    }else{
+                      $scope.acompanante = cliente;
+                      sweetService.info("Cliente Registrado","El cliente " + cliente.nombreCompleto + " ya se encuentra registrado. \n Ya puedes agregarlo como acompañante.");
+                      $scope.seBloqueanLosCamposDeCedulaAcompanante = true;
+                    }
+                  }
+                }, function(error){
+                  sweetService.error("Se ha producido un error al intentar validar el estado de checkin del cliente. Comuníquese con el área de sistemas.")
+                })
               }
             }else{
               sweetService.info("Cliente no Registrado","Se te habilitará un módulo para registrar el nuevo cliente.");
@@ -85,38 +100,6 @@ define(['app-module','clienteService', 'tipoDocumentoService', 'sweetService', '
           }
         }
         return false;
-      }
-
-      $scope.reset = function(){
-        $scope.buscarTiposDocumento();
-        $scope.buscarHabitacionesDisponibles();
-        $scope.nuevoCliente = {
-          id : {}
-        };
-        $scope.esNecesarioRegistrar = false;
-        $scope.puedeHacerCheckin = false;
-        $scope.seBloqueanLosCamposDeCedula = false;
-        $scope.tipodocumento = null;
-        $scope.cedulaVerificar = null;
-        $scope.confirmacionCedula = null;
-        $scope.cliente = null;
-        $scope.checkin = true;
-        $scope.habitacionSeleccionada = {
-          id : null
-        };
-        $scope.numeroAcompanantes = 0;
-        $scope.habitacionesDisponibles = [];
-        $scope.conoceElNumeroDeNoches = {
-          value : "'NO'"
-        };
-        $scope.numeroNoches = 0;
-        $scope.acompanantes = [];
-        $scope.registarAcompanante = false;
-        $scope.acompanante = null;
-        $scope.seBloqueanLosCamposDeCedulaAcompanante = false;
-        $scope.tipodocumentoAcompanante = null;
-        $scope.confirmacionCedulaAcompanante = null;
-        $scope.cedulaVerificarAcompanante = null;
       }
 
       $scope.buscarTiposDocumento = function(){
@@ -153,6 +136,10 @@ define(['app-module','clienteService', 'tipoDocumentoService', 'sweetService', '
         habitacionService.getByState(estado).then(function(data){
           if(data !== null && data.listaHabitaciones !== null){
             $scope.habitacionesDisponibles = data.listaHabitaciones;
+            if($scope.habitacionesDisponibles.length == 0){
+              sweetService.warning("No quedan habitaciones disponibles para generar un check-in");
+              $state.go("app.content");
+            }
           }
         })
       }
@@ -210,24 +197,95 @@ define(['app-module','clienteService', 'tipoDocumentoService', 'sweetService', '
         arriendoService.add($scope.arriendo).then(function(arriendo){
           if(arriendo !== null && arriendo.id !== null){
             var fecha = $filter('date')(new Date(arriendo.dateCheckin), "yyyy/MM/dd 'a las' h:mma")
-            sweetService.success("El check-in se registró correctamente el " + fecha)
+            sweetService.success("El check-in se registró correctamente el "
+              + fecha + ". \n Para el cliente " + $scope.cliente.nombreCompleto + " en la habitación " + $scope.habitacionSeleccionada.id + ".",
+              function(){
+                $scope.print(fecha);
+              });
           }
         }, function(error){
-          sweetService.error("El check-in no se registró correctamente.")
+          alert("Ha ocurrido un error creando el check-in. Inténtelo de nuevo o comuníquese con el área de sistemas");
+          $scope.reset();
         })
       }
 
       $scope.finishCheckIn = function(){
-        if($scope.cliente === null || $scope.cliente.id.id === null || $scope.habitacionSeleccionada.id === null || $scope.numeroAcompanantes != $scope.acompanantes.length){
-          sweetService.warning("Falta información para realizar el check-in.");
-        }else{
-          sweetService.question("Finalizar Check-in", "¿Está seguro que desea realizar el check-in?", "Realizar", "Cancelar",
-            function(confirm){
-              if(confirm){
-                $scope.realizarCheckIn();
-              }
-            })
-        }
+        arriendoService.getByClienteKeyCheckInActive($scope.cliente.id).then(function(arriendo){
+          if(arriendo !== undefined && arriendo.id !== undefined){
+            sweetService.warning("No puedes generar un checkin a un cliente que ya tiene uno activo.");
+          }else{
+            if($scope.cliente === null || $scope.cliente.id.id === null || $scope.habitacionSeleccionada.id === null || $scope.numeroAcompanantes != $scope.acompanantes.length){
+              sweetService.warning("Falta información para realizar el check-in.");
+            }else{
+              sweetService.question("Finalizar Check-in", "¿Está seguro que desea realizar el check-in?", "Realizar", "Cancelar",
+                function(confirm){
+                  if(confirm){
+                    $scope.realizarCheckIn();
+                  }
+                })
+
+            }
+          }
+        }, function(error){
+          sweetService.error("Se ha producido un error al intentar validar el estado de checkin del cliente. Comuníquese con el área de sistemas.")
+        })
+      }
+
+      $scope.print = function(fecha){
+        printElement(document.getElementById("printThis"));
+
+        var modThis = document.querySelector("#printSection");
+        modThis.appendChild(document.createTextNode(fecha));
+
+        window.print();
+        $scope.reset();
+      }
+
+      function printElement(elem) {
+          var domClone = elem.cloneNode(true);
+
+          var $printSection = document.getElementById("printSection");
+
+          if (!$printSection) {
+              var $printSection = document.createElement("div");
+              $printSection.id = "printSection";
+              document.body.appendChild($printSection);
+          }
+
+          $printSection.innerHTML = "";
+
+          $printSection.appendChild(domClone);
+      }
+
+      $scope.reset = function(){
+        $scope.buscarTiposDocumento();
+        $scope.buscarHabitacionesDisponibles();
+        $scope.nuevoCliente = {
+          id : {}
+        };
+        $scope.esNecesarioRegistrar = false;
+        $scope.seBloqueanLosCamposDeCedula = false;
+        $scope.tipodocumento = null;
+        $scope.cedulaVerificar = null;
+        $scope.confirmacionCedula = null;
+        $scope.cliente = null;
+        $scope.checkin = true;
+        $scope.habitacionSeleccionada = {
+          id : null
+        };
+        $scope.numeroAcompanantes = 0;
+        $scope.habitacionesDisponibles = [];
+        $scope.conoceElNumeroDeNoches = {
+          value : "'NO'"
+        };
+        $scope.numeroNoches = 0;
+        $scope.acompanantes = [];
+        $scope.registarAcompanante = false;
+        $scope.acompanante = null;
+        $scope.seBloqueanLosCamposDeCedulaAcompanante = false;
+        $scope.tipodocumentoAcompanante = null;
+        $scope.confirmacionCedulaAcompanante = null;
+        $scope.cedulaVerificarAcompanante = null;
       }
 
       $scope.init = function(){

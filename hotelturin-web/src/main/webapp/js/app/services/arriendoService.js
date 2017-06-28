@@ -6,6 +6,9 @@ define(['app-module', 'restService'], function (app) {
         var servicesRest = {
           add : function(arriendo){
             return restService.POST(path + 'add', arriendo);
+          },
+          getByClienteKeyCheckInActive : function(clienteId){
+            return restService.POST(path + 'getByClienteKeyCheckInActive', clienteId);
           }
         }
 

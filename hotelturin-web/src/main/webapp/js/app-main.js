@@ -2,6 +2,7 @@
 
 requirejs.config({
     baseUrl: 'js',
+    urlArgs: "bust=" + (new Date()).getTime(),
     paths: {
       'angular': 'ext/angular.min',
       'angularAMD' : 'ext/angularAMD.min',

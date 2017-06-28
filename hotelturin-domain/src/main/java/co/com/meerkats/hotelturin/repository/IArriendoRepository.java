@@ -8,4 +8,6 @@ import co.com.meerkats.hotelturin.domain.Arriendo;
 @Eager
 public interface IArriendoRepository extends JpaRepository<Arriendo,Integer> {
 
+	Arriendo findByClienteIdAndTipodocumentoIdAndEstadoId(String clienteId, Integer tipodocumentoId, Integer integer);
+
 }

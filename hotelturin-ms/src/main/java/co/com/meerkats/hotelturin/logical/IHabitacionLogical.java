@@ -13,4 +13,5 @@ public interface IHabitacionLogical extends ILogicalCommon<Habitacion,Habitacion
 	ListHabitacionDTO getByState(EstadoDTO estado);	
 	HabitacionDTO add(HabitacionDTO habitacion) throws Exception;
 	HabitacionDTO getById(HabitacionDTO habitacion);
+	HabitacionDTO ocuparHabitacion(HabitacionDTO habitacionDTO) throws Exception;
 }
