@@ -136,6 +136,10 @@ define(['app-module','clienteService', 'tipoDocumentoService', 'sweetService', '
         habitacionService.getByState(estado).then(function(data){
           if(data !== null && data.listaHabitaciones !== null){
             $scope.habitacionesDisponibles = data.listaHabitaciones;
+            if($scope.habitacionesDisponibles.length == 0){
+              sweetService.warning("No quedan habitaciones disponibles para generar un check-in");
+              $state.go("app.content");
+            }
           }
         })
       }
@@ -200,7 +204,8 @@ define(['app-module','clienteService', 'tipoDocumentoService', 'sweetService', '
               });
           }
         }, function(error){
-          sweetService.error("El check-in no se registró correctamente.")
+          alert("Ha ocurrido un error creando el check-in. Inténtelo de nuevo o comuníquese con el área de sistemas");
+          $scope.reset();
         })
       }
 
@@ -218,6 +223,7 @@ define(['app-module','clienteService', 'tipoDocumentoService', 'sweetService', '
                     $scope.realizarCheckIn();
                   }
                 })
+
             }
           }
         }, function(error){

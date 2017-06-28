@@ -1,4 +1,4 @@
-<div style="display: inline-grid;">
+<div style="display: inline-grid;" ng-show="habitacionesDisponibles.length > 0">
 
   <div>Verificar Registro del Cliente</div>
   <fieldset ng-disabled="seBloqueanLosCamposDeCedula">
@@ -113,6 +113,9 @@
     <div>
       <label class="btn btn-default" ng-click="finishCheckIn()">
         Check-in
+      </label>
+      <label class="btn btn-default" ng-click="reset()">
+        Cancelar
       </label>
     </div>
 

@@ -21,6 +21,14 @@ define(['angularAMD', 'angular-ui-router', 'angular-resource'], function (angula
 				  controller : 'appController'
 				})
 			)
+      .state('app.content', {
+        url: '/content',
+        views: {
+          'content@app': angularAMD.route({
+            templateUrl : 'resources/partials/home/indexContent.html' + "?bust=" + (new Date()).getTime()
+          })
+        }
+      })
       .state('app.checkin', {
         url: '/checkin',
         views: {
