@@ -1,0 +1,23 @@
+      <div id="contenedorhabitaciones"ng-controller="habitacionController">	           
+	      <div id="disponibles">
+	        <h3>Habitaciones Disponibles</h1>	        
+	          <div id="item" class="btn-group" data-toggle="buttons" ng-repeat="habitacion in habitacionesDisponibles">
+	            <label  class="btn btn-lg btn-primary" ng-class="{active: habitacionSeleccionada.id == habitacion.id}" ng-click="">
+	              <label>{{habitacion.id}}</label> <br> {{habitacion.nombre}} <br> Capacidad: {{habitacion.capacidad}} Persona(s) <br> Precio: $ {{habitacion.precio}}
+	            </label>
+	          </div>
+	      </div>	 	
+        <div id="ocupadas">
+		        <h3>Habitaciones Ocupadas</h1>
+		          <div id ="item" class="btn-group" data-toggle="buttons" ng-repeat="habitacion in habitacionesOcupadas">
+		            <label  class="btn btn-lg btn-danger" ng-class="{active: habitacionSeleccionada.id == habitacion.id}" ng-click="">
+		              	<label>{{habitacion.id}}</label> <br> {{habitacion.nombre}} <br> Capacidad: {{habitacion.capacidad}} Persona(s) <br> Precio: $ {{habitacion.precio}}
+		            </label>
+		          </div>
+	    </div>  
+       </div>
+      
+   
+      
+			
+			

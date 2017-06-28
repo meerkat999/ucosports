@@ -59,6 +59,28 @@ define(['app-module', 'sweetService', 'habitacionService'], function (app) {
           }
           return valido;
         }
+      
+      $scope.buscarHabitacionesDisponibles = function(){
+          var estado = {
+            id : 1
+          }
+          habitacionService.getByState(estado).then(function(data){
+            if(data !== null && data.listaHabitaciones !== null){
+              $scope.habitacionesDisponibles = data.listaHabitaciones;             
+            }
+          })
+        }
+      
+      $scope.buscarHabitacionesOcupadas = function(){
+          var estado = {
+            id : 3
+          }
+          habitacionService.getByState(estado).then(function(data){
+            if(data !== null && data.listaHabitaciones !== null){
+              $scope.habitacionesOcupadas = data.listaHabitaciones;             
+            }
+          })
+        }
 
       $scope.registrar = function(){
         if($scope.validarFormularioRegistro() == true){
@@ -86,8 +108,12 @@ define(['app-module', 'sweetService', 'habitacionService'], function (app) {
           }
     
       $scope.init = function(){
-    	$scope.buscarhabitaciones();    
+    	$scope.buscarhabitaciones();
+    	$scope.buscarHabitacionesDisponibles();
+    	$scope.buscarHabitacionesOcupadas();
         $scope.listHabitaciones = [];
+        $scope.habitacionesDisponibles = [];
+        $scope.habitacionesOcupadas = [];
         $scope.Habitacion={};
                       
       }

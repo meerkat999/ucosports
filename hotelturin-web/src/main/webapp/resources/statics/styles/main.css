@@ -7,6 +7,75 @@
   height: 180px;
 }
 
+#fondo{
+	background-color: #FAFAFA;
+	margin-right: 8%;
+	margin-left: 8%;
+}
+
+#contenedorhabitaciones{
+margin: 0 auto;
+position: relative;
+width: auto;
+height: auto;
+padding-top: 20px;
+
+}
+#item{
+
+padding-right: 5px;
+padding-bottom: 5px;
+width: 50%;
+}
+#servicioitem{
+
+padding-right: 5px;
+padding-bottom: 5px;
+
+}
+
+#content{
+margin-left: 10%;
+margin-right: 10%; 
+padding-bottom: 15px;
+}
+
+#separador{
+	height: 2.5px;   
+    margin-top: 5px;
+    margin-bottom: 0px;
+    border: 0;
+    border-top: 1px solid #eee;
+	background-color: 8f6b00;
+}
+#menuppal{
+margin-left: 20%;
+margin-right: 10%; 
+padding-top:15px;
+padding-bottom: 15px;
+}
+#servicios{
+padding-top:30px;
+}
+
+#habitacion{
+
+padding-top:30px;
+}
+
+
+#disponibles{
+width:50%;
+height:auto;
+float: left;
+}
+
+#ocupadas{
+width:50%;
+height:auto;
+float: right;
+}
+
 @media screen {
   #printSection {
       display: none;
@@ -33,4 +102,6 @@
     margin: 0 auto;
     background: url(/resources/statics/images/logo.png) no-repeat center;
   }
+  
+  
 }

@@ -10,6 +10,9 @@ define(['app-module', 'clienteService','habitacionService','servicioService'], f
        }
         $scope.goRegistrarServicio = function(){
             $state.go("app.administracion.registrarServicio")
+       }        
+        $scope.goconsultarHabitaciones = function(){
+            $state.go("app.administracion.consultarHabitaciones")
        }
         
         $scope.getMonthsWithClients = function(year){

@@ -1,12 +1,12 @@
+<div id="habitacion">
 
-
-<h3 class="panel-title">Registrar Habitacion</h3>
+<h3>Registrar Habitacion</h3>
 
 <div class="panel-body">
 
   <div class="input-group">
     <label style="color: red;"  ng-if="erroresFormularioRegistro[0]">Falta diligenciar el Numero Identificador</label>
-    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+    <span class="input-group-addon"><i class="glyphicon glyphicon-copyright-mark"></i></span>
     <input  class="form-control" maxlength="4" type="text" placeholder="Numero identificador de la Habitacion" ng-model="Habitacion.id" ></input>
   </div>
 
@@ -18,21 +18,21 @@
 
   <div class="input-group">
     <label style="color: red;"  ng-if="erroresFormularioRegistro[2]">Falta diligenciar la Capacidad</label>
-    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+    <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
     <input  class="form-control" maxlength="2" type="number" placeholder="Capacidad de la Habitacion" ng-model="Habitacion.capacidad" ></input>
   </div>
 
 
   <div class="input-group">
     <label style="color: red;"  ng-if="erroresFormularioRegistro[3]">Falta diligenciar la Descripcion</label>
-    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+    <span class="input-group-addon"><i class="glyphicon glyphicon-list-alt"></i></span>
     <input  class="form-control" maxlength="200" type="text" placeholder="Descripcion de la Habitacion" ng-model="Habitacion.descripcion" ></input>
   </div>
 
 
   <div class="input-group">
     <label style="color: red;"  ng-if="erroresFormularioRegistro[4]">Falta diligenciar el Precio</label>
-    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+    <span class="input-group-addon"><i class="glyphicon glyphicon-usd"></i></span>
     <input  class="form-control" maxlength="10" number type="text" placeholder="Precio de la Habitacion" ng-model="Habitacion.precio" ></input>
   </div>
 
@@ -42,14 +42,14 @@
 
  
 <div ng-controller="habitacionController"class="row small-up-2 medium-up-2 large-up-4">
-  <h2>Habitaciones</h2>        
-  <table class="table table-condensed">
+  <h2>Editar Habitaciones</h2>        
+  <table class="table table--striped">
     <thead>
       <tr>
       <center>
         <th>Numero</th>
         <th>Nombre</th>
-        <th>Descipcion</th>
+        <th>Descripcion</th>
         <th>Precio</th>
         </center>
       </tr>
@@ -60,10 +60,10 @@
         <td>{{Habitacion.nombre}}</td>
         <td>{{Habitacion.descripcion}}</td>
         <td>{{Habitacion.precio}}</td>
-        <td><button class="btn btn-info" ng-hide="registrarHabitacion" ng-click="edit(Habitacion)" data-toggle="modal" data-target="#modal">Editar</button></td>  
-            
+        <td><button class="btn btn-info" ng-click="edit(Habitacion)">Editar</button></td> 
       </tr>      
     </tbody>
   </table>
+</div>
 </div>
 </div>

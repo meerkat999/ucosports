@@ -1,0 +1,10 @@
+      <div id="contenedorservicios"ng-controller="servicioController">	           
+	      <div id="serviciosdisponibles">
+	        <h3>Servicios Disponibles</h1>	        
+	          <div id="item" class="btn-group" data-toggle="buttons" ng-repeat="servicio in serviciosDisponibles">
+	            <label  class="btn btn-lg btn-success" ng-class="{active: habitacionSeleccionada.id == habitacion.id}" ng-click="">
+	              <label>{{servicio.nombre}}</label> <br> $ {{servicio.precio}}
+	            </label>
+	          </div>
+	      </div>
+	      </div>	

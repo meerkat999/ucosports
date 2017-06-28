@@ -5,7 +5,7 @@
 
           <div class="input-group">
 					  <label style="color: red;" ng-if="erroresFormularioRegistro[0]">Falta escoger el tipo de documento.</label>
-					  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+					  <span class="input-group-addon"><i class="glyphicon glyphicon-list-alt"></i></span>
 					  <select ng-disabled="seBloqueanLosCamposDeCedula" class="form-control" id="tipoDocumento"
 					    ng-model="nuevoCliente.id.tipodocumento" placeholder="Tipo de Documento" ng-change="validarEnTiempoRealCamposCedula()" ng-options="tipo.id as tipo.nombre for tipo in listaTiposDocumentos"
 					  ></select>
@@ -13,19 +13,19 @@
 
 				  <div class="input-group">
 					  <label style="color: red;"  ng-if="erroresFormularioRegistro[1]">Falta digelenciar la cédula</label>
-					  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+					  <span class="input-group-addon"><i class="glyphicon glyphicon-copyright-mark"></i></span>
 					  <input ng-disabled="seBloqueanLosCamposDeCedula" class="form-control" maxlength="10" placeholder="Número de Identificación" ng-change="validarEnTiempoRealCamposCedula()" number type="text" ng-model="nuevoCliente.id.id" ></input>
 					</div>
 
 					<div ng-if="confirmacionCedulaAcompanante == undefined" class="input-group">
 					  <label style="color: red;"  ng-if="erroresFormularioRegistro[2]">El número de cédula no coincide con el ingresado.</label>
-					  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+					  <span class="input-group-addon"><i class="glyphicon glyphicon-copyright-mark"></i></span>
 						<input ng-disabled="seBloqueanLosCamposDeCedula" class="form-control" maxlength="10" placeholder="Confirmar Número de Identificación" ng-change="validarEnTiempoRealCamposCedula()" number type="text" ng-model="confirmacionCedula"></input>
 					</div>
 
 					<div ng-if="confirmacionCedulaAcompanante" class="input-group">
 					  <label style="color: red;"  ng-if="erroresFormularioRegistro[2]">El número de cédula no coincide con el ingresado.</label>
-					  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+					  <span class="input-group-addon"><i class="glyphicon glyphicon-copyright-mark"></i></span>
 						<input ng-disabled="seBloqueanLosCamposDeCedula" class="form-control" maxlength="10" placeholder="Confirmar Número de Identificación" ng-change="validarEnTiempoRealCamposCedula()" number type="text" ng-model="confirmacionCedulaAcompanante"></input>
 					</div>
 
@@ -58,12 +58,12 @@
 					</div>
 
 					<div class="input-group">
-					  <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
+					  <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
 					  <input class="form-control" type="date" placeholder="Fecha Nacimiento" ng-model="nuevoCliente.fechaNacimiento"></input>
 					</div>
 
 					<div class="input-group">
-					  <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
+					  <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
 					  <input class="form-control" type="email" placeholder="Correo" ng-model="nuevoCliente.correo"></input>
 					</div>
 

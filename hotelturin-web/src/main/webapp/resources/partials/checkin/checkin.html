@@ -1,18 +1,27 @@
 <div style="display: inline-grid;" ng-show="habitacionesDisponibles.length > 0">
 
-  <div>Verificar Registro del Cliente</div>
+  <h3>Verificar Registro del Cliente</h3>
+   <div class="input-group">
   <fieldset ng-disabled="seBloqueanLosCamposDeCedula">
     <label>Tipo de Documento:</label>
-    <select ng-model="tipodocumento" ng-change="validarEnTiempoRealCamposCedula()"
+    
+    <div class="input-group">
+    <span class="input-group-addon"><i class="glyphicon glyphicon-list-alt"></i></span>
+    <select  class="form-control" placeholder="Tipo de Identificación"ng-model="tipodocumento" ng-change="validarEnTiempoRealCamposCedula()"
       ng-options="tipo.id as tipo.nombre for tipo in listaTiposDocumentos"></select>
-    <input number placeholder="Número de Identificación" type="text" ng-change="validarEnTiempoRealCamposCedula()" maxlength="10" number ng-model="cedulaVerificar" ></input>
-    <input number placeholder="Confirmación de Número" type="text" ng-change="validarEnTiempoRealCamposCedula()"  maxlength="10" number  ng-model="confirmacionCedula"></input>
+          
+     <span class="input-group-addon"><i class="glyphicon glyphicon-copyright-mark"></i></span>
+    <input class="form-control" number placeholder="Número de Identificación" type="text" ng-change="validarEnTiempoRealCamposCedula()" maxlength="10" number ng-model="cedulaVerificar" ></input>
+   
+    <span class="input-group-addon"><i class="glyphicon glyphicon-copyright-mark"></i></span>
+    <input class="form-control" number placeholder="Confirmación de Número" type="text" ng-change="validarEnTiempoRealCamposCedula()"  maxlength="10" number  ng-model="confirmacionCedula"></input>
+	 
+  
   </fieldset>
-
-  <label class="btn btn-default" ng-click="reset()">
-    Nueva Verificación
-  </label>
-
+  </div>
+  <div class="form-group">
+  <button type="button" class="btn btn-primary" ng-click="reset()">Nueva Verificación </button>
+</div>
   <div ng-if="mostrarVistaRegistro()">
     <div ui-view="registro" style="display: flex;"></div>
   </div>

@@ -74,6 +74,16 @@ define(['angularAMD', 'angular-ui-router', 'angular-resource'], function (angula
           })
         }
     })
+    
+    .state('app.administracion.consultarHabitaciones', {
+        url: '/consultarHabitaciones',
+        views: {
+          'content@app.administracion': angularAMD.route({
+            templateUrl : 'resources/partials/habitacion/consultarHabitaciones.html' + "?bust=" + (new Date()).getTime(),
+            controller : 'habitacionController'
+          })
+        }
+    })
        .state('app.administracion.registrarServicio', {
         url: '/registrarServicio',
         views: {

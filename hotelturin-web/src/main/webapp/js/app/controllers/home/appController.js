@@ -4,7 +4,6 @@ define(['app-module'], function (app) {
       $scope.goCheckin = function(){
         $state.go("app.checkin");
       }
-
       $scope.goAdministracion = function(){
         $state.go("app.administracion");
       }
@@ -12,7 +11,6 @@ define(['app-module'], function (app) {
         $state.go("app.registrarCliente");
         $state.go("app.registrarCliente.listar");
       }
-
       $scope.init = function(){
         $state.go("app.content");
       }

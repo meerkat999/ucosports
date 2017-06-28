@@ -57,6 +57,7 @@ define(['app-module', 'sweetService', 'servicioService'], function (app) {
         }
      
       $scope.init = function(){
+    	$scope.buscarServiciosDisponibles();  
         $scope.listServicios = [];
         $scope.serviciosDisponibles = [];        
         $scope.Servicio={};
