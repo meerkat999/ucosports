@@ -72,10 +72,13 @@ public class ArriendoLogicalImpl extends LogicalCommonImpl<Arriendo, ArriendoDTO
 	@Override
 	@Transactional(value=TxType.REQUIRED, rollbackOn=Exception.class)
 	public ArriendoDTO add(ArriendoDTO arriendoDTO) throws Exception {
+		
 		ArriendoDTO respuesta = null;
+		
 		if(arriendoDTO == null){
 			throw new Exception("Error al intentar guardar un arriendo teniendo el dto nulo.");
 		}
+		
 		String cedula = arriendoDTO.getClienteId();
 		Integer tipodocumentoId = arriendoDTO.getTipodocumentoId();
 		String habitacionId = arriendoDTO.getHabitacionId();
@@ -86,18 +89,34 @@ public class ArriendoLogicalImpl extends LogicalCommonImpl<Arriendo, ArriendoDTO
 		validarCheckInActivoCliente(cedula, tipodocumentoId);
 
 		Arriendo arriendo = new Arriendo();
-		arriendo.setClienteId(cedula);
-		arriendo.setTipodocumentoId(tipodocumentoId);
+		arriendo.setClienteId(arriendoDTO.getClienteId());
+		arriendo.setTipodocumentoId(arriendoDTO.getTipodocumentoId());
 		arriendo.setEstadoId(StatesEnum.ACTIVO.getValue());
-		arriendo.setHabitacionId(habitacionId);
+		arriendo.setHabitacionId(arriendoDTO.getHabitacionId());
 		arriendo.setDateCheckin(new Date());
 		arriendo.setFecha(new Date());
 		arriendo.setNumeroNoches(arriendoDTO.getNumeroNoches());
-		arriendo.setNumeroAcompanantes(acompanantes.size());
+		arriendo.setNumeroAcompanantes(arriendoDTO.getAcompanantes().size());
 		arriendo.setDateCheckout(null);
-		
 		arriendo = repository.save(arriendo);
 		
+		setAcompanantes(acompanantes, arriendo);
+		
+		ocuparHabitacion(habitacionId);
+		
+		respuesta = buildDTO(arriendo);
+		return respuesta;
+	}
+
+	private void ocuparHabitacion(String habitacionId) throws Exception {
+		HabitacionDTO habitacionDTO = new HabitacionDTO();
+		habitacionDTO.setId(habitacionId);
+		if(habitacionLogical.ocuparHabitacion(habitacionDTO) == null){
+			throw new Exception("Error al ocupar una habitación en el momento de la creación del checkin.");
+		}
+	}
+
+	private void setAcompanantes(List<ClienteDTO> acompanantes, Arriendo arriendo) throws Exception {
 		for (ClienteDTO cliente : acompanantes) {
 			AcompananteDTO acompananteDTO = new AcompananteDTO();
 			acompananteDTO.setCedulaId(cliente.getId().getId());
@@ -105,9 +124,6 @@ public class ArriendoLogicalImpl extends LogicalCommonImpl<Arriendo, ArriendoDTO
 			acompananteDTO.setArriendoId(arriendo.getId());
 			acompananteLogical.add(acompananteDTO);
 		}
-		
-		respuesta = buildDTO(arriendo);
-		return respuesta;
 	}
 
 	private void validarCheckInActivoCliente(String cedula, Integer tipodocumentoId) throws Exception {

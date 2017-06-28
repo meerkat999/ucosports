@@ -82,5 +82,23 @@ public class HabitacionLogicalImpl extends LogicalCommonImpl<Habitacion,Habitaci
 		return buildDTO(habitacion);
 	}
 
+	@Override
+	public HabitacionDTO ocuparHabitacion(HabitacionDTO habitacionDTO) throws Exception {
+		HabitacionDTO dto = null;
+		if(habitacionDTO == null || habitacionDTO.getId() == null){
+			throw new Exception("Error al intentar ocupar una habitación con un dto nulo.");
+		}
+		Habitacion habitacion = repository.findOne(habitacionDTO.getId());
+		if(habitacion == null){
+			throw new Exception("Error al intentar ocupar una habitación inexistente.");
+		}
+		if(habitacion.getEstado() != StatesEnum.ACTIVO.getValue()){
+			throw new Exception("Error al intentar ocupar una habitación que no esta activa.");
+		}
+		habitacion.setEstado(StatesEnum.OCUPADA.getValue());
+		dto = buildDTO(repository.save(habitacion));
+		return dto;
+	}
+
 }
 

@@ -197,7 +197,6 @@ define(['app-module','clienteService', 'tipoDocumentoService', 'sweetService', '
               + fecha + ". \n Para el cliente " + $scope.cliente.nombreCompleto + " en la habitación " + $scope.habitacionSeleccionada.id + ".",
               function(){
                 $scope.print(fecha);
-                $scope.reset();
               });
           }
         }, function(error){
@@ -206,16 +205,24 @@ define(['app-module','clienteService', 'tipoDocumentoService', 'sweetService', '
       }
 
       $scope.finishCheckIn = function(){
-        if($scope.cliente === null || $scope.cliente.id.id === null || $scope.habitacionSeleccionada.id === null || $scope.numeroAcompanantes != $scope.acompanantes.length){
-          sweetService.warning("Falta información para realizar el check-in.");
-        }else{
-          sweetService.question("Finalizar Check-in", "¿Está seguro que desea realizar el check-in?", "Realizar", "Cancelar",
-            function(confirm){
-              if(confirm){
-                $scope.realizarCheckIn();
-              }
-            })
-        }
+        arriendoService.getByClienteKeyCheckInActive($scope.cliente.id).then(function(arriendo){
+          if(arriendo !== undefined && arriendo.id !== undefined){
+            sweetService.warning("No puedes generar un checkin a un cliente que ya tiene uno activo.");
+          }else{
+            if($scope.cliente === null || $scope.cliente.id.id === null || $scope.habitacionSeleccionada.id === null || $scope.numeroAcompanantes != $scope.acompanantes.length){
+              sweetService.warning("Falta información para realizar el check-in.");
+            }else{
+              sweetService.question("Finalizar Check-in", "¿Está seguro que desea realizar el check-in?", "Realizar", "Cancelar",
+                function(confirm){
+                  if(confirm){
+                    $scope.realizarCheckIn();
+                  }
+                })
+            }
+          }
+        }, function(error){
+          sweetService.error("Se ha producido un error al intentar validar el estado de checkin del cliente. Comuníquese con el área de sistemas.")
+        })
       }
 
       $scope.print = function(fecha){
@@ -225,6 +232,7 @@ define(['app-module','clienteService', 'tipoDocumentoService', 'sweetService', '
         modThis.appendChild(document.createTextNode(fecha));
 
         window.print();
+        $scope.reset();
       }
 
       function printElement(elem) {
