@@ -24,5 +24,13 @@
     position:absolute;
     left:0;
     top:0;
+    width: 100%;
+    background: url(/resources/statics/images/logo.png) no-repeat center;
+    min-height: 300px;
+  }
+  #printSectionChild{
+    width: 62%;
+    margin: 0 auto;
+    background: url(/resources/statics/images/logo.png) no-repeat center;
   }
 }

@@ -122,7 +122,7 @@ define(['app-module','clienteService', 'tipoDocumentoService', 'sweetService', '
 
       $scope.filtrarPorCapacidad = function(){
         return function(habitacion){
-          if(habitacion.capacidad >= $scope.numeroAcompanantes){
+          if(habitacion.capacidad > $scope.numeroAcompanantes){
             return true;
           }
           return false;
@@ -196,11 +196,13 @@ define(['app-module','clienteService', 'tipoDocumentoService', 'sweetService', '
         }
         arriendoService.add($scope.arriendo).then(function(arriendo){
           if(arriendo !== null && arriendo.id !== null){
-            var fecha = $filter('date')(new Date(arriendo.dateCheckin), "yyyy/MM/dd 'a las' h:mma")
+            $scope.arriendo = arriendo;
+            $scope.arriendoFecha = $filter('date')(new Date(arriendo.dateCheckin), "yyyy/MM/dd 'a las' h:mma")
+            var fecha = $filter('date')(new Date(arriendo.dateCheckin), "yyyy/MM/dd 'a las' h:mma");
             sweetService.success("El check-in se registró correctamente el "
               + fecha + ". \n Para el cliente " + $scope.cliente.nombreCompleto + " en la habitación " + $scope.habitacionSeleccionada.id + ".",
               function(){
-                $scope.print(fecha);
+                $scope.print();
               });
           }
         }, function(error){
@@ -231,12 +233,8 @@ define(['app-module','clienteService', 'tipoDocumentoService', 'sweetService', '
         })
       }
 
-      $scope.print = function(fecha){
+      $scope.print = function(){
         printElement(document.getElementById("printThis"));
-
-        var modThis = document.querySelector("#printSection");
-        modThis.appendChild(document.createTextNode(fecha));
-
         window.print();
         $scope.reset();
       }

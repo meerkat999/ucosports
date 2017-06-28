@@ -22,92 +22,101 @@
     <div>Se realizará el check-in para el/la señor/a {{cliente.nombreCompleto}}</div>
 
     <div>
-      <label>
-        ¿Número de noches definidas?:
-        <input type="checkbox" ng-model="conoceElNumeroDeNoches.value"
-           ng-true-value="'SI'" ng-false-value="'NO'">
-      </label>
-      <div ng-show="conoceElNumeroDeNoches.value == 'SI'">
-        <label>Número de Noches:</label>
-        <input number type="text" maxlength="2" ng-model="numeroNoches"></input>
-        <label class="btn btn-default" ng-click="numeroNoches = 0">
+        <label>
+          ¿Número de noches definidas?:
+          <input type="checkbox" ng-model="conoceElNumeroDeNoches.value"
+             ng-true-value="'SI'" ng-false-value="'NO'">
+        </label>
+        <div ng-show="conoceElNumeroDeNoches.value == 'SI'">
+          <label>Número de Noches:</label>
+          <input number type="text" maxlength="2" ng-model="numeroNoches"></input>
+          <label class="btn btn-default" ng-click="numeroNoches = 0">
+            Limpiar
+          </label>
+        </div>
+    </div>
+
+      <div>
+        <label>Número de Acompañantes:</label>
+        <input number type="text" maxlength="2" ng-model="numeroAcompanantes"></input>
+        <label class="btn btn-default" ng-click="limpiarAcompanantes()">
           Limpiar
         </label>
       </div>
-    </div>
 
-    <div>
-      <label>Número de Acompañantes:</label>
-      <input number type="text" maxlength="2" ng-model="numeroAcompanantes"></input>
-      <label class="btn btn-default" ng-click="limpiarAcompanantes()">
-        Limpiar
-      </label>
-    </div>
-
-    <div ng-show = "numeroAcompanantes > 0">
-      <label>Acompañantes registrados: {{acompanantes.length}}</label>
-      <div>
-        <label>Acompañantes:</label>
-        <div ng-repeat="acompanante in acompanantes">
-          {{acompanante.id.id}} - {{acompanante.nombreCompleto}}
-        </div>
-        <label ng-show = "numeroAcompanantes != acompanantes.length"  class="btn btn-default" ng-click="setRegistarAcompanante()">
-          Registrar Acompañante
-        </label>
-        <div ng-show="registarAcompanante && numeroAcompanantes != acompanantes.length">
-          <div>Verificar Registro del Cliente</div>
-          <fieldset ng-disabled="seBloqueanLosCamposDeCedulaAcompanante">
-            <label>Tipo de Documento:</label>
-            <select ng-model="tipodocumentoAcompanante" ng-change="validarEnTiempoRealCamposCedulaAcompanante()"
-              ng-options="tipo.id as tipo.nombre for tipo in listaTiposDocumentos"></select>
-            <input number placeholder="Número de Identificación" type="text" ng-change="validarEnTiempoRealCamposCedulaAcompanante()" maxlength="10" number ng-model="cedulaVerificarAcompanante" ></input>
-            <input number placeholder="Confirmación de Número" type="text" ng-change="validarEnTiempoRealCamposCedulaAcompanante()"  maxlength="10" number  ng-model="confirmacionCedulaAcompanante"></input>
-          </fieldset>
-          <label ng-show = "acompanante"  class="btn btn-default" ng-click="anadirAcompanante()">
-            Añadir
-          </label>
-          <label  class="btn btn-default" ng-click="cancelarAnadir()">
-            Cancelar
-          </label>
-          <div ui-view="registroAcompanante" style="display: flex;"></div>
-
-        </div>
-      </div>
-    </div>
-
-    <div>
-      <label>Habitaciones Disponibles</label>
-      <div>
-        <div class="btn-group" data-toggle="buttons">
-          <label ng-repeat="habitacion in habitacionesDisponibles | filter:filtrarPorCapacidad()" class="btn btn-default" ng-class="{active: habitacionSeleccionada.id == habitacion.id}" ng-click="">
-            <input type="radio" ng-click="openHabitacion(habitacion)"></input>
-            <label>{{habitacion.id}}</label> <br> {{habitacion.nombre}} <br> Capacidad: {{habitacion.capacidad}} <br> Precio: {{habitacion.precio}}
-          </label>
-        </div>
-      </div>
-    </div>
-
-    <div style="display: grid;" id="printThis">
-        <h3>Check-in</h3>
-        <div style="display: grid;"><label>Cliente:</label> {{cliente.nombreCompleto}}</div>
-        <div style="display: grid;" ng-if="habitacionSeleccionada.id"><label>Habitacion:</label> {{habitacionSeleccionada.id}} - {{habitacionSeleccionada.nombre}} </div>
-        <div style="display: grid;" ng-if="habitacionSeleccionada.id"><label>Valor por noche:</label> {{habitacionSeleccionada.precio | currency}} </div>
-        <div style="display: grid;" ng-if="numeroNoches > 0 && habitacionSeleccionada.precio">
-          <label>Valor total a pagar en el checkout:</label> {{habitacionSeleccionada.precio * numeroNoches | currency}}
-        </div>
-        <div style="display: grid;" ng-if="numeroNoches == 0">
-          <label>Valor total a pagar en el checkout:</label> El valor dependerá de la fecha de salida.
-        </div>
-
-        <div  style="display: grid;"><label>Acompañantes:</label>
-          <div ng-show="acompanantes.length > 0 " ng-repeat="acompanante in acompanantes">
+      <div ng-show = "numeroAcompanantes > 0">
+        <label>Acompañantes registrados: {{acompanantes.length}}</label>
+        <div>
+          <label>Acompañantes:</label>
+          <div ng-repeat="acompanante in acompanantes">
             {{acompanante.id.id}} - {{acompanante.nombreCompleto}}
           </div>
-          <div ng-show="acompanantes.length == 0 ">
-            Sin Acompañantes
+          <label ng-show = "numeroAcompanantes != acompanantes.length"  class="btn btn-default" ng-click="setRegistarAcompanante()">
+            Registrar Acompañante
+          </label>
+          <div ng-show="registarAcompanante && numeroAcompanantes != acompanantes.length">
+            <div>Verificar Registro del Cliente</div>
+            <fieldset ng-disabled="seBloqueanLosCamposDeCedulaAcompanante">
+              <label>Tipo de Documento:</label>
+              <select ng-model="tipodocumentoAcompanante" ng-change="validarEnTiempoRealCamposCedulaAcompanante()"
+                ng-options="tipo.id as tipo.nombre for tipo in listaTiposDocumentos"></select>
+              <input number placeholder="Número de Identificación" type="text" ng-change="validarEnTiempoRealCamposCedulaAcompanante()" maxlength="10" number ng-model="cedulaVerificarAcompanante" ></input>
+              <input number placeholder="Confirmación de Número" type="text" ng-change="validarEnTiempoRealCamposCedulaAcompanante()"  maxlength="10" number  ng-model="confirmacionCedulaAcompanante"></input>
+            </fieldset>
+            <label ng-show = "acompanante"  class="btn btn-default" ng-click="anadirAcompanante()">
+              Añadir
+            </label>
+            <label  class="btn btn-default" ng-click="cancelarAnadir()">
+              Cancelar
+            </label>
+            <div ui-view="registroAcompanante" style="display: flex;"></div>
+
           </div>
         </div>
+      </div>
 
+      <div>
+        <label>Habitaciones Disponibles</label>
+        <div>
+          <div class="btn-group" data-toggle="buttons">
+            <label ng-repeat="habitacion in habitacionesDisponibles | filter:filtrarPorCapacidad()" class="btn btn-default" ng-class="{active: habitacionSeleccionada.id == habitacion.id}" ng-click="">
+              <input type="radio" ng-click="openHabitacion(habitacion)"></input>
+              <label>{{habitacion.id}}</label> <br> {{habitacion.nombre}} <br> Capacidad: {{habitacion.capacidad}} <br> Precio: {{habitacion.precio}}
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div style="display: grid;" id="printThis">
+        <div id = "printSectionChild">
+          <h3>Check-in</h3>
+          <div><label>Cliente:</label> {{cliente.nombreCompleto}}</div>
+          <div ng-if="habitacionSeleccionada.id"><label>Habitacion:</label> {{habitacionSeleccionada.id}} - {{habitacionSeleccionada.nombre}} <br> </div>
+          <div ng-if="habitacionSeleccionada.id"><label>Valor por noche:</label> {{habitacionSeleccionada.precio | currency}} <br> </div>
+          <div ng-if="numeroNoches > 0 && habitacionSeleccionada.precio">
+            <label>Valor total a pagar en el checkout:</label> {{habitacionSeleccionada.precio * numeroNoches | currency}}
+            <br>
+          </div>
+          <div ng-if="numeroNoches == 0">
+            <label>Valor total a pagar en el checkout:</label> El valor dependerá de la fecha de salida.
+            <br>
+          </div>
+
+          <div><label>Acompañantes:</label>
+            <label ng-show="acompanantes.length > 0 ">Número de acompañantes: {{acompanantes.length}} <br></label>
+            <div ng-show="acompanantes.length > 0 " ng-repeat="acompanante in acompanantes">
+              {{acompanante.id.id}} - {{acompanante.nombreCompleto}}
+              <br>
+            </div>
+            <div ng-show="acompanantes.length == 0 ">
+              Sin Acompañantes
+              <br>
+            </div>
+          </div>
+          <div ng-if="arriendo.id"><label>Check-in:</label> {{arriendo.id}} - {{arriendoFecha}} <br> </div>
+
+          <br>
+        </div>
     </div>
 
     <div>
