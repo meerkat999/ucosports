@@ -6,17 +6,18 @@ define(['angularAMD', 'angular-ui-router', 'angular-resource'], function (angula
 
       $httpProvider.defaults.headers.post['Content-Type'] =  'application/json';
 
+
     	$stateProvider
 			.state('login', angularAMD.route({
 				  url: '/',
 				  name : 'login',
-				  templateUrl : 'resources/partials/login/login.html',
+				  templateUrl : 'resources/partials/login/login.html' + "?bust=" + (new Date()).getTime(),
 				  controller : 'loginController'
 				})
 			)
 			.state('app', angularAMD.route({
 				  url: 'app',
-				  templateUrl : 'resources/partials/home/app.html',
+				  templateUrl : 'resources/partials/home/app.html' + "?bust=" + (new Date()).getTime(),
 				  controller : 'appController'
 				})
 			)
@@ -24,7 +25,7 @@ define(['angularAMD', 'angular-ui-router', 'angular-resource'], function (angula
         url: '/checkin',
         views: {
           'content@app': angularAMD.route({
-            templateUrl : 'resources/partials/checkin/checkin.html',
+            templateUrl : 'resources/partials/checkin/checkin.html' + "?bust=" + (new Date()).getTime(),
             controller : 'checkinController'
           })
         }
@@ -33,7 +34,7 @@ define(['angularAMD', 'angular-ui-router', 'angular-resource'], function (angula
         url: '/registro',
         views: {
           'registro@app.checkin': angularAMD.route({
-            templateUrl : 'resources/partials/cliente/registrarCliente.html',
+            templateUrl : 'resources/partials/cliente/registrarCliente.html' + "?bust=" + (new Date()).getTime(),
             controller : 'clienteController'
           })
         }
@@ -42,7 +43,7 @@ define(['angularAMD', 'angular-ui-router', 'angular-resource'], function (angula
         url: '/registroAcompanante',
         views: {
           'registroAcompanante@app.checkin': angularAMD.route({
-            templateUrl : 'resources/partials/cliente/registrarCliente.html',
+            templateUrl : 'resources/partials/cliente/registrarCliente.html' + "?bust=" + (new Date()).getTime(),
             controller : 'clienteController'
           })
         }
@@ -51,7 +52,7 @@ define(['angularAMD', 'angular-ui-router', 'angular-resource'], function (angula
         url: '/administracion',
         views: {
           'content@app': angularAMD.route({
-            templateUrl : 'resources/partials/administracion/administracion.html',
+            templateUrl : 'resources/partials/administracion/administracion.html' + "?bust=" + (new Date()).getTime(),
             controller : 'administracionController'
           })
         }
@@ -60,7 +61,7 @@ define(['angularAMD', 'angular-ui-router', 'angular-resource'], function (angula
         url: '/registrarHabitacion',
         views: {
           'content@app.administracion': angularAMD.route({
-            templateUrl : 'resources/partials/habitacion/registrarHabitacion.html',
+            templateUrl : 'resources/partials/habitacion/registrarHabitacion.html' + "?bust=" + (new Date()).getTime(),
             controller : 'habitacionController'
           })
         }
@@ -69,7 +70,7 @@ define(['angularAMD', 'angular-ui-router', 'angular-resource'], function (angula
         url: '/registrarServicio',
         views: {
           'content@app.administracion': angularAMD.route({
-            templateUrl : 'resources/partials/servicio/registrarServicio.html',
+            templateUrl : 'resources/partials/servicio/registrarServicio.html' + "?bust=" + (new Date()).getTime(),
             controller : 'servicioController'
           })
         }
@@ -78,7 +79,7 @@ define(['angularAMD', 'angular-ui-router', 'angular-resource'], function (angula
           url: '/adminClientes',
           views: {
             'content@app.administracion': angularAMD.route({
-              templateUrl : 'resources/partials/administracion/adminClientes.html',
+              templateUrl : 'resources/partials/administracion/adminClientes.html' + "?bust=" + (new Date()).getTime(),
               controller : 'clienteController'
             })
           }

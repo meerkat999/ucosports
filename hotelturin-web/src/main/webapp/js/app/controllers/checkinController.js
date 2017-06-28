@@ -27,6 +27,8 @@ define(['app-module','clienteService', 'tipoDocumentoService', 'sweetService', '
                   sweetService.info("Cliente Registrado","El cliente " + cliente.nombreCompleto + " ya se encuentra registrado. \n Puedes continuar con el proceso de check-in.");
                   $scope.seBloqueanLosCamposDeCedula = true;
                 }
+              }, function(error){
+                sweetService.error("Se ha producido un error al intentar validar el estado de checkin del cliente. Comuníquese con el área de sistemas.")
               })
             }else{
               sweetService.info("Cliente no Registrado","Se te habilitará un módulo para registrar el nuevo cliente.");
@@ -71,6 +73,8 @@ define(['app-module','clienteService', 'tipoDocumentoService', 'sweetService', '
                       $scope.seBloqueanLosCamposDeCedulaAcompanante = true;
                     }
                   }
+                }, function(error){
+                  sweetService.error("Se ha producido un error al intentar validar el estado de checkin del cliente. Comuníquese con el área de sistemas.")
                 })
               }
             }else{
@@ -190,9 +194,9 @@ define(['app-module','clienteService', 'tipoDocumentoService', 'sweetService', '
           if(arriendo !== null && arriendo.id !== null){
             var fecha = $filter('date')(new Date(arriendo.dateCheckin), "yyyy/MM/dd 'a las' h:mma")
             sweetService.success("El check-in se registró correctamente el "
-              + fecha + ". /n Para el cliente " + $scope.cliente.nombreCompleto + " en la habitación " + $scope.habitacionSeleccionada.id + ".",
+              + fecha + ". \n Para el cliente " + $scope.cliente.nombreCompleto + " en la habitación " + $scope.habitacionSeleccionada.id + ".",
               function(){
-                $scope.print();
+                $scope.print(fecha);
                 $scope.reset();
               });
           }
@@ -214,11 +218,11 @@ define(['app-module','clienteService', 'tipoDocumentoService', 'sweetService', '
         }
       }
 
-      $scope.print = function(){
+      $scope.print = function(fecha){
         printElement(document.getElementById("printThis"));
 
         var modThis = document.querySelector("#printSection");
-        modThis.appendChild(document.createTextNode(" new"));
+        modThis.appendChild(document.createTextNode(fecha));
 
         window.print();
       }
