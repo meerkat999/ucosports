@@ -160,7 +160,7 @@ public class ClienteLogicalImpl extends LogicalCommonImpl<Cliente, ClienteDTO> i
 			List<Cliente> all = repository.findAll();
 			XSSFWorkbook workbook = new XSSFWorkbook();
 			XSSFSheet sheet = workbook.createSheet();
-			sheet.setDefaultColumnWidth(80);
+			sheet.setDefaultColumnWidth(10);
 			createHeaders(sheet);
 			all.stream().forEach(c -> {
 				buildRows(all, sheet, c);
