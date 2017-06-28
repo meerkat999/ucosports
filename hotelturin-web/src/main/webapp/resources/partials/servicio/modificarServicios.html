@@ -1,0 +1,25 @@
+<h2>Editar Servicios</h2>
+<table class="table table-striped">
+ <thead>
+   <tr>
+   <center>
+     <th>ID</th>
+     <th>Nombre</th>
+     <th>Precio</th>
+     </center>
+   </tr>
+ </thead>
+   <tr ng-repeat="servicio in serviciosDisponibles">
+     <td>{{servicio.id}}</td>
+     <td>{{servicio.nombre}}</td>
+     <td>{{servicio.valor | currency}}</td>
+     <td><button class="btn btn-warning"  ng-click="goEditar(servicio)">Editar</button></td>
+     <td><button class="btn btn-danger" ng-click="">Desactivar</button></td>
+   </tr>
+ </tbody>
+</table>
+
+{{isEditing}}
+<div ui-view="editar">
+
+</div>

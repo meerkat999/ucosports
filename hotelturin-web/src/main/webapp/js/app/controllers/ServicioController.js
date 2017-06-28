@@ -12,6 +12,16 @@ define(['app-module', 'sweetService', 'servicioService'], function (app) {
           })
       }
 
+      $scope.actualizar = function(){
+          servicioService.update($scope.Servicio).then(function(data){
+            if(data !== null){
+          	   sweetService.success("El Servicio adicional " + data.nombre + " fue editado satisfactoriamente");
+            }
+          },function(error){
+            sweetService.error("Ha ocurrido un error al intentar Actualizar el Servicio adicional. Si el problema persiste, comúniquese con el área de sistemas.");
+          })
+      }
+
       $scope.campoVacio = function(campo){
           return campo == undefined || campo == "";
       }
@@ -24,7 +34,7 @@ define(['app-module', 'sweetService', 'servicioService'], function (app) {
           $scope.erroresFormularioRegistro[0] = true;
         }else if($scope.campoVacio($scope.Servicio.valor)){
           valido = false;
-          $scope.erroresFormularioRegistro[1] = true;           
+          $scope.erroresFormularioRegistro[1] = true;
         }
         return valido;
       }
@@ -48,22 +58,39 @@ define(['app-module', 'sweetService', 'servicioService'], function (app) {
             }
           })
         }
-     
+
       $scope.registrar = function(){
         if($scope.validarFormularioRegistro() == true){
               $scope.agregar();
             }
-         
+
         }
-     
+
+        $scope.goRegistrarServicio = function(){
+          $scope.init();
+          $scope.Servicio={};
+          $state.go("app.administracion.adminServicios.registrarServicio")
+        }
+
+        $scope.goModificarServicios = function(){
+          $scope.init();
+          $state.go("app.administracion.adminServicios.modificarServicios")
+        }
+
+        $scope.goEditar = function(servicio){
+          $scope.Servicio = servicio;
+          $scope.isEditing = true;
+          $state.go("app.administracion.adminServicios.modificarServicios.editarServicio")
+        }
+
       $scope.init = function(){
-    	$scope.buscarServiciosDisponibles();  
+        $scope.buscarServiciosDisponibles();
+        $scope.isEditing = false;
         $scope.listServicios = [];
-        $scope.serviciosDisponibles = [];        
-        $scope.Servicio={};
+        $scope.serviciosDisponibles = [];
         $scope.servicioSeleccionado = {
-                id : null
-              };
+            id : null
+        };
       }
 
       $scope.init();

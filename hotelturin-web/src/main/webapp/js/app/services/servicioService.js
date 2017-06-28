@@ -15,6 +15,9 @@ define(['app-module', 'restService'], function (app) {
             },
           add : function(servicio){
             return restService.POST(path + 'add', servicio);
+          },
+          update : function(servicio){
+            return restService.POST(path + 'update', servicio);
           }
         }
 

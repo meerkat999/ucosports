@@ -74,22 +74,13 @@ define(['angularAMD', 'angular-ui-router', 'angular-resource'], function (angula
           })
         }
     })
-    
+
     .state('app.administracion.consultarHabitaciones', {
         url: '/consultarHabitaciones',
         views: {
           'content@app.administracion': angularAMD.route({
             templateUrl : 'resources/partials/habitacion/consultarHabitaciones.html' + "?bust=" + (new Date()).getTime(),
             controller : 'habitacionController'
-          })
-        }
-    })
-       .state('app.administracion.registrarServicio', {
-        url: '/registrarServicio',
-        views: {
-          'content@app.administracion': angularAMD.route({
-            templateUrl : 'resources/partials/servicio/registrarServicio.html' + "?bust=" + (new Date()).getTime(),
-            controller : 'servicioController'
           })
         }
     })
@@ -101,8 +92,42 @@ define(['angularAMD', 'angular-ui-router', 'angular-resource'], function (angula
               controller : 'clienteController'
             })
           }
-        })
       })
+      .state('app.administracion.adminServicios', {
+          url: '/adminServicios',
+          views: {
+            'content@app.administracion': angularAMD.route({
+              templateUrl : 'resources/partials/administracion/adminServicios.html' + "?bust=" + (new Date()).getTime(),
+              controller : 'servicioController'
+            })
+          }
+        })
+        .state('app.administracion.adminServicios.registrarServicio', {
+         url: '/registrarServicio',
+         views: {
+           'content@app.administracion.adminServicios': angularAMD.route({
+             templateUrl : 'resources/partials/servicio/registrarServicios.html' + "?bust=" + (new Date()).getTime()
+           })
+         }
+       })
+         .state('app.administracion.adminServicios.modificarServicios', {
+          url: '/modificarServicios',
+          views: {
+            'content@app.administracion.adminServicios': angularAMD.route({
+              templateUrl : 'resources/partials/servicio/modificarServicios.html' + "?bust=" + (new Date()).getTime()
+            })
+          }
+        })
+        .state('app.administracion.adminServicios.modificarServicios.editarServicio', {
+         url: '/editarServicio',
+         views: {
+           'editar@app.administracion.adminServicios.modificarServicios': angularAMD.route({
+             templateUrl : 'resources/partials/servicio/registrarServicios.html' + "?bust=" + (new Date()).getTime()
+           })
+         }
+       })
+      })
+
      ;
 
     app.run(function($state, $rootScope){
