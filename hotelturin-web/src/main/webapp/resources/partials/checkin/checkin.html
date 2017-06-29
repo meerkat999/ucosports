@@ -38,18 +38,18 @@
         <div ng-show="conoceElNumeroDeNoches.value == 'SI'">
           <label>Número de Noches:</label>
           <input number type="text" maxlength="2" ng-model="numeroNoches"></input>
-          <label class="btn btn-default" ng-click="numeroNoches = 0">
+          <button class="btn btn-warning" ng-click="numeroNoches = 0">
             Limpiar
-          </label>
+          </button>
         </div>
     </div>
 
       <div>
         <label>Número de Acompañantes:</label>
         <input number type="text" maxlength="2" ng-model="numeroAcompanantes"></input>
-        <label class="btn btn-default" ng-click="limpiarAcompanantes()">
+        <button class="btn btn-warning" ng-click="limpiarAcompanantes()">
           Limpiar
-        </label>
+        </button>
       </div>
 
       <div ng-show = "numeroAcompanantes > 0">
@@ -59,9 +59,9 @@
           <div ng-repeat="acompanante in acompanantes">
             {{acompanante.id.id}} - {{acompanante.nombreCompleto}}
           </div>
-          <label ng-show = "numeroAcompanantes != acompanantes.length"  class="btn btn-default" ng-click="setRegistarAcompanante()">
+          <button ng-show = "numeroAcompanantes != acompanantes.length"  class="btn btn-primary" ng-click="setRegistarAcompanante()">
             Registrar Acompañante
-          </label>
+          </button>
           <div ng-show="registarAcompanante && numeroAcompanantes != acompanantes.length">
             <div>Verificar Registro del Cliente</div>
             <fieldset ng-disabled="seBloqueanLosCamposDeCedulaAcompanante">
@@ -71,12 +71,12 @@
               <input number placeholder="Número de Identificación" type="text" ng-change="validarEnTiempoRealCamposCedulaAcompanante()" maxlength="10" number ng-model="cedulaVerificarAcompanante" ></input>
               <input number placeholder="Confirmación de Número" type="text" ng-change="validarEnTiempoRealCamposCedulaAcompanante()"  maxlength="10" number  ng-model="confirmacionCedulaAcompanante"></input>
             </fieldset>
-            <label ng-show = "acompanante"  class="btn btn-default" ng-click="anadirAcompanante()">
+            <button ng-show = "acompanante"  class="btn btn-primary" ng-click="anadirAcompanante()">
               Añadir
-            </label>
-            <label  class="btn btn-default" ng-click="cancelarAnadir()">
+            </button>
+            <button  class="btn btn-danger" ng-click="cancelarAnadir()">
               Cancelar
-            </label>
+            </button>
             <div ui-view="registroAcompanante" style="display: flex;"></div>
 
           </div>
@@ -87,7 +87,7 @@
         <label>Habitaciones Disponibles</label>
         <div>
           <div class="btn-group" data-toggle="buttons">
-            <label ng-repeat="habitacion in habitacionesDisponibles | filter:filtrarPorCapacidad()" class="btn btn-default" ng-class="{active: habitacionSeleccionada.id == habitacion.id}" ng-click="">
+            <label ng-repeat="habitacion in habitacionesDisponibles | filter:filtrarPorCapacidad()" class="btn btn-primary" ng-class="{active: habitacionSeleccionada.id == habitacion.id}" ng-click="">
               <input type="radio" ng-click="openHabitacion(habitacion)"></input>
               <label>{{habitacion.id}}</label> <br> {{habitacion.nombre}} <br> Capacidad: {{habitacion.capacidad}} <br> Precio: {{habitacion.precio}}
             </label>
@@ -95,7 +95,6 @@
         </div>
       </div>
 
-{{isprinting}}
       <div style="display: grid;" id="printThis">
         <div id = "printSectionChild">      
         <div  ng-show="isprinting==true" id="logocheckin">logo</div>
@@ -130,12 +129,12 @@
     </div>
 
     <div>
-      <label class="btn btn-default" ng-click="finishCheckIn()">
+      <button class="btn btn-primary" ng-click="finishCheckIn()">
         Check-in
-      </label>
-      <label class="btn btn-default" ng-click="reset()">
+      </button>
+      <button class="btn btn-danger" ng-click="reset()">
         Cancelar
-      </label>
+      </button>
     </div>
 
   </div>
