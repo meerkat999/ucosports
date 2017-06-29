@@ -1,0 +1,23 @@
+<h2>Activar Servicios</h2>
+<table class="table table-striped">
+ <thead>
+   <tr>
+   <center>
+     <th>ID</th>
+     <th>Nombre</th>
+     <th>Precio</th>
+     </center>
+   </tr>
+ </thead>
+   <tr ng-repeat="servicio in serviciosInactivos">
+     <td>{{servicio.id}}</td>
+     <td>{{servicio.nombre}}</td>
+     <td>{{servicio.valor | currency}}</td>
+     <td><button class="btn btn-success" ng-click="activar(servicio)">Activar</button></td>
+   </tr>
+ </tbody>
+</table>
+
+<div ui-view="editar">
+
+</div>

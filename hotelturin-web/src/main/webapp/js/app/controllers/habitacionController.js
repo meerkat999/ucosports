@@ -6,6 +6,7 @@ define(['app-module', 'sweetService', 'habitacionService'], function (app) {
           habitacionService.add($scope.Habitacion).then(function(data){
             if(data !== null){
           	   sweetService.success("La Habitacion " + data.id + " fue registrada satisfactoriamente");
+          	 $state.go("app.administracion.adminHabitaciones")
             }
           },function(error){
             sweetService.error("Ha ocurrido un error al intentar Registrar la  habitacion. Si el problema persiste, comúniquese con el área de sistemas.");
@@ -103,12 +104,32 @@ define(['app-module', 'sweetService', 'habitacionService'], function (app) {
               sweetService.error("No se pudieron obtener las Habitaciones.");
             })
           }
-      $scope.edit = function(Habitacion){          
-    	 
+     
+      $scope.goRegistrarHabitacion = function(){
+          $scope.init();
+          $scope.Habitacion={};
+          $state.go("app.administracion.adminHabitaciones.registrarHabitacion")
+        }
+      
+      $scope.goModificarHabitacion = function(){
+          $scope.init();
+          $state.go("app.administracion.adminHabitaciones.modificarHabitaciones")
+        }
+        
+        $scope.goActivarHabitacion = function(){
+            $scope.init();
+            $state.go("app.administracion.adminHabitaciones.activarHabitaciones")
           }
+        
+        $scope.goEditar = function(habitacion){
+          $scope.Habitacion = habitacion;
+          $scope.isEditing = true;
+          $state.go("app.administracion.adminHabitaciones.modificarHabitaciones.editarHabitaciones")
+        }
     
       $scope.init = function(){
     	$scope.buscarhabitaciones();
+    	$scope.isEditing = false;
     	$scope.buscarHabitacionesDisponibles();
     	$scope.buscarHabitacionesOcupadas();
         $scope.listHabitaciones = [];

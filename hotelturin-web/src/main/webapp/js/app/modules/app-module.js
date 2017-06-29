@@ -65,11 +65,40 @@ define(['angularAMD', 'angular-ui-router', 'angular-resource'], function (angula
           })
         }
       })
-       .state('app.administracion.registrarHabitacion', {
+       .state('app.administracion.adminHabitaciones.registrarHabitacion', {
         url: '/registrarHabitacion',
         views: {
           'content@app.administracion': angularAMD.route({
             templateUrl : 'resources/partials/habitacion/registrarHabitacion.html' + "?bust=" + (new Date()).getTime(),
+            controller : 'habitacionController'
+          })
+        }
+    })
+    
+    .state('app.administracion.adminHabitaciones.modificarHabitaciones', {
+        url: '/modificarHabitaciones',
+        views: {
+          'content@app.administracion': angularAMD.route({
+            templateUrl : 'resources/partials/habitacion/modificarHabitaciones.html' + "?bust=" + (new Date()).getTime(),
+            controller : 'habitacionController'
+          })
+        }
+    })
+    
+    .state('app.administracion.adminHabitaciones.modificarHabitaciones.editarHabitaciones', {
+         url: '/editarHabitaciones',
+         views: {
+           'editar@app.administracion.adminHabitaciones.modificarHabitaciones': angularAMD.route({
+             templateUrl : 'resources/partials/habitacion/registrarHabitacion.html' + "?bust=" + (new Date()).getTime()
+           })
+         }
+       })
+    
+    .state('app.administracion.adminHabitaciones.activarHabitacion', {
+        url: '/activarHabitacion',
+        views: {
+          'content@app.administracion': angularAMD.route({
+            templateUrl : 'resources/partials/habitacion/activarHabitaciones.html' + "?bust=" + (new Date()).getTime(),
             controller : 'habitacionController'
           })
         }
@@ -93,6 +122,18 @@ define(['angularAMD', 'angular-ui-router', 'angular-resource'], function (angula
             })
           }
       })
+      
+      .state('app.administracion.adminHabitaciones', {
+          url: '/adminHabitaciones',
+          views: {
+            'content@app.administracion': angularAMD.route({
+              templateUrl : 'resources/partials/administracion/adminHabitaciones.html' + "?bust=" + (new Date()).getTime(),
+              controller : 'habitacionController'
+            })
+          }
+      })
+      
+      
       .state('app.administracion.adminServicios', {
           url: '/adminServicios',
           views: {
