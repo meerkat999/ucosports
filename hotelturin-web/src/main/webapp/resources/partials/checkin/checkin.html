@@ -32,12 +32,12 @@
     <div>
         <label>
           ¿Número de noches definidas?:
-          <input type="checkbox" ng-model="conoceElNumeroDeNoches.value"
+          <input class="form-control" type="checkbox" ng-model="conoceElNumeroDeNoches.value"
              ng-true-value="'SI'" ng-false-value="'NO'">
         </label>
         <div ng-show="conoceElNumeroDeNoches.value == 'SI'">
           <label>Número de Noches:</label>
-          <input number type="text" maxlength="2" ng-model="numeroNoches"></input>
+          <input class="form-control" number type="text" maxlength="2" ng-model="numeroNoches"></input>
           <button class="btn btn-warning" ng-click="numeroNoches = 0">
             Limpiar
           </button>
@@ -46,7 +46,7 @@
 
       <div>
         <label>Número de Acompañantes:</label>
-        <input number type="text" maxlength="2" ng-model="numeroAcompanantes"></input>
+        <input class="form-control" number type="text" maxlength="2" ng-model="numeroAcompanantes"></input>
         <button class="btn btn-warning" ng-click="limpiarAcompanantes()">
           Limpiar
         </button>
@@ -66,10 +66,10 @@
             <div>Verificar Registro del Cliente</div>
             <fieldset ng-disabled="seBloqueanLosCamposDeCedulaAcompanante">
               <label>Tipo de Documento:</label>
-              <select ng-model="tipodocumentoAcompanante" ng-change="validarEnTiempoRealCamposCedulaAcompanante()"
+              <select class="form-control" ng-model="tipodocumentoAcompanante" ng-change="validarEnTiempoRealCamposCedulaAcompanante()"
                 ng-options="tipo.id as tipo.nombre for tipo in listaTiposDocumentos"></select>
-              <input number placeholder="Número de Identificación" type="text" ng-change="validarEnTiempoRealCamposCedulaAcompanante()" maxlength="10" number ng-model="cedulaVerificarAcompanante" ></input>
-              <input number placeholder="Confirmación de Número" type="text" ng-change="validarEnTiempoRealCamposCedulaAcompanante()"  maxlength="10" number  ng-model="confirmacionCedulaAcompanante"></input>
+              <input class="form-control" number placeholder="Número de Identificación" type="text" ng-change="validarEnTiempoRealCamposCedulaAcompanante()" maxlength="10" number ng-model="cedulaVerificarAcompanante" ></input>
+              <input class="form-control" number placeholder="Confirmación de Número" type="text" ng-change="validarEnTiempoRealCamposCedulaAcompanante()"  maxlength="10" number  ng-model="confirmacionCedulaAcompanante"></input>
             </fieldset>
             <button ng-show = "acompanante"  class="btn btn-primary" ng-click="anadirAcompanante()">
               Añadir
@@ -87,7 +87,7 @@
         <label>Habitaciones Disponibles</label>
         <div>
           <div class="btn-group" data-toggle="buttons">
-            <label ng-repeat="habitacion in habitacionesDisponibles | filter:filtrarPorCapacidad()" class="btn btn-primary" ng-class="{active: habitacionSeleccionada.id == habitacion.id}" ng-click="">
+            <label id="itemhab" ng-repeat="habitacion in habitacionesDisponibles | filter:filtrarPorCapacidad()" class="btn btn-primary" ng-class="{active: habitacionSeleccionada.id == habitacion.id}" ng-click="">
               <input type="radio" ng-click="openHabitacion(habitacion)"></input>
               <label>{{habitacion.id}}</label> <br> {{habitacion.nombre}} <br> Capacidad: {{habitacion.capacidad}} <br> Precio: {{habitacion.precio}}
             </label>

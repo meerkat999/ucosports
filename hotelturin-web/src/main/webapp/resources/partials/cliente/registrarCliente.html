@@ -1,9 +1,12 @@
 
-			<h3 class="panel-title">Registar Cliente</h3>
+			
 
       <div class="panel-body" style="max-width: 600px;">
-
+			
           <div class="input-group">
+          <br>
+          <h3>Registar Cliente</h3>
+          <br>
 					  <label style="color: red;" ng-if="erroresFormularioRegistro[0]">Falta escoger el tipo de documento.</label>
 					  <span class="input-group-addon"><i class="glyphicon glyphicon-list-alt"></i></span>
 					  <select ng-disabled="seBloqueanLosCamposDeCedula" class="form-control" id="tipoDocumento"
@@ -54,7 +57,7 @@
 					<div class="input-group">
 					  <label style="color: red;"  ng-if="erroresFormularioRegistro[5]">Falta digilenciar el celular o el teléfono de contacto.</label>
 					  <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
-					  <input number class="form-control" type="text" maxlength="10" placeholder="Celular o teléfono" ng-model="nuevoCliente.celular"></input>
+					  <input number class="form-control" type="text" minlength="7" maxlength="10" placeholder="Celular o teléfono" ng-model="nuevoCliente.celular"></input>
 					</div>
 
 					<div class="input-group">
