@@ -14,12 +14,11 @@
      <td>{{servicio.nombre}}</td>
      <td>{{servicio.valor | currency}}</td>
      <td><button class="btn btn-warning"  ng-click="goEditar(servicio)">Editar</button></td>
-     <td><button class="btn btn-danger" ng-click="">Desactivar</button></td>
+     <td><button class="btn btn-danger" ng-click="desactivar(servicio)">Desactivar</button></td>
    </tr>
  </tbody>
 </table>
 
-{{isEditing}}
 <div ui-view="editar">
 
 </div>

@@ -126,6 +126,16 @@ define(['angularAMD', 'angular-ui-router', 'angular-resource'], function (angula
            })
          }
        })
+       
+       .state('app.administracion.adminServicios.activarServicios', {
+         url: '/activarServicios',
+         views: {
+           'content@app.administracion.adminServicios': angularAMD.route({
+             templateUrl : 'resources/partials/servicio/activarServicios.html' + "?bust=" + (new Date()).getTime()
+           })
+         }
+       })
+       
       })
 
      ;

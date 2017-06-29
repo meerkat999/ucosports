@@ -43,7 +43,25 @@ public class ServicioServiceRest {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public ServicioDTO update(ServicioDTO servicio) throws Exception{
 		return logical.update(servicio);
+	}
+	
+	@POST
+	@Path("/desactivar")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public ServicioDTO desactivar(ServicioDTO servicio) throws Exception{
+		return logical.desactivar(servicio);
 	}	
+	
+
+	@POST
+	@Path("/activar")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public ServicioDTO activar(ServicioDTO servicio) throws Exception{
+		return logical.activar(servicio);
+	}	
+	
 	
 	
 	@POST

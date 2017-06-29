@@ -18,7 +18,14 @@ define(['app-module', 'restService'], function (app) {
           },
           update : function(servicio){
             return restService.POST(path + 'update', servicio);
-          }
+          },
+          desactivar : function(servicio){
+              return restService.POST(path + 'desactivar', servicio);
+            },
+          activar : function(servicio){
+              return restService.POST(path + 'activar', servicio);
+            }
+          
         }
 
         return servicesRest;

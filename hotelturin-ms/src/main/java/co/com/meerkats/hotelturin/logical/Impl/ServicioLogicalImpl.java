@@ -91,7 +91,35 @@ public class ServicioLogicalImpl extends LogicalCommonImpl<Servicio,ServicioDTO>
 		return buildDTO(repository.save(servicioEntity));
 	}
 
+	@Override
+	@Transactional(value=TxType.REQUIRED, rollbackOn=Exception.class)
+	public ServicioDTO desactivar(ServicioDTO servicio) throws Exception {
+		Servicio servicioEntity = repository.findById(servicio.getId());
+		if(servicioEntity == null){
+			throw new Exception("Error, se está intentando editar un servicio inexistente");
+		}
+		servicioEntity.setEstado(StatesEnum.INACTIVO.getValue());		
+		servicioEntity = repository.save(servicioEntity);
+		if(servicioEntity == null){
+			throw new Exception("Error al desactivar el servicio.");
+		}
+		return buildDTO(repository.save(servicioEntity));
+	}
 	
+	@Override
+	@Transactional(value=TxType.REQUIRED, rollbackOn=Exception.class)
+	public ServicioDTO activar(ServicioDTO servicio) throws Exception {
+		Servicio servicioEntity = repository.findById(servicio.getId());
+		if(servicioEntity == null){
+			throw new Exception("Error, se está intentando editar un servicio inexistente");
+		}
+		servicioEntity.setEstado(StatesEnum.ACTIVO.getValue());		
+		servicioEntity = repository.save(servicioEntity);
+		if(servicioEntity == null){
+			throw new Exception("Error al Activar el servicio.");
+		}
+		return buildDTO(repository.save(servicioEntity));
+	}
 
 
 
