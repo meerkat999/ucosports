@@ -1,10 +1,9 @@
 #header {
   background-image: url(/resources/statics/images/logo.png);
-  background-position: right top;
+  background-position:top;
   background-repeat: no-repeat;
   background-size: contain;
-  margin-right: 100px;
-  height: 180px;
+  height: 200px;
 }
 
 #fondo{
@@ -61,6 +60,11 @@ padding-top:30px;
 padding-top:30px;
 }
 
+#cuadroexportar{
+
+padding-top:15px;
+
+}
 
 #disponibles{
 width:50%;

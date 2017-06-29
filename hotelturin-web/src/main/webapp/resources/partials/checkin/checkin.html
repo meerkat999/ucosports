@@ -10,13 +10,12 @@
     <select  class="form-control" placeholder="Tipo de Identificación"ng-model="tipodocumento" ng-change="validarEnTiempoRealCamposCedula()"
       ng-options="tipo.id as tipo.nombre for tipo in listaTiposDocumentos"></select>
           
-     <span class="input-group-addon"><i class="glyphicon glyphicon-copyright-mark"></i></span>
+    <span class="input-group-addon"><i class="glyphicon glyphicon-copyright-mark"></i></span>
     <input class="form-control" number placeholder="Número de Identificación" type="text" ng-change="validarEnTiempoRealCamposCedula()" maxlength="10" number ng-model="cedulaVerificar" ></input>
    
     <span class="input-group-addon"><i class="glyphicon glyphicon-copyright-mark"></i></span>
     <input class="form-control" number placeholder="Confirmación de Número" type="text" ng-change="validarEnTiempoRealCamposCedula()"  maxlength="10" number  ng-model="confirmacionCedula"></input>
-	 
-  
+	  
   </fieldset>
   </div>
   <div class="form-group">

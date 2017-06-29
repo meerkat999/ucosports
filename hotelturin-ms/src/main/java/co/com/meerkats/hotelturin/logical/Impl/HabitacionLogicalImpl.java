@@ -8,10 +8,12 @@ import javax.transaction.Transactional;
 import javax.transaction.Transactional.TxType;
 
 import co.com.meerkats.hotelturin.domain.Habitacion;
+import co.com.meerkats.hotelturin.domain.Servicio;
 import co.com.meerkats.hotelturin.domain.constants.StatesEnum;
 import co.com.meerkats.hotelturin.dto.EstadoDTO;
 import co.com.meerkats.hotelturin.dto.HabitacionDTO;
 import co.com.meerkats.hotelturin.dto.ListHabitacionDTO;
+import co.com.meerkats.hotelturin.dto.ServicioDTO;
 import co.com.meerkats.hotelturin.logical.IHabitacionLogical;
 import co.com.meerkats.hotelturin.repository.IHabitacionRepository;
 
@@ -117,6 +119,55 @@ public class HabitacionLogicalImpl extends LogicalCommonImpl<Habitacion,Habitaci
 	}
 
 
+	@Override
+	@Transactional(value=TxType.REQUIRED, rollbackOn=Exception.class)
+	public HabitacionDTO update(HabitacionDTO habitacionDTO) throws Exception {
+		Habitacion habitacionEntity = repository.findById(habitacionDTO.getId());
+		if(habitacionEntity == null){
+			throw new Exception("Error, se está intentando editar una habitacion inexistente");
+		}
+		habitacionEntity.setId(habitacionDTO.getId());
+		habitacionEntity.setEstado(habitacionDTO.getEstado());
+		habitacionEntity.setNombre(habitacionDTO.getNombre());
+		habitacionEntity.setPrecio(habitacionDTO.getPrecio());
+		habitacionEntity.setCapacidad(habitacionDTO.getCapacidad());
+		habitacionEntity.setDescripcion(habitacionDTO.getDescripcion());		
+		habitacionEntity = repository.save(habitacionEntity);
+		if(habitacionEntity == null){
+			throw new Exception("Error al intentar editar la Habitacion.");
+		}
+		return buildDTO(repository.save(habitacionEntity));
+	}
+
+	@Override
+	@Transactional(value=TxType.REQUIRED, rollbackOn=Exception.class)
+	public HabitacionDTO desactivar(HabitacionDTO habitacionDTO) throws Exception {
+		Habitacion habitacionEntity = repository.findById(habitacionDTO.getId());
+		if(habitacionEntity == null){
+			throw new Exception("Error, se está intentando editar una Habitacion inexistente");
+		}
+		habitacionEntity.setEstado(StatesEnum.INACTIVO.getValue());		
+		habitacionEntity = repository.save(habitacionEntity);
+		if(habitacionEntity == null){
+			throw new Exception("Error al desactivar la Habitacion.");
+		}
+		return buildDTO(repository.save(habitacionEntity));
+	}
+	
+	@Override
+	@Transactional(value=TxType.REQUIRED, rollbackOn=Exception.class)
+	public HabitacionDTO activar(HabitacionDTO habitacionDTO) throws Exception {
+		Habitacion habitacionEntity = repository.findById(habitacionDTO.getId());
+		if(habitacionEntity == null){
+			throw new Exception("Error, se está intentando editar un servicio inexistente");
+		}
+		habitacionEntity.setEstado(StatesEnum.ACTIVO.getValue());		
+		habitacionEntity = repository.save(habitacionEntity);
+		if(habitacionEntity == null){
+			throw new Exception("Error al Activar el servicio.");
+		}
+		return buildDTO(repository.save(habitacionEntity));
+	}
 
 }
 

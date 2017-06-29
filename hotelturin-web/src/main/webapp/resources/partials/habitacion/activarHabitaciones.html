@@ -5,15 +5,17 @@
    <center>
      <th>ID</th>
      <th>Nombre</th>
+     <th>Descripcion</th>     
      <th>Precio</th>
      </center>
    </tr>
  </thead>
-   <tr ng-repeat="servicio in serviciosInactivos">
-     <td>{{servicio.id}}</td>
-     <td>{{servicio.nombre}}</td>
-     <td>{{servicio.valor | currency}}</td>
-     <td><button class="btn btn-success" ng-click="activar(servicio)">Activar</button></td>
+   <tr ng-repeat="habitacion in habitacionesInactivas">
+     <td>{{habitacion.id}}</td>
+     <td>{{habitacion.nombre}}</td>
+     <td>{{habitacion.descripcion}}</td>     
+     <td>{{habitacion.precio | currency}}</td>
+     <td><button class="btn btn-success" ng-click="activar(habitacion)">Activar</button></td>
    </tr>
  </tbody>
 </table>

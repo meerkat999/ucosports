@@ -17,7 +17,7 @@ define(['app-module', 'sweetService', 'servicioService'], function (app) {
           servicioService.update($scope.Servicio).then(function(data){
             if(data !== null){
           	   sweetService.success("El Servicio adicional " + data.nombre + " fue editado satisfactoriamente");
-          	           	  
+          	   $state.go("app.administracion.adminServicios.modificarServicios")     	  
             }
           },function(error){
             sweetService.error("Ha ocurrido un error al intentar Actualizar el Servicio adicional. Si el problema persiste, comúniquese con el área de sistemas.");
@@ -106,6 +106,7 @@ define(['app-module', 'sweetService', 'servicioService'], function (app) {
         $scope.goRegistrarServicio = function(){
           $scope.init();
           $scope.Servicio={};
+          $scope.isEditing = false;
           $state.go("app.administracion.adminServicios.registrarServicio")
         }
 

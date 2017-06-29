@@ -38,28 +38,7 @@ define(['app-module', 'sweetService', 'habitacionService'], function (app) {
         }
         return valido;
       }
-
-      $scope.llenarFormularioRegistro = function(){
-          var valido = true;
-          $scope.erroresFormularioRegistro = [];
-          if($scope.campoVacio($scope.Habitacion.id)){
-            valido = false;
-            $scope.erroresFormularioRegistro[0] = true;
-          }else if($scope.campoVacio($scope.Habitacion.nombre)){
-            valido = false;
-            $scope.erroresFormularioRegistro[1] = true;
-          }else if($scope.campoVacio($scope.Habitacion.capacidad)){
-            valido = false;
-            $scope.erroresFormularioRegistro[2] = true;
-          }else if($scope.campoVacio($scope.Habitacion.descripcion)){
-            valido = false;
-            $scope.erroresFormularioRegistro[3] = true;
-          }else if($scope.campoVacio($scope.Habitacion.precio)){
-            valido = false;
-            $scope.erroresFormularioRegistro[4] = true;
-          }
-          return valido;
-        }
+     
       
       $scope.buscarHabitacionesDisponibles = function(){
           var estado = {
@@ -83,6 +62,16 @@ define(['app-module', 'sweetService', 'habitacionService'], function (app) {
           })
         }
 
+      $scope.buscarHabitacionesInactivas = function(){
+          var estado = {
+            id : 2
+          }
+          habitacionService.getByState(estado).then(function(data){
+            if(data !== null && data.listaHabitaciones !== null){
+              $scope.habitacionesInactivas = data.listaHabitaciones;             
+            }
+          })
+        }
       $scope.registrar = function(){
         if($scope.validarFormularioRegistro() == true){
           habitacionService.getById($scope.Habitacion).then(function(habitacion){
@@ -93,6 +82,40 @@ define(['app-module', 'sweetService', 'habitacionService'], function (app) {
             }
           });
         }
+      }
+      $scope.actualizar = function(){
+          habitacionService.update($scope.Habitacion).then(function(data){
+            if(data !== null){
+          	   sweetService.success("La Habitacion  " + data.id + " fue editada satisfactoriamente");
+          	  $state.go('app.administracion.adminHabitaciones.modificarHabitaciones')        	  
+            }
+          },function(error){
+            sweetService.error("Ha ocurrido un error al intentar Actualizar la Habitacion. Si el problema persiste, comúniquese con el área de sistemas.");
+          })
+      }
+      
+      $scope.desactivar = function(habitacion){
+          habitacionService.desactivar(habitacion).then(function(data){
+            if(data !== null){
+          	   sweetService.success("La Habitacion  " + data.id + " fue desactivada satisfactoriamente");
+          	 $scope.buscarHabitacionesDisponibles();
+          	 $scope.$apply();
+            }
+          },function(error){
+            sweetService.error("Ha ocurrido un error al intentar Desactivar la Habitacion. Si el problema persiste, comúniquese con el área de sistemas.");
+          })      
+      }   
+      
+      $scope.activar = function(habitacion){
+          habitacionService.activar(habitacion).then(function(data){
+            if(data !== null){
+          	   sweetService.success("La Habitacion " + data.id + " fue Activada satisfactoriamente");
+          	 $scope.buscarHabitacionesInactivas();
+          	 $scope.$apply();
+            }
+          },function(error){
+            sweetService.error("Ha ocurrido un error al intentar Activar la Habitacion. Si el problema persiste, comúniquese con el área de sistemas.");
+          })      
       }
       
       $scope.buscarhabitaciones = function(){          
@@ -131,9 +154,11 @@ define(['app-module', 'sweetService', 'habitacionService'], function (app) {
     	$scope.buscarhabitaciones();
     	$scope.isEditing = false;
     	$scope.buscarHabitacionesDisponibles();
+    	$scope.buscarHabitacionesInactivas();
     	$scope.buscarHabitacionesOcupadas();
         $scope.listHabitaciones = [];
         $scope.habitacionesDisponibles = [];
+        $scope.habitacionesInactivas = [];
         $scope.habitacionesOcupadas = [];
         $scope.Habitacion={};
                       

@@ -1,6 +1,6 @@
 <div ng-controller="habitacionController"class="row small-up-2 medium-up-2 large-up-4">
-  <h2>Editar Habitaciones</h2>        
-  <table class="table table--striped">
+  <h2 ng-hide="isEditing == true">Editar Habitaciones</h2>        
+  <table ng-hide="isEditing == true" class="table table--striped">
     <thead>
       <tr>
       <center>
@@ -12,11 +12,11 @@
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="Habitacion in listHabitaciones">
+      <tr ng-repeat="Habitacion in habitacionesDisponibles">
         <td>{{Habitacion.id}}</td>
         <td>{{Habitacion.nombre}}</td>
         <td>{{Habitacion.descripcion}}</td>
-        <td>{{Habitacion.precio}}</td>
+        <td>{{Habitacion.precio| currency}}</td>
         <td><button class="btn btn-warning"  ng-click="goEditar(Habitacion)">Editar</button></td>
      	<td><button class="btn btn-danger" ng-click="desactivar(Habitacion)">Desactivar</button></td>
       </tr>      

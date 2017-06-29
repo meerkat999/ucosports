@@ -103,7 +103,7 @@ define(['angularAMD', 'angular-ui-router', 'angular-resource'], function (angula
          }
        })
     
-    .state('app.administracion.adminHabitaciones.activarHabitacion', {
+    .state('app.administracion.adminHabitaciones.activarHabitaciones', {
         url: '/activarHabitacion',
         views: {
           'content@app.administracion': angularAMD.route({
