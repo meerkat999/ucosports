@@ -14,18 +14,21 @@ import co.com.meerkats.hotelturin.dto.AcompananteDTO;
 import co.com.meerkats.hotelturin.dto.ArriendoDTO;
 import co.com.meerkats.hotelturin.dto.ClienteDTO;
 import co.com.meerkats.hotelturin.dto.ClienteKeyDTO;
+import co.com.meerkats.hotelturin.dto.EstadoDTO;
 import co.com.meerkats.hotelturin.dto.HabitacionDTO;
+import co.com.meerkats.hotelturin.dto.ListArriendoDTO;
 import co.com.meerkats.hotelturin.dto.TipoDocumentoDTO;
 import co.com.meerkats.hotelturin.logical.IAcompananteLogical;
 import co.com.meerkats.hotelturin.logical.IArriendoLogical;
 import co.com.meerkats.hotelturin.logical.IClienteLogical;
+import co.com.meerkats.hotelturin.logical.IEstadoLogical;
 import co.com.meerkats.hotelturin.logical.IHabitacionLogical;
 import co.com.meerkats.hotelturin.logical.ITipoDocumentoLogical;
 import co.com.meerkats.hotelturin.repository.IArriendoRepository;
 
 @RequestScoped
 public class ArriendoLogicalImpl extends LogicalCommonImpl<Arriendo, ArriendoDTO> implements IArriendoLogical {
-
+	
 	@Inject
 	private IArriendoRepository repository;
 	
@@ -40,6 +43,9 @@ public class ArriendoLogicalImpl extends LogicalCommonImpl<Arriendo, ArriendoDTO
 	
 	@Inject
 	private IAcompananteLogical acompananteLogical;
+	
+	@Inject
+	private IEstadoLogical estadoLogical;
 	
 	@Override
 	public ArriendoDTO buildDTO(Arriendo entity) {
@@ -169,6 +175,61 @@ public class ArriendoLogicalImpl extends LogicalCommonImpl<Arriendo, ArriendoDTO
 			dto = buildDTO(repository.findByClienteIdAndTipodocumentoIdAndEstadoId(clienteKeyDTO.getId(), clienteKeyDTO.getTipodocumento(), StatesEnum.ACTIVO.getValue()));
 		}
 		return dto;
+	}
+
+	@Override
+	public ListArriendoDTO getByState(ArriendoDTO arriendoDTO) {
+		ListArriendoDTO dto = null;
+		if(arriendoDTO != null && arriendoDTO.getEstadoId() != null){
+			Integer estadoId = arriendoDTO.getEstadoId();
+			EstadoDTO estadoDTO = new EstadoDTO();
+			estadoDTO.setId(estadoId);
+			if(estadoLogical.getByID(estadoDTO) != null){
+				dto = new ListArriendoDTO();
+				List<Arriendo> arriendoActivos = repository.findByEstadoId(estadoId);
+				dto.setListaArriendos(listEntitiesToListDTOs(arriendoActivos));
+			}
+		}
+		return dto;
+	}
+
+	@Override
+	@Transactional(value=TxType.REQUIRED, rollbackOn=Exception.class)
+	public ArriendoDTO checkOut(ArriendoDTO arriendoDTO) throws Exception {
+		
+		ArriendoDTO dto = null;
+		if(arriendoDTO == null){
+			throw new Exception("Error al intentar generar un checkIn teniendo el dto nulo.");
+		}
+		
+		Arriendo arriendo = repository.findOne(arriendoDTO.getId());
+		
+		validarEstadoYCheckout(arriendo);
+		
+		arriendo.setDateCheckout(new Date());
+		arriendo.setEstadoId(StatesEnum.INACTIVO.getValue());
+		
+		arriendo = repository.save(arriendo);
+		
+		HabitacionDTO habitacionDTO = new HabitacionDTO();
+		habitacionDTO.setId(arriendo.getHabitacionId());
+		habitacionLogical.desocuparHabitacion(habitacionDTO);
+		
+		return buildDTO(arriendo);
+	}
+
+	private void validarEstadoYCheckout(Arriendo arriendo) throws Exception {
+		if(arriendo == null){
+			throw new Exception("Error al intentar generar un checkIn a un arriendo inexistente.");
+		}
+		
+		if(!StatesEnum.ACTIVO.getValue().equals(arriendo.getEstadoId())){
+			throw new Exception("Error al intentar generar un checkIn a un arriendo inactivo.");
+		}
+		
+		if(arriendo.getDateCheckout() != null){
+			throw new Exception("Error al intentar generar un checkIn con un checkout ya generado.");
+		}
 	}
 
 

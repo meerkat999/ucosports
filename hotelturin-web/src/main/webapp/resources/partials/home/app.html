@@ -1,11 +1,12 @@
 <div id="menuppal">
 <div class="btn-group btn-group-lg">
 <button class="btn btn-default" ng-click="goCheckin()">Check-in</button>
-<button class="btn btn-default" ng-click="">Check-out</button>
+<button class="btn btn-default" ng-click="goCheckOut()">Check-out</button>
 <button class="btn btn-default" ng-click="">Servicios</button>
+<button class="btn btn-default" ng-click="">Facturar</button>
 <button class="btn btn-default" ng-click="goAdministracion()">Administración</button>
 </div>
 </div>
-<div align="center" id="content"  style="display: flex">
+<div align="center" id="content">
   <div ui-view="content"></div>
  </div>

@@ -1,0 +1,32 @@
+<div>
+  <label>Checkin Activos</label>
+  <div>
+    <div class="btn-group" data-toggle="buttons">
+      <label ng-repeat="arriendo in arriendoActivos" class="btn btn-default" ng-class="{active: arriendoSeleccionado.id == arriendo.id}" ng-click="">
+        <input type="radio" ng-click="openArriendo(arriendo)"></input>
+        <label>Check-in:</label> <br> {{arriendo.id}} <br> Cliente: {{arriendo.clienteId}} <br> Habitacion: {{arriendo.id}}
+      </label>
+    </div>
+  </div>
+  <div ng-show="arriendoSeleccionado">
+    <div><label>Check-in: </label>{{arriendoSeleccionado.id}}</div>
+    <div><label>Cliente: </label>{{arriendoSeleccionado.clienteId}}</div>
+    <div><label>Habitacion: </label>{{arriendoSeleccionado.habitacionId}}</div>
+    <div><label>Fecha check-in: </label>{{arriendoSeleccionado.dateCheckin | date:"yyyy/MM/dd 'a las' h:mma"}}</div>
+    <div><label>Número de noches: </label>{{arriendoSeleccionado.numeroNoches}}</div>
+    <div ng-if="arriendoSeleccionado.numeroAcompanantes > 0">
+      <label>Número de Acompañantes</label>{{arriendoSeleccionado.numeroAcompanantes}}
+    </div>
+    <div ng-if="arriendoSeleccionado.dateCheckout">
+      <label>Fecha del Check-out</label>{{arriendoSeleccionado.dateCheckout | date:"yyyy/MM/dd 'a las' h:mma"}}}}
+    </div>
+    <div>
+      <label class="btn btn-default" ng-click="questionCheckOut()">
+        Check-out
+      </label>
+      <label class="btn btn-default" ng-click="arriendoSeleccionado = undefined">
+        Cerrar
+      </label>
+    </div>
+  </div>
+</div>

@@ -9,6 +9,7 @@ import javax.ws.rs.core.MediaType;
 
 import co.com.meerkats.hotelturin.dto.ArriendoDTO;
 import co.com.meerkats.hotelturin.dto.ClienteKeyDTO;
+import co.com.meerkats.hotelturin.dto.ListArriendoDTO;
 import co.com.meerkats.hotelturin.logical.IArriendoLogical;
 
 @Path("/arriendoService")
@@ -34,11 +35,27 @@ public class ArriendoServiceRest {
 	}
 	
 	@POST
+	@Path("/getByState")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public ListArriendoDTO getByState(ArriendoDTO arriendoDTO){
+		return logical.getByState(arriendoDTO);
+	}
+	
+	@POST
 	@Path("/add")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public ArriendoDTO add(ArriendoDTO arriendoDTO) throws Exception{
 		return logical.add(arriendoDTO);
+	}
+	
+	@POST
+	@Path("/checkOut")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public ArriendoDTO checkOut(ArriendoDTO arriendoDTO) throws Exception{
+		return logical.checkOut(arriendoDTO);
 	}
 	
 }

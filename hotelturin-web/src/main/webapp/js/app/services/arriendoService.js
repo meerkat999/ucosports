@@ -9,6 +9,15 @@ define(['app-module', 'restService'], function (app) {
           },
           getByClienteKeyCheckInActive : function(clienteId){
             return restService.POST(path + 'getByClienteKeyCheckInActive', clienteId);
+          },
+          getByState : function(arriendo){
+            return restService.POST(path + 'getByState', arriendo);
+          },
+          checkOut : function(arriendo){
+            return restService.POST(path + 'checkOut', arriendo);
+          },
+          getById : function(arriendo){
+            return restService.POST(path + 'getById', arriendo);
           }
         }
 

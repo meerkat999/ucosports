@@ -19,6 +19,7 @@ requirejs.config({
       'servicioController' : 'app/controllers/servicioController',
       'servicioService' : 'app/services/servicioService',
       'checkinController' : 'app/controllers/checkinController',
+      'checkoutController' : 'app/controllers/checkoutController',
       'administracionController' : 'app/controllers/administracionController',
       'restService' : 'app/services/restService',
       'clienteService' : 'app/services/clienteService',
@@ -34,5 +35,5 @@ requirejs.config({
     	'app-module' : ['angular']
     },
     deps: [
-      'app-module', 'sweetService', 'clienteController', 'numberDirective', 'checkinController','habitacionController', 'servicioController','administracionController']
+      'app-module', 'sweetService', 'clienteController', 'numberDirective', 'checkinController', 'checkoutController','habitacionController', 'servicioController','administracionController']
 });

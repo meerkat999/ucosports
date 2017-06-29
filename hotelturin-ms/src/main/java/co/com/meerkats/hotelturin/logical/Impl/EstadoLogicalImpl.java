@@ -10,25 +10,26 @@ import co.com.meerkats.hotelturin.repository.IEstadoRepository;
 
 @RequestScoped
 public class EstadoLogicalImpl extends LogicalCommonImpl<Estado, EstadoDTO> implements IEstadoLogical {
-
+	
 	@Inject
 	private IEstadoRepository repository;
 	
 	@Override
 	public EstadoDTO buildDTO(Estado entity) {
 		EstadoDTO dto = null;
-		if(entity != null & entity.getId() != null){
+		if(entity != null && entity.getId() != null){
 			dto = new EstadoDTO();
 			dto.setId(entity.getId());
 		}
-		return null;
+		return dto;
 	}
 
 	@Override
 	public EstadoDTO getByID(EstadoDTO estadoDTO) {
 		EstadoDTO dto = null;
 		if(estadoDTO != null && estadoDTO.getId() != null){
-			dto = buildDTO(repository.findOne(estadoDTO.getId()));
+			Estado estado = repository.findOne(estadoDTO.getId());
+			dto = buildDTO(estado);
 		}
 		return dto;
 	}
