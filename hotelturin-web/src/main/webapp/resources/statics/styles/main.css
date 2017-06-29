@@ -56,14 +56,15 @@ padding-top:30px;
 }
 
 #habitacion{
-
 padding-top:30px;
 }
 
 #cuadroexportar{
-
 padding-top:15px;
+}
 
+#logocheckin{
+ background-image: url(/resources/statics/images/logo.png);	
 }
 
 #disponibles{

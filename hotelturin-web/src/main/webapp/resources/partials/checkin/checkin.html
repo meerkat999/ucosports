@@ -95,9 +95,11 @@
         </div>
       </div>
 
+{{isprinting}}
       <div style="display: grid;" id="printThis">
-        <div id = "printSectionChild">
-          <h3>Check-in</h3>
+        <div id = "printSectionChild">      
+        <div  ng-show="isprinting==true" id="logocheckin">logo</div>
+           <h3>Check-in</h3>
           <div><label>Cliente:</label> {{cliente.nombreCompleto}}</div>
           <div ng-if="habitacionSeleccionada.id"><label>Habitacion:</label> {{habitacionSeleccionada.id}} - {{habitacionSeleccionada.nombre}} <br> </div>
           <div ng-if="habitacionSeleccionada.id"><label>Valor por noche:</label> {{habitacionSeleccionada.precio | currency}} <br> </div>

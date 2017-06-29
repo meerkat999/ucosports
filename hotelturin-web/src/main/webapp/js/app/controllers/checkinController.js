@@ -202,6 +202,7 @@ define(['app-module','clienteService', 'tipoDocumentoService', 'sweetService', '
             sweetService.success("El check-in se registró correctamente el "
               + fecha + ". \n Para el cliente " + $scope.cliente.nombreCompleto + " en la habitación " + $scope.habitacionSeleccionada.id + ".",
               function(){
+            	$scope.isprinting = true;  
                 $scope.print();
               });
           }
@@ -234,23 +235,26 @@ define(['app-module','clienteService', 'tipoDocumentoService', 'sweetService', '
       }
 
       $scope.print = function(){
-        printElement(document.getElementById("printThis"));
-        window.print();
+    	$scope.isprinting = true;    
+        printElement(document.getElementById("printThis"));        
+        window.print();       
         $scope.reset();
       }
 
       function printElement(elem) {
+    	  $scope.isprinting=true;
           var domClone = elem.cloneNode(true);
-
           var $printSection = document.getElementById("printSection");
 
           if (!$printSection) {
               var $printSection = document.createElement("div");
               $printSection.id = "printSection";
               document.body.appendChild($printSection);
+              $scope.isprinting = true;  
           }
 
           $printSection.innerHTML = "";
+          $scope.isprinting = true;  
 
           $printSection.appendChild(domClone);
       }
@@ -284,6 +288,7 @@ define(['app-module','clienteService', 'tipoDocumentoService', 'sweetService', '
         $scope.tipodocumentoAcompanante = null;
         $scope.confirmacionCedulaAcompanante = null;
         $scope.cedulaVerificarAcompanante = null;
+        $scope.isprinting=false;
       }
 
       $scope.init = function(){

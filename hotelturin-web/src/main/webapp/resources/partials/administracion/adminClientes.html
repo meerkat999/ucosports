@@ -2,10 +2,10 @@
   <h3>Exportar Registro de Clientes</h3>
  <div id="cuadroexportar" style="display:inline-table;" >  
  <fieldset> 
-  <div class="input-group">  
-  <label>Año:</label><select class="form-control" ng-model="exportarDate.year" ng-change="yearChange()" ng-options="year.year as year.year for year in $parent.listaYearsConClientes"></select>
+  <div ng-hide="true" class="input-group">  
+  <label ng-hide="true">Año:</label><select class="form-control" ng-model="exportarDate.year" ng-change="yearChange()" ng-options="year.year as year.year for year in $parent.listaYearsConClientes"></select>
   <br>  
-  <label>Mes:</label><select class="form-control" ng-disabled="exportarDate.year === undefined" ng-model="exportarDate.month" ng-options="mes.month as mes.month for mes in listaMesesConClientes"></select>
+  <label ng-hide="true">Mes:</label><select class="form-control" ng-disabled="exportarDate.year === undefined" ng-model="exportarDate.month" ng-options="mes.month as mes.month for mes in listaMesesConClientes"></select>
 </div>
 </fieldset>
 <br>

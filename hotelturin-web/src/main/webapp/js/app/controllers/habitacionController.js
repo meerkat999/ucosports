@@ -149,6 +149,12 @@ define(['app-module', 'sweetService', 'habitacionService'], function (app) {
           $scope.isEditing = true;
           $state.go("app.administracion.adminHabitaciones.modificarHabitaciones.editarHabitaciones")
         }
+        
+        $scope.goConsultarHabitaciones = function(){
+            $scope.init();
+            $state.go("app.administracion.adminHabitaciones.consultarHabitaciones")
+          }
+        
     
       $scope.init = function(){
     	$scope.buscarhabitaciones();
