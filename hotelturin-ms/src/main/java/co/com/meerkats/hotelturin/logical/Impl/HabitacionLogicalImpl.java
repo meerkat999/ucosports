@@ -83,22 +83,40 @@ public class HabitacionLogicalImpl extends LogicalCommonImpl<Habitacion,Habitaci
 	}
 
 	@Override
+	@Transactional(value=TxType.REQUIRED, rollbackOn=Exception.class)
 	public HabitacionDTO ocuparHabitacion(HabitacionDTO habitacionDTO) throws Exception {
-		HabitacionDTO dto = null;
-		if(habitacionDTO == null || habitacionDTO.getId() == null){
-			throw new Exception("Error al intentar ocupar una habitación con un dto nulo.");
+		return updateEstado(habitacionDTO, StatesEnum.ACTIVO, StatesEnum.OCUPADA);
+	}
+	
+	@Override
+	@Transactional(value=TxType.REQUIRED, rollbackOn=Exception.class)
+	public HabitacionDTO desocuparHabitacion(HabitacionDTO habitacionDTO) throws Exception {
+		return updateEstado(habitacionDTO, StatesEnum.OCUPADA, StatesEnum.ACTIVO);
+	}
+
+	private HabitacionDTO updateEstado(HabitacionDTO habitacionDTO, StatesEnum oldStateRequired, StatesEnum newStateRequired) throws Exception {
+		HabitacionDTO dto;
+		Habitacion habitacion = validarExistenciaHabitacion(habitacionDTO);
+		if(!oldStateRequired.getValue().equals(habitacion.getEstado())){
+			throw new Exception("Error al intentar desocupar/ocupar una habitación que no está ocupada.");
 		}
-		Habitacion habitacion = repository.findOne(habitacionDTO.getId());
-		if(habitacion == null){
-			throw new Exception("Error al intentar ocupar una habitación inexistente.");
-		}
-		if(habitacion.getEstado() != StatesEnum.ACTIVO.getValue()){
-			throw new Exception("Error al intentar ocupar una habitación que no esta activa.");
-		}
-		habitacion.setEstado(StatesEnum.OCUPADA.getValue());
+		habitacion.setEstado(newStateRequired.getValue());
 		dto = buildDTO(repository.save(habitacion));
 		return dto;
 	}
+
+	private Habitacion validarExistenciaHabitacion(HabitacionDTO habitacionDTO) throws Exception {
+		if(habitacionDTO == null || habitacionDTO.getId() == null){
+			throw new Exception("Error al intentar cambiar el estado a una habitación con un dto nulo.");
+		}
+		Habitacion habitacion = repository.findOne(habitacionDTO.getId());
+		if(habitacion == null){
+			throw new Exception("Error al intentar cambiar el estado una habitación inexistente.");
+		}
+		return habitacion;
+	}
+
+
 
 }
 

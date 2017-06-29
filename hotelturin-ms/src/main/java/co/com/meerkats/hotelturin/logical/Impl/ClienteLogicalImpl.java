@@ -100,8 +100,14 @@ public class ClienteLogicalImpl extends LogicalCommonImpl<Cliente, ClienteDTO> i
 	}
 
 	private String buildNombreCompleto(ClienteDTO clientedto) {
-		String nombreCompleto = clientedto.getNombreUno() + " " + clientedto.getApellidoUno() + " " + clientedto.getApellidoDos();
+		String nombreCompleto = clientedto.getNombreUno() + " " + clientedto.getApellidoUno();
 		if(clientedto.getNombreDos() != null){
+			nombreCompleto = clientedto.getNombreUno() + " " + clientedto.getNombreDos() + " " + clientedto.getApellidoUno();
+		}
+		if(clientedto.getApellidoDos() != null){
+			nombreCompleto = clientedto.getNombreUno() + " " + clientedto.getApellidoUno() + " " + clientedto.getApellidoDos();
+		}
+		if(clientedto.getNombreDos() != null && clientedto.getApellidoDos() != null){
 			nombreCompleto = clientedto.getNombreUno() + " " + clientedto.getNombreDos() + " " + clientedto.getApellidoUno() + " " + clientedto.getApellidoDos();
 		}
 		return nombreCompleto;

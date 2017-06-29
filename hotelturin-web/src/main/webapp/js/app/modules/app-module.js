@@ -38,6 +38,15 @@ define(['angularAMD', 'angular-ui-router', 'angular-resource'], function (angula
           })
         }
       })
+      .state('app.checkout', {
+        url: '/checkout',
+        views: {
+          'content@app': angularAMD.route({
+            templateUrl : 'resources/partials/checkout/checkout.html' + "?bust=" + (new Date()).getTime(),
+            controller : 'checkoutController'
+          })
+        }
+      })
       .state('app.checkin.registro', {
         url: '/registro',
         views: {
