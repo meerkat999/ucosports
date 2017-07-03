@@ -185,16 +185,19 @@ public class ArriendoLogicalImpl extends LogicalCommonImpl<Arriendo, ArriendoDTO
 	}
 
 	@Override
-	public ListArriendoDTO getByState(EstadoDTO estado ) {
-		ListArriendoDTO ListArriendoDTO = null;
-		Integer estadoId = estado.getId();
-		if(estadoId != null){			
-			ListArriendoDTO  = new ListArriendoDTO();
-			List<Arriendo> listaarriendos = repository.findByEstado(estadoId);
-			List<ArriendoDTO> listEntitiesToListDTOs = listEntitiesToListDTOs(listaarriendos);
-			ListArriendoDTO.setListaArriendos(listEntitiesToListDTOs);
-		}	
-		return ListArriendoDTO;
+	public ListArriendoDTO getByState(ArriendoDTO arriendoDTO) { 
+	    ListArriendoDTO dto = null; 
+	    if(arriendoDTO != null && arriendoDTO.getEstadoId() != null){ 
+	      Integer estadoId = arriendoDTO.getEstadoId(); 
+	      EstadoDTO estadoDTO = new EstadoDTO(); 
+	      estadoDTO.setId(estadoId); 
+	      if(estadoLogical.getByID(estadoDTO) != null){ 
+	        dto = new ListArriendoDTO(); 
+	        List<Arriendo> arriendoActivos = repository.findByEstadoId(estadoId); 
+	        dto.setListaArriendos(listEntitiesToListDTOs(arriendoActivos)); 
+	      } 
+	    } 
+	    return dto; 
 	}
 	@Override
 	@Transactional(value=TxType.REQUIRED, rollbackOn=Exception.class)
@@ -221,7 +224,7 @@ public class ArriendoLogicalImpl extends LogicalCommonImpl<Arriendo, ArriendoDTO
 		key.setId(arriendo.getClienteId());
 		key.setTipodocumento(arriendo.getTipodocumentoId());
 		
-		sendCorreo(arriendo, key);
+		//sendCorreo(arriendo, key);
 		
 		return buildDTO(arriendo);
 	}
