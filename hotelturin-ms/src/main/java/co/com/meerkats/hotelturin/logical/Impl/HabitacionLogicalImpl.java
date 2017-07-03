@@ -8,12 +8,10 @@ import javax.transaction.Transactional;
 import javax.transaction.Transactional.TxType;
 
 import co.com.meerkats.hotelturin.domain.Habitacion;
-import co.com.meerkats.hotelturin.domain.Servicio;
 import co.com.meerkats.hotelturin.domain.constants.StatesEnum;
 import co.com.meerkats.hotelturin.dto.EstadoDTO;
 import co.com.meerkats.hotelturin.dto.HabitacionDTO;
 import co.com.meerkats.hotelturin.dto.ListHabitacionDTO;
-import co.com.meerkats.hotelturin.dto.ServicioDTO;
 import co.com.meerkats.hotelturin.logical.IHabitacionLogical;
 import co.com.meerkats.hotelturin.repository.IHabitacionRepository;
 

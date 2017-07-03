@@ -10,11 +10,9 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-
 import co.com.meerkats.hotelturin.dto.EstadoDTO;
 import co.com.meerkats.hotelturin.dto.HabitacionDTO;
 import co.com.meerkats.hotelturin.dto.ListHabitacionDTO;
-import co.com.meerkats.hotelturin.dto.ServicioDTO;
 import co.com.meerkats.hotelturin.logical.IHabitacionLogical;
 
 @Path("/habitacionService")

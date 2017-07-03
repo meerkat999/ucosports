@@ -9,6 +9,8 @@
             <property name="connection.autoReconnect" value="true"/>
 			<property name="connection.autoReconnectForPools" value="true"/>
 			<property name="connection.is-connection-validation-required" value="true"/>
+			<property name="hibernate.c3p0.preferredTestQuery" value="SELECT 1" />
+			<property name="hibernate.c3p0.idle_test_period" value="20" />
         </properties>
     </persistence-unit>
 </persistence>

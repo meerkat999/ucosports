@@ -1,3 +1,5 @@
 @echo off
-start "UCOSPORTS-TOURNAMENT-MS" java -jar %cd%/ucosports-tournament-ms/target/deploy-swarm.jar --profile=default
-start "UCOSPORTS-WEB" java -jar %cd%/ucosports-web/target/deploy-swarm.jar
+
+start "HOTELTURIN-MS" java -jar %cd%/hotelturin-ms/target/deploy-swarm.jar --profile=default
+
+start "HOTELTURIN-WEB" java -jar %cd%/hotelturin-web/target/deploy-swarm.jar
