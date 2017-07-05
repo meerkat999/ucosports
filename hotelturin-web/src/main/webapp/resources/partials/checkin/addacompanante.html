@@ -25,7 +25,7 @@
   <div ui-view="registro" style="display: flex;"></div>
 </div>
 <div ng-show="mostrarVistaCheckIn()">
-    <h2>Para la habitación:</h2>
+    <h3>Para la habitación:</h3>
     <div>
       <div class="btn-group" data-toggle="buttons">
         <label ng-repeat="arriendo in arriendoActivos" class="btn btn-default" ng-class="{active: arriendoSeleccionado.id == arriendo.id}" ng-click="">
@@ -36,7 +36,6 @@
     </div>
     <br>
     <div>
-      {{addAcompanante}}
       <button class="btn btn-primary" ng-click="finishAddAcompanante()">
         Agregar
       </button>

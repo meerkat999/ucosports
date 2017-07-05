@@ -17,11 +17,19 @@ public class AcompananteServiceRest {
 	private IAcompananteLogical logical;
 	
 	@POST
-	@Path("/add")
+	@Path("/addAfterCheckin")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public AcompananteDTO add(AcompananteDTO acompananteDTO) throws Exception{
-		return logical.add(acompananteDTO);
+	public AcompananteDTO addAfterCheckin(AcompananteDTO acompananteDTO) throws Exception{
+		return logical.addAfterCheckin(acompananteDTO);
+	}
+	
+	@POST
+	@Path("/searchAcompananteCheckInActive")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public AcompananteDTO searchAcompananteCheckInActive(AcompananteDTO acompananteDTO){
+		return logical.searchAcompananteCheckInActive(acompananteDTO);
 	}
 	
 }

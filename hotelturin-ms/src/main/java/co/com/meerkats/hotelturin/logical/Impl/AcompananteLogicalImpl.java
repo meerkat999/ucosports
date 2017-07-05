@@ -1,5 +1,7 @@
 package co.com.meerkats.hotelturin.logical.Impl;
 
+import java.util.List;
+
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
@@ -42,21 +44,19 @@ public class AcompananteLogicalImpl extends LogicalCommonImpl<Acompanante, Acomp
 			dto.setTipoDocumentoId(entity.getTipoDocumentoId());
 			dto.setCedulaId(entity.getClienteId());
 		}
-		return null;
+		return dto;
 	}
 
 	@Override
 	@Transactional(value=TxType.REQUIRED, rollbackOn=Exception.class)
 	public AcompananteDTO add(AcompananteDTO acompananteDTO) throws Exception {
 		AcompananteDTO dto = null;
-		if(acompananteDTO != null){
-			validar(acompananteDTO);
-			Acompanante acompanante = new Acompanante();
-			acompanante.setArriendoId(acompananteDTO.getArriendoId());
-			acompanante.setClienteId(acompananteDTO.getCedulaId());
-			acompanante.setTipoDocumentoId(acompananteDTO.getTipoDocumentoId());
-			dto = buildDTO(repository.save(acompanante));
-		}
+		validar(acompananteDTO);
+		Acompanante acompanante = new Acompanante();
+		acompanante.setArriendoId(acompananteDTO.getArriendoId());
+		acompanante.setClienteId(acompananteDTO.getCedulaId());
+		acompanante.setTipoDocumentoId(acompananteDTO.getTipoDocumentoId());
+		dto = buildDTO(repository.save(acompanante));
 		return dto;
 	}
 
@@ -98,6 +98,36 @@ public class AcompananteLogicalImpl extends LogicalCommonImpl<Acompanante, Acomp
 		if(clienteLogical.getById(clienteKeyDTO) == null){
 			throw new Exception("Error al intentar guardar un acompanante que no esta registrado/inexistente.");
 		}
+	}
+
+	@Override
+	public AcompananteDTO searchAcompananteCheckInActive(AcompananteDTO acompananteDTO) {
+		AcompananteDTO dto = null;
+		if(acompananteDTO != null){
+			List<AcompananteDTO> byClienteWithArriendoActive = getByClienteWithArriendoActive(acompananteDTO);
+			if(byClienteWithArriendoActive != null){
+				dto = byClienteWithArriendoActive.stream().findFirst().orElse(null);
+			}
+		}
+		return dto;
+	}
+
+	private List<AcompananteDTO> getByClienteWithArriendoActive(AcompananteDTO acompananteDTO) {
+		List<AcompananteDTO> lista = null;
+		if(acompananteDTO.getCedulaId() != null && acompananteDTO.getTipoDocumentoId() != null){
+			lista = listEntitiesToListDTOs(repository.findByClienteIdAndTipoDocumentoIdWithArriendoActive(acompananteDTO.getCedulaId(), acompananteDTO.getTipoDocumentoId()));
+		}
+		return lista;
+	}
+
+	@Override
+	@Transactional(value=TxType.REQUIRED, rollbackOn=Exception.class)
+	public AcompananteDTO addAfterCheckin(AcompananteDTO acompananteDTO) throws Exception {
+		validar(acompananteDTO);
+		ArriendoDTO arriendoDTO = new ArriendoDTO();
+		arriendoDTO.setId(acompananteDTO.getArriendoId());
+		arriendoLogical.addNumAcompanantes(arriendoDTO, 1);
+		return add(acompananteDTO);
 	}
 
 }

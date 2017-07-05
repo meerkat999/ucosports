@@ -7,5 +7,8 @@ public interface IAcompananteLogical extends ILogicalCommon<Acompanante, Acompan
 
 	AcompananteDTO add(AcompananteDTO acompananteDTO) throws Exception;
 
+	AcompananteDTO searchAcompananteCheckInActive(AcompananteDTO acompananteDTO);
+
+	AcompananteDTO addAfterCheckin(AcompananteDTO acompananteDTO) throws Exception;
 
 }

@@ -23,9 +23,19 @@ define(['app-module','clienteService', 'tipoDocumentoService', 'sweetService', '
                 if(arriendo !== undefined && arriendo.id !== undefined){
                   sweetService.warning("No puedes continuar con el proceso porque el cliente tiene un checkin activo.");
                 }else{
-                  $scope.cliente = cliente;
-                  sweetService.info("Cliente Registrado","El cliente " + cliente.nombreCompleto + " ya se encuentra registrado. \n Puedes continuar con el proceso.");
-                  $scope.seBloqueanLosCamposDeCedula = true;
+                  var verifyAcompanante = {
+                    cedulaId : cliente.id.id,
+                    tipoDocumentoId : cliente.id.tipodocumento
+                  }
+                  acompananteService.searchAcompananteCheckInActive(verifyAcompanante).then(function(verify){
+                    if(verify !== undefined && verify.id !== undefined){
+                      sweetService.warning("No puedes continuar con el proceso porque el cliente ya está registrado como acompañante en un checkin activo.");
+                    }else{
+                      $scope.cliente = cliente;
+                      sweetService.info("Cliente Registrado","El cliente " + cliente.nombreCompleto + " ya se encuentra registrado. \n Puedes continuar con el proceso.");
+                      $scope.seBloqueanLosCamposDeCedula = true;
+                    }
+                  })
                 }
               }, function(error){
                 sweetService.error("Se ha producido un error al intentar validar el estado de checkin del cliente. Comuníquese con el área de sistemas.")
@@ -40,7 +50,7 @@ define(['app-module','clienteService', 'tipoDocumentoService', 'sweetService', '
                 }
               };
               $scope.seBloqueanLosCamposDeCedula = true;
-              if($state.currentState === "Nuevo"){
+              if($scope.currentState === "Nuevo"){
                 $state.go("app.checkinMenu.nuevo.registro")
               }else{
                 $state.go("app.checkinMenu.addAcompanante.registroAcompanante")
@@ -240,7 +250,7 @@ define(['app-module','clienteService', 'tipoDocumentoService', 'sweetService', '
       }
 
       $scope.print = function(){
-    	$scope.isprinting = true;
+    	   $scope.isprinting = true;
         printElement(document.getElementById("printThis"));
         window.print();
         $scope.reset();
@@ -264,12 +274,12 @@ define(['app-module','clienteService', 'tipoDocumentoService', 'sweetService', '
           $printSection.appendChild(domClone);
       }
 
-      $scope.getArriendosActivos = function(){
-        arriendoService.getByState({estadoId : 1}).then(function(listaArriendosActivos){
-          if(listaArriendosActivos !== undefined && listaArriendosActivos.listaArriendos !== undefined && listaArriendosActivos.listaArriendos.length > 0){
-            $scope.arriendoActivos = listaArriendosActivos.listaArriendos;
+      $scope.getArriendosActivosConEspacio = function(){
+        arriendoService.getArriendosActivosConEspacio().then(function(listaArriendosActivos){
+          if(listaArriendosActivos !== undefined && listaArriendosActivos.length > 0){
+            $scope.arriendoActivos = listaArriendosActivos;
           }else{
-            sweetService.warning("No hay ningún check-in activo para agregarle un acompañante.");
+            sweetService.warning("No hay ningún check-in disponible para agregarle un acompañante.");
             $state.go("app.checkinMenu");
           }
         })
@@ -286,9 +296,13 @@ define(['app-module','clienteService', 'tipoDocumentoService', 'sweetService', '
           tipoDocumentoId : $scope.cliente.id.tipodocumento,
           arriendoId : $scope.arriendoSeleccionado.id
         }
-        acompananteService.add($scope.addAcompanante).then(function(acompanante){
+        acompananteService.addAfterCheckin($scope.addAcompanante).then(function(acompanante){
           if(acompanante !== undefined && acompanante.id !== undefined){
-            sweetService.success("Se el acompañante" + $scope.nombreCompleto + "se ha incluido correctamente en la habitación " + $scope.arriendoSeleccionado.habitacionId + ".")
+            sweetService.success("El acompañante" + $scope.cliente.nombreCompleto + " se ha incluido correctamente en la habitación " + $scope.arriendoSeleccionado.habitacionId + ".",
+            function(success){
+              $scope.reset();
+            })
+            
           }else{
             sweetService.warning("No se ha podido añadir el acompanante. Inténtelo de nuevo en unos instantes.")
           }
@@ -302,7 +316,7 @@ define(['app-module','clienteService', 'tipoDocumentoService', 'sweetService', '
         $scope.buscarTiposDocumento();
         $scope.buscarHabitacionesDisponibles();
         if($scope.currentState === "AddAcompanante"){
-          $scope.getArriendosActivos();
+          $scope.getArriendosActivosConEspacio();
         }
         $scope.nuevoCliente = {
           id : {}

@@ -4,8 +4,11 @@ define(['app-module', 'restService'], function (app) {
       var path = 'acompananteService/'
 
         var servicesRest = {
-          add : function(acompanante){
-            return restService.POST(path + 'add', acompanante);
+          addAfterCheckin : function(acompanante){
+            return restService.POST(path + 'addAfterCheckin', acompanante);
+          },
+          searchAcompananteCheckInActive : function(acompanante){
+            return restService.POST(path + 'searchAcompananteCheckInActive', acompanante);
           }
         }
 

@@ -1,21 +1,20 @@
 <div style="display: inline-grid;" ng-show="habitacionesDisponibles.length > 0">
-
   <h3>Verificar Registro del Cliente</h3>
    <div class="input-group">
   <fieldset ng-disabled="seBloqueanLosCamposDeCedula">
     <label>Tipo de Documento:</label>
-    
+
     <div class="input-group">
     <span class="input-group-addon"><i class="glyphicon glyphicon-list-alt"></i></span>
     <select  class="form-control" placeholder="Tipo de Identificación"ng-model="tipodocumento" ng-change="validarEnTiempoRealCamposCedula()"
       ng-options="tipo.id as tipo.nombre for tipo in listaTiposDocumentos"></select>
-          
+
     <span class="input-group-addon"><i class="glyphicon glyphicon-copyright-mark"></i></span>
     <input class="form-control" number placeholder="Número de Identificación" type="text" ng-change="validarEnTiempoRealCamposCedula()" maxlength="10" number ng-model="cedulaVerificar" ></input>
-   
+
     <span class="input-group-addon"><i class="glyphicon glyphicon-copyright-mark"></i></span>
     <input class="form-control" number placeholder="Confirmación de Número" type="text" ng-change="validarEnTiempoRealCamposCedula()"  maxlength="10" number  ng-model="confirmacionCedula"></input>
-	  
+
   </fieldset>
   </div>
   <div class="form-group">
@@ -96,7 +95,7 @@
       </div>
 
       <div style="display: grid;" id="printThis">
-        <div id = "printSectionChild">      
+        <div id = "printSectionChild">
         <div  ng-show="isprinting==true" id="logocheckin">logo</div>
            <h3>Check-in</h3>
           <div><label>Cliente:</label> {{cliente.nombreCompleto}}</div>

@@ -15,7 +15,7 @@
     <div><label>Fecha check-in: </label>{{arriendoSeleccionado.dateCheckin | date:"yyyy/MM/dd 'a las' h:mma"}}</div>
     <div><label>Número de noches: </label>{{arriendoSeleccionado.numeroNoches}}</div>
     <div ng-if="arriendoSeleccionado.numeroAcompanantes > 0">
-      <label>Número de Acompañantes</label>{{arriendoSeleccionado.numeroAcompanantes}}
+      <label>Número de Acompañantes: </label>{{arriendoSeleccionado.numeroAcompanantes}}
     </div>
     <div ng-if="arriendoSeleccionado.dateCheckout">
       <label>Fecha del Check-out</label>{{arriendoSeleccionado.dateCheckout | date:"yyyy/MM/dd 'a las' h:mma"}}}}

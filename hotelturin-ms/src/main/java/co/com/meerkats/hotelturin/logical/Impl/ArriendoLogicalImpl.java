@@ -77,7 +77,7 @@ public class ArriendoLogicalImpl extends LogicalCommonImpl<Arriendo, ArriendoDTO
 	@Override
 	public ArriendoDTO getById(ArriendoDTO arriendoDTO) {
 		Arriendo arriendo = null;
-		if(arriendoDTO!= null && arriendoDTO.getId() == null){
+		if(arriendoDTO != null && arriendoDTO.getId() != null){
 			arriendo = (repository.findOne(arriendoDTO.getId()));
 		}
 		return buildDTO(arriendo);
@@ -200,6 +200,7 @@ public class ArriendoLogicalImpl extends LogicalCommonImpl<Arriendo, ArriendoDTO
 	    } 
 	    return dto; 
 	}
+	
 	@Override
 	@Transactional(value=TxType.REQUIRED, rollbackOn=Exception.class)
 	public ArriendoDTO checkOut(ArriendoDTO arriendoDTO) throws Exception {
@@ -313,7 +314,7 @@ public class ArriendoLogicalImpl extends LogicalCommonImpl<Arriendo, ArriendoDTO
 		row.createCell(2).setCellValue(c.getTipodocumentoId());
 		row.createCell(3).setCellValue(c.getClienteId());
 		row.createCell(4).setCellValue(c.getNumeroAcompanantes());
-		if(c.getNumeroNoches() != null){
+		if(c.getNumeroNoches() != null || c.getNumeroNoches() == 0){
 			row.createCell(5).setCellValue(c.getNumeroNoches());
 		}else{
 			if(c.getDateCheckout() != null){
@@ -321,7 +322,37 @@ public class ArriendoLogicalImpl extends LogicalCommonImpl<Arriendo, ArriendoDTO
 			}
 		}
 		row.createCell(6).setCellValue(c.getEstadoId());
-		row.createCell(7).setCellValue(c.getDateCheckout());
+		row.createCell(7).setCellValue(DateUtil.dateToString(c.getDateCheckout(), DateUtil.FORMATO_DOS));
+	}
+
+	@Override
+	@Transactional(value=TxType.REQUIRED, rollbackOn=Exception.class)
+	public ArriendoDTO addNumAcompanantes(ArriendoDTO arriendoDTO, Integer more) throws Exception {
+		if(arriendoDTO == null || arriendoDTO.getId() == null){
+			throw new Exception("Error al intentar sumar al numero de acompanantes con un dto nulo.");
+		}
+		Arriendo arriendo = repository.findOne(arriendoDTO.getId());
+		validarCapacidadHabitacion(arriendo);
+		validarEstadoYCheckout(arriendo);
+		arriendo.setNumeroAcompanantes(arriendo.getNumeroAcompanantes() + 1);
+		return buildDTO(repository.save(arriendo));
+	}
+
+	private void validarCapacidadHabitacion(Arriendo arriendo) throws Exception {
+		HabitacionDTO habitacionDTO = new HabitacionDTO();
+		habitacionDTO.setId(arriendo.getHabitacionId());
+		HabitacionDTO habitacion = habitacionLogical.getById(habitacionDTO);
+		if(habitacion == null || habitacion.getEstado() == StatesEnum.INACTIVO.getValue()){
+			throw new Exception("No se puede añadir el acompañante en una habitación inexistente o inactiva");
+		}
+		if(habitacion.getCapacidad() == arriendo.getNumeroAcompanantes()){
+			throw new Exception("No se puede añadir el acompañante en una habitación que no suple su capacidad");
+		}
+	}
+
+	@Override
+	public List<ArriendoDTO> findByArriendosConCapacidadEnHabitacion() {
+		return listEntitiesToListDTOs(repository.findByArriendosConCapacidadEnHabitacion());
 	}
 	
 

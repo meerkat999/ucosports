@@ -18,6 +18,9 @@ define(['app-module', 'restService'], function (app) {
           },
           getById : function(arriendo){
             return restService.POST(path + 'getById', arriendo);
+          },
+          getArriendosActivosConEspacio : function(){
+            return restService.GETArray(path + 'getArriendosActivosConEspacio');
           }
         }
 

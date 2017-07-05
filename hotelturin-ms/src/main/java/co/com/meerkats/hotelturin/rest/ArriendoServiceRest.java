@@ -1,6 +1,7 @@
 package co.com.meerkats.hotelturin.rest;
 
 import java.io.File;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -31,6 +32,14 @@ public class ArriendoServiceRest {
 	    ResponseBuilder response = Response.ok((Object) file);
 	    response.header("Content-Disposition", "attachment; filename=reporteHospedajes.xlsx");
 	    return response.build();
+	}
+	
+	@GET
+	@Path("/getArriendosActivosConEspacio")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public List<ArriendoDTO> getArriendosActivosConEspacio() throws Exception{
+		return logical.findByArriendosConCapacidadEnHabitacion();
 	}
 	
 	@POST
