@@ -2,16 +2,16 @@ define(['app-module', 'clienteService','habitacionService','servicioService'], f
     app.controller('administracionController',['$scope','$state', 'clienteService','habitacionService','servicioService',
      function ($scope, $state, clienteService,habitacionService,servicioService) {
 
-        $scope.goAdminClientes = function(){
-          $state.go("app.administracion.adminClientes")
+        $scope.goReportes = function(){
+          $state.go("app.administracion.reportes")
         }
         $scope.goAdminServicios = function(){
             $state.go("app.administracion.adminServicios")
        }
         $scope.goAdminHabitaciones = function(){
             $state.go("app.administracion.adminHabitaciones")
-       }       
-       
+       }
+
         $scope.goconsultarHabitaciones = function(){
             $state.go("app.administracion.consultarHabitaciones")
        }

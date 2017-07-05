@@ -1,11 +1,16 @@
 package co.com.meerkats.hotelturin.rest;
 
+import java.io.File;
+
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.ResponseBuilder;
 
 import co.com.meerkats.hotelturin.dto.ArriendoDTO;
 import co.com.meerkats.hotelturin.dto.ClienteKeyDTO;
@@ -18,6 +23,16 @@ public class ArriendoServiceRest {
 	@Inject
 	private IArriendoLogical logical;
 
+	@GET
+	@Path("/exportAll")
+	@Produces("application/vnd.ms-excel")
+	public Response exportAll(){
+		File file = logical.exportAll();
+	    ResponseBuilder response = Response.ok((Object) file);
+	    response.header("Content-Disposition", "attachment; filename=reporteHospedajes.xlsx");
+	    return response.build();
+	}
+	
 	@POST
 	@Path("/getByClienteKeyCheckInActive")
 	@Produces(MediaType.APPLICATION_JSON)

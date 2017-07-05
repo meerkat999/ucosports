@@ -29,12 +29,57 @@ define(['angularAMD', 'angular-ui-router', 'angular-resource'], function (angula
           })
         }
       })
-      .state('app.checkin', {
-        url: '/checkin',
+      .state('app.checkinMenu', {
+        url: '/checkinmenu',
         views: {
           'content@app': angularAMD.route({
+            templateUrl : 'resources/partials/checkin/checkinmenu.html' + "?bust=" + (new Date()).getTime(),
+            controller : 'checkinMenuController'
+          })
+        }
+      })
+      .state('app.checkinMenu.nuevo', {
+        url: '/nuevo',
+        views: {
+          'content@app.checkinMenu': angularAMD.route({
             templateUrl : 'resources/partials/checkin/checkin.html' + "?bust=" + (new Date()).getTime(),
             controller : 'checkinController'
+          })
+        }
+      })
+      .state('app.checkinMenu.addAcompanante', {
+        url: '/addAcompanante',
+        views: {
+          'content@app.checkinMenu': angularAMD.route({
+            templateUrl : 'resources/partials/checkin/addacompanante.html' + "?bust=" + (new Date()).getTime(),
+            controller : 'checkinController'
+          })
+        }
+      })
+      .state('app.checkinMenu.addAcompanante.registroAcompanante', {
+        url: '/registroAcompanante',
+        views: {
+          'registro@app.checkinMenu.addAcompanante': angularAMD.route({
+            templateUrl : 'resources/partials/cliente/registrarCliente.html' + "?bust=" + (new Date()).getTime(),
+            controller : 'clienteController'
+          })
+        }
+      })
+      .state('app.checkinMenu.nuevo.registro', {
+        url: '/registro',
+        views: {
+          'registro@app.checkinMenu.nuevo': angularAMD.route({
+            templateUrl : 'resources/partials/cliente/registrarCliente.html' + "?bust=" + (new Date()).getTime(),
+            controller : 'clienteController'
+          })
+        }
+      })
+      .state('app.checkinMenu.nuevo.registroAcompanante', {
+        url: '/registroAcompanante',
+        views: {
+          'registroAcompanante@app.checkinMenu.nuevo': angularAMD.route({
+            templateUrl : 'resources/partials/cliente/registrarCliente.html' + "?bust=" + (new Date()).getTime(),
+            controller : 'clienteController'
           })
         }
       })
@@ -44,24 +89,6 @@ define(['angularAMD', 'angular-ui-router', 'angular-resource'], function (angula
           'content@app': angularAMD.route({
             templateUrl : 'resources/partials/checkout/checkout.html' + "?bust=" + (new Date()).getTime(),
             controller : 'checkoutController'
-          })
-        }
-      })
-      .state('app.checkin.registro', {
-        url: '/registro',
-        views: {
-          'registro@app.checkin': angularAMD.route({
-            templateUrl : 'resources/partials/cliente/registrarCliente.html' + "?bust=" + (new Date()).getTime(),
-            controller : 'clienteController'
-          })
-        }
-      })
-      .state('app.checkin.registroAcompanante', {
-        url: '/registroAcompanante',
-        views: {
-          'registroAcompanante@app.checkin': angularAMD.route({
-            templateUrl : 'resources/partials/cliente/registrarCliente.html' + "?bust=" + (new Date()).getTime(),
-            controller : 'clienteController'
           })
         }
       })
@@ -83,7 +110,7 @@ define(['angularAMD', 'angular-ui-router', 'angular-resource'], function (angula
           })
         }
     })
-    
+
     .state('app.administracion.adminHabitaciones.modificarHabitaciones', {
         url: '/modificarHabitaciones',
         views: {
@@ -93,7 +120,7 @@ define(['angularAMD', 'angular-ui-router', 'angular-resource'], function (angula
           })
         }
     })
-    
+
     .state('app.administracion.adminHabitaciones.modificarHabitaciones.editarHabitaciones', {
          url: '/editarHabitaciones',
          views: {
@@ -102,7 +129,7 @@ define(['angularAMD', 'angular-ui-router', 'angular-resource'], function (angula
            })
          }
        })
-    
+
     .state('app.administracion.adminHabitaciones.activarHabitaciones', {
         url: '/activarHabitacion',
         views: {
@@ -122,16 +149,16 @@ define(['angularAMD', 'angular-ui-router', 'angular-resource'], function (angula
           })
         }
     })
-      .state('app.administracion.adminClientes', {
-          url: '/adminClientes',
+      .state('app.administracion.reportes', {
+          url: '/reportes',
           views: {
             'content@app.administracion': angularAMD.route({
-              templateUrl : 'resources/partials/administracion/adminClientes.html' + "?bust=" + (new Date()).getTime(),
-              controller : 'clienteController'
+              templateUrl : 'resources/partials/administracion/reportes.html' + "?bust=" + (new Date()).getTime(),
+              controller : 'administracionController'
             })
           }
       })
-      
+
       .state('app.administracion.adminHabitaciones', {
           url: '/adminHabitaciones',
           views: {
@@ -141,8 +168,8 @@ define(['angularAMD', 'angular-ui-router', 'angular-resource'], function (angula
             })
           }
       })
-      
-      
+
+
       .state('app.administracion.adminServicios', {
           url: '/adminServicios',
           views: {
@@ -167,8 +194,8 @@ define(['angularAMD', 'angular-ui-router', 'angular-resource'], function (angula
               templateUrl : 'resources/partials/habitacion/consultarHabitaciones.html' + "?bust=" + (new Date()).getTime()
             })
           }
-        })        
-       
+        })
+
          .state('app.administracion.adminServicios.modificarServicios', {
           url: '/modificarServicios',
           views: {
@@ -185,7 +212,7 @@ define(['angularAMD', 'angular-ui-router', 'angular-resource'], function (angula
            })
          }
        })
-       
+
        .state('app.administracion.adminServicios.activarServicios', {
          url: '/activarServicios',
          views: {
@@ -194,7 +221,7 @@ define(['angularAMD', 'angular-ui-router', 'angular-resource'], function (angula
            })
          }
        })
-       
+
       })
 
      ;

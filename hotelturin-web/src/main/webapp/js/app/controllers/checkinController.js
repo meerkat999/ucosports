@@ -1,7 +1,7 @@
-define(['app-module','clienteService', 'tipoDocumentoService', 'sweetService', 'habitacionService', 'arriendoService'], function (app) {
+define(['app-module','clienteService', 'tipoDocumentoService', 'sweetService', 'habitacionService', 'arriendoService', 'acompananteService'], function (app) {
     app.controller('checkinController',['$scope','$state', 'clienteService', 'tipoDocumentoService',
-    'sweetService', 'habitacionService', '$filter', 'arriendoService',
-    function ($scope, $state, clienteService, tipoDocumentoService, sweetService, habitacionService, $filter, arriendoService) {
+    'sweetService', 'habitacionService', '$filter', 'arriendoService','acompananteService',
+    function ($scope, $state, clienteService, tipoDocumentoService, sweetService, habitacionService, $filter, arriendoService, acompananteService) {
 
       $scope.campoVacio = function(campo){
         return campo == undefined || campo == "";
@@ -21,10 +21,10 @@ define(['app-module','clienteService', 'tipoDocumentoService', 'sweetService', '
             if(cliente.id !== undefined){
               arriendoService.getByClienteKeyCheckInActive(cliente.id).then(function(arriendo){
                 if(arriendo !== undefined && arriendo.id !== undefined){
-                  sweetService.warning("No puedes generar un checkin a un cliente que ya tiene uno activo.");
+                  sweetService.warning("No puedes continuar con el proceso porque el cliente tiene un checkin activo.");
                 }else{
                   $scope.cliente = cliente;
-                  sweetService.info("Cliente Registrado","El cliente " + cliente.nombreCompleto + " ya se encuentra registrado. \n Puedes continuar con el proceso de check-in.");
+                  sweetService.info("Cliente Registrado","El cliente " + cliente.nombreCompleto + " ya se encuentra registrado. \n Puedes continuar con el proceso.");
                   $scope.seBloqueanLosCamposDeCedula = true;
                 }
               }, function(error){
@@ -40,7 +40,12 @@ define(['app-module','clienteService', 'tipoDocumentoService', 'sweetService', '
                 }
               };
               $scope.seBloqueanLosCamposDeCedula = true;
-              $state.go("app.checkin.registro")
+              if($state.currentState === "Nuevo"){
+                $state.go("app.checkinMenu.nuevo.registro")
+              }else{
+                $state.go("app.checkinMenu.addAcompanante.registroAcompanante")
+              }
+
             }
           });
         }
@@ -87,7 +92,7 @@ define(['app-module','clienteService', 'tipoDocumentoService', 'sweetService', '
                 }
               };
               $scope.seBloqueanLosCamposDeCedulaAcompanante = true;
-              $state.go("app.checkin.registroAcompanante")
+              $state.go("app.checkinMenu.nuevo.registroAcompanante")
             }
           });
         }
@@ -202,7 +207,7 @@ define(['app-module','clienteService', 'tipoDocumentoService', 'sweetService', '
             sweetService.success("El check-in se registró correctamente el "
               + fecha + ". \n Para el cliente " + $scope.cliente.nombreCompleto + " en la habitación " + $scope.habitacionSeleccionada.id + ".",
               function(){
-            	$scope.isprinting = true;  
+            	$scope.isprinting = true;
                 $scope.print();
               });
           }
@@ -235,9 +240,9 @@ define(['app-module','clienteService', 'tipoDocumentoService', 'sweetService', '
       }
 
       $scope.print = function(){
-    	$scope.isprinting = true;    
-        printElement(document.getElementById("printThis"));        
-        window.print();       
+    	$scope.isprinting = true;
+        printElement(document.getElementById("printThis"));
+        window.print();
         $scope.reset();
       }
 
@@ -250,18 +255,55 @@ define(['app-module','clienteService', 'tipoDocumentoService', 'sweetService', '
               var $printSection = document.createElement("div");
               $printSection.id = "printSection";
               document.body.appendChild($printSection);
-              $scope.isprinting = true;  
+              $scope.isprinting = true;
           }
 
           $printSection.innerHTML = "";
-          $scope.isprinting = true;  
+          $scope.isprinting = true;
 
           $printSection.appendChild(domClone);
       }
 
+      $scope.getArriendosActivos = function(){
+        arriendoService.getByState({estadoId : 1}).then(function(listaArriendosActivos){
+          if(listaArriendosActivos !== undefined && listaArriendosActivos.listaArriendos !== undefined && listaArriendosActivos.listaArriendos.length > 0){
+            $scope.arriendoActivos = listaArriendosActivos.listaArriendos;
+          }else{
+            sweetService.warning("No hay ningún check-in activo para agregarle un acompañante.");
+            $state.go("app.checkinMenu");
+          }
+        })
+      }
+
+      $scope.openArriendo = function(arriendo){
+        $scope.arriendoSeleccionado = arriendo;
+      }
+
+
+      $scope.finishAddAcompanante = function(){
+        $scope.addAcompanante = {
+          cedulaId : $scope.cliente.id.id,
+          tipoDocumentoId : $scope.cliente.id.tipodocumento,
+          arriendoId : $scope.arriendoSeleccionado.id
+        }
+        acompananteService.add($scope.addAcompanante).then(function(acompanante){
+          if(acompanante !== undefined && acompanante.id !== undefined){
+            sweetService.success("Se el acompañante" + $scope.nombreCompleto + "se ha incluido correctamente en la habitación " + $scope.arriendoSeleccionado.habitacionId + ".")
+          }else{
+            sweetService.warning("No se ha podido añadir el acompanante. Inténtelo de nuevo en unos instantes.")
+          }
+        }, function(error){
+          sweetService.error("Ha ocurrido un error al intentar añadir un acompañante. Comuníquese con el área de sistemas.")
+        })
+      }
+
+
       $scope.reset = function(){
         $scope.buscarTiposDocumento();
         $scope.buscarHabitacionesDisponibles();
+        if($scope.currentState === "AddAcompanante"){
+          $scope.getArriendosActivos();
+        }
         $scope.nuevoCliente = {
           id : {}
         };

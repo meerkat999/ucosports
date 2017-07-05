@@ -1,5 +1,7 @@
 package co.com.meerkats.hotelturin.logical;
 
+import java.io.File;
+
 import co.com.meerkats.hotelturin.domain.Arriendo;
 import co.com.meerkats.hotelturin.dto.ArriendoDTO;
 import co.com.meerkats.hotelturin.dto.ClienteKeyDTO;
@@ -12,5 +14,6 @@ public interface IArriendoLogical extends ILogicalCommon<Arriendo, ArriendoDTO> 
 	ArriendoDTO getByClienteKeyCheckInActive(ClienteKeyDTO clienteKeyDTO) throws Exception;
 	ListArriendoDTO getByState(ArriendoDTO arriendoDTO);
 	ArriendoDTO checkOut(ArriendoDTO arriendoDTO) throws Exception;
+	File exportAll();
 
 }

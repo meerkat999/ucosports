@@ -3,14 +3,16 @@ define(['app-module', 'sweetService', 'clienteService', 'tipoDocumentoService'],
         function ($scope, $state, sweetService, clienteService, tipoDocumentoService, $filter, $rootScope) {
 
       $scope.funcionesCheckin = function() {
-        if($scope.checkin == true){
+        if($scope.checkin == true && $scope.currentState === "Nuevo"){
           if($scope.registarAcompanante == true){
             $scope.$parent.acompanantes.push($scope.cliente);
             $scope.$parent.registarAcompanante = false;
           }else{
             $scope.$parent.$parent.cliente = $scope.cliente;
           }
-          $state.go("app.checkin");
+          $state.go("app.checkinMenu.nuevo");
+        }else if($scope.checkin == true && $scope.currentState === "AddAcompanante"){
+          $scope.$parent.$parent.cliente = $scope.cliente;
         }
       }
 
