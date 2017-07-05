@@ -291,24 +291,28 @@ define(['app-module','clienteService', 'tipoDocumentoService', 'sweetService', '
 
 
       $scope.finishAddAcompanante = function(){
-        $scope.addAcompanante = {
-          cedulaId : $scope.cliente.id.id,
-          tipoDocumentoId : $scope.cliente.id.tipodocumento,
-          arriendoId : $scope.arriendoSeleccionado.id
-        }
-        acompananteService.addAfterCheckin($scope.addAcompanante).then(function(acompanante){
-          if(acompanante !== undefined && acompanante.id !== undefined){
-            sweetService.success("El acompañante" + $scope.cliente.nombreCompleto + " se ha incluido correctamente en la habitación " + $scope.arriendoSeleccionado.habitacionId + ".",
-            function(success){
-              $scope.reset();
-            })
-            
-          }else{
-            sweetService.warning("No se ha podido añadir el acompanante. Inténtelo de nuevo en unos instantes.")
+        if($scope.arriendoSeleccionado === undefined || $scope.arriendoSeleccionado.id === undefined){
+          sweetService.warning("Selecciona por favor el hospejade al que se le agregará el acompañante.")
+        }else{
+          $scope.addAcompanante = {
+            cedulaId : $scope.cliente.id.id,
+            tipoDocumentoId : $scope.cliente.id.tipodocumento,
+            arriendoId : $scope.arriendoSeleccionado.id
           }
-        }, function(error){
-          sweetService.error("Ha ocurrido un error al intentar añadir un acompañante. Comuníquese con el área de sistemas.")
-        })
+          acompananteService.addAfterCheckin($scope.addAcompanante).then(function(acompanante){
+            if(acompanante !== undefined && acompanante.id !== undefined){
+              sweetService.success("El acompañante" + $scope.cliente.nombreCompleto + " se ha incluido correctamente en la habitación " + $scope.arriendoSeleccionado.habitacionId + ".",
+              function(success){
+                $scope.reset();
+              })
+
+            }else{
+              sweetService.warning("No se ha podido añadir el acompanante. Inténtelo de nuevo en unos instantes.")
+            }
+          }, function(error){
+            sweetService.error("Ha ocurrido un error al intentar añadir un acompañante. Comuníquese con el área de sistemas.")
+          })
+        }
       }
 
 
@@ -345,6 +349,7 @@ define(['app-module','clienteService', 'tipoDocumentoService', 'sweetService', '
         $scope.confirmacionCedulaAcompanante = null;
         $scope.cedulaVerificarAcompanante = null;
         $scope.isprinting=false;
+        $scope.arriendoSeleccionado = undefined;
       }
 
       $scope.init = function(){
