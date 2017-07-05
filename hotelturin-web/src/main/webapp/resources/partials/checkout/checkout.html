@@ -1,5 +1,7 @@
 <div>
+  <br>
   <label>Checkin Activos</label>
+  <br>
   <div>
     <div class="btn-group" data-toggle="buttons">
       <label ng-repeat="arriendo in arriendoActivos" class="btn btn-default" ng-class="{active: arriendoSeleccionado.id == arriendo.id}" ng-click="">
@@ -8,6 +10,7 @@
       </label>
     </div>
   </div>
+  <br>
   <div ng-show="arriendoSeleccionado">
     <div><label>Check-in: </label>{{arriendoSeleccionado.id}}</div>
     <div><label>Cliente: </label>{{arriendoSeleccionado.clienteId}}</div>
@@ -20,6 +23,7 @@
     <div ng-if="arriendoSeleccionado.dateCheckout">
       <label>Fecha del Check-out</label>{{arriendoSeleccionado.dateCheckout | date:"yyyy/MM/dd 'a las' h:mma"}}}}
     </div>
+    <br>
     <div>
       <label class="btn btn-default" ng-click="questionCheckOut()">
         Check-out

@@ -1,5 +1,5 @@
 <div style="display: inline-grid;" ng-show="habitacionesDisponibles.length > 0">
-  <h3>Verificar Registro del Cliente</h3>
+  <h4>Check-in</h4>
    <div class="input-group">
   <fieldset ng-disabled="seBloqueanLosCamposDeCedula">
     <label>Tipo de Documento:</label>
@@ -18,6 +18,7 @@
   </fieldset>
   </div>
   <div class="form-group">
+  <br>
   <button type="button" class="btn btn-primary" ng-click="reset()">Nueva Verificación </button>
 </div>
   <div ng-if="mostrarVistaRegistro()">
@@ -35,22 +36,26 @@
              ng-true-value="'SI'" ng-false-value="'NO'">
         </label>
         <div ng-show="conoceElNumeroDeNoches.value == 'SI'">
+          <br>
           <label>Número de Noches:</label>
           <input class="form-control" number type="text" maxlength="2" ng-model="numeroNoches"></input>
+          <br>
           <button class="btn btn-warning" ng-click="numeroNoches = 0">
             Limpiar
           </button>
         </div>
     </div>
 
+      <br>
       <div>
         <label>Número de Acompañantes:</label>
         <input class="form-control" number type="text" maxlength="2" ng-model="numeroAcompanantes"></input>
+        <br>
         <button class="btn btn-warning" ng-click="limpiarAcompanantes()">
           Limpiar
         </button>
       </div>
-
+      <br>
       <div ng-show = "numeroAcompanantes > 0">
         <label>Acompañantes registrados: {{acompanantes.length}}</label>
         <div>
@@ -82,6 +87,7 @@
         </div>
       </div>
 
+      <br>
       <div>
         <label>Habitaciones Disponibles</label>
         <div>
