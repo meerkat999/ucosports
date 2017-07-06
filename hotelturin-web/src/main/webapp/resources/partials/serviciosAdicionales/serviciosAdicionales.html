@@ -3,7 +3,8 @@
 <br>
 <h4>Agregar Servicio Adicional</h4>
 
-  <fieldset ng-disabled="seBloqueanLosCamposDeCedula">
+  <fieldset ng-disabled="seBloqueanLosCamposDeCedula" ng-show="cliente === null">
+    <h4>Consumo por Cliente</h4>
     <label>Tipo de Documento:</label>
     <div class="input-group">
       <span class="input-group-addon"><i class="glyphicon glyphicon-list-alt"></i></span>
@@ -18,23 +19,42 @@
     </div>
   </fieldset>
 
-  <div class="form-group">
-    <br>
-    <button type="button" class="btn btn-primary" ng-click="init()">Nueva Verificación </button>
-  </div>
-
   <div ng-if="mostrarVistaRegistro()">
     <div ui-view="registro" style="display: flex;"></div>
   </div>
 
+  <div ng-show="cliente === null">
+    <h4>o</h4>
+
+    <h4>Consumo por Check-in</h4>
+
+    <div>
+      <div class="btn-group" data-toggle="buttons">
+        <label ng-repeat="arriendo in arriendoActivos" class="btn btn-default" ng-class="{active: arriendoSeleccionado.id == arriendo.id}" ng-click="openArriendo(arriendo)">
+          <input type="radio"></input>
+          <label>Check-in:</label> <br> {{arriendo.id}} <br> Cliente: {{arriendo.clienteId}} <br> Habitacion: {{arriendo.habitacionId}}
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <br>
+    <button type="button" class="btn btn-primary" ng-click="init()">Nueva Consulta</button>
+  </div>
+
   <div ng-show="mostrarVistaServicioAdicional()">
-    <h4>Servicios Adicionales Disponibles para el/la señor/a {{cliente.nombreCompleto}}.</h4>
+    <h4 ng-if="cliente.nombreCompleto !== undefined">Servicios Adicionales a consumir por el/la señor/a {{cliente.nombreCompleto}}.</h4>
+    <h4 ng-if="arriendoSeleccionado !== undefined">Servicios Adicionales a consumir la habitacion {{arriendoSeleccionado.habitacionId}}</h4>
     <br>
   </div>
 
-  <div ng-show="mostrarVistaServicioAdicional()" style="display: flex; width: 100%;">
+  <div ng-show="mostrarVistaServicioAdicional()" style="display: table; width: 100%;">
 
-    <div style="width: 100%;">
+    <div style="
+    display: table-cell;
+    width: 420px;
+    max-width: 420px;">
       <div data-toggle="buttons">
         <label ng-repeat="servicio in serviciosDisponibles" class="btn btn-default" ng-click="addServicio(servicio)">
           <label>{{servicio.nombre}}</label> <br> {{servicio.valor | currency}}
@@ -45,28 +65,30 @@
         <label>Limpiar todos</label>
       </label>
     </div>
-    <div style="width: 100%;">
-      <div ng-repeat="servicioSeleccionado in serviciosSeleccionados track by $index" style="display: inline-flex; width: 100%;">
-        <div style="display: inherit;text-align: left;width: 100%;">
-          <div>{{servicioSeleccionado.nombre}}</div><div style="margin: 0 auto;">{{servicioSeleccionado.valor | currency}}</div>
+    <div style="display: table-cell;width: 500px;">
+      <div style="display: table;">
+        <div ng-repeat="servicioSeleccionado in serviciosSeleccionados track by $index" style="display: table-row; width: 100%;">
+          <div style="display: table-cell;text-align: left; width: 100%;">{{servicioSeleccionado.nombre}}</div>
+          <div style="display: table-cell;padding-right: 10px;    text-align: left;">{{servicioSeleccionado.valor | currency}}</div>
+          <div style="text-align: left" class="btn btn-default" ng-click="deleteServicio($index)">Quitar</div>
         </div>
-        <div class="btn btn-default" ng-click="deleteServicio($index)">Quitar</div>
+        <div ng-show="serviciosSeleccionados.length > 0" style="text-align: center;width: 100%;">Total: {{totalMonto | currency}}</div>
       </div>
-      <div ng-show="serviciosSeleccionados.length > 0" style="text-align: center;width: 100%;">Total: {{totalMonto | currency}}</div>
+      <br>
     </div>
 
   </div>
 
-  <div ng-show="mostrarVistaServicioAdicional() && serviciosSeleccionados.length > 0">
-    <button ng-if="arriendo === undefined" class="btn btn-primary" ng-click="finishFactura()">
-      Facturar inmediatamente
-    </button>
-    <button ng-if="arriendo !== undefined" class="btn btn-primary" ng-click="anadirALaCuenta()">
-      Añadir a la cuenta
-    </button>
-    <button class="btn btn-danger" ng-click="init()">
-      Cancelar
-    </button>
-  </div>
-
+</div>
+<br>
+<div ng-show="mostrarVistaServicioAdicional() && serviciosSeleccionados.length > 0">
+  <button ng-if="arriendoSeleccionado === undefined" class="btn btn-primary" ng-click="finishFactura()">
+    Facturar inmediatamente
+  </button>
+  <button ng-if="arriendoSeleccionado !== undefined" class="btn btn-primary" ng-click="anadirALaCuenta()">
+    Añadir a la cuenta
+  </button>
+  <button class="btn btn-danger" ng-click="init()">
+    Cancelar
+  </button>
 </div>

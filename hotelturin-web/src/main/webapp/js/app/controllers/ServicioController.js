@@ -16,7 +16,7 @@ define(['app-module', 'sweetService', 'servicioService', 'tipoDocumentoService',
                 if(cliente !== undefined && cliente.id !== undefined){
                   arriendoService.getByClienteKeyCheckInActive(cliente.id).then(function(arriendo){
                     if(arriendo !== undefined && arriendo.id !== undefined){
-                      $scope.arriendo = arriendo;
+                      $scope.arriendoSeleccionado = arriendo;
                       sweetService.info("Cliente Registrado con Checkin","El cliente " + cliente.nombreCompleto + " ya se encuentra registrado. \n Tiene un checkin activo, se facturará para la habitación " + arriendo.habitacionId + " . \n Puedes continuar con el proceso.");
                     }else{
                       sweetService.info("Cliente Registrado","El cliente " + cliente.nombreCompleto + " ya se encuentra registrado. \n Puedes continuar con el proceso.");
@@ -209,10 +209,33 @@ define(['app-module', 'sweetService', 'servicioService', 'tipoDocumentoService',
         $scope.serviciosSeleccionados = [];
       }
 
+      $scope.getArriendosActivos = function(){
+        arriendoService.getByState({estadoId : 1}).then(function(listaArriendosActivos){
+          if(listaArriendosActivos !== undefined && listaArriendosActivos.listaArriendos !== undefined && listaArriendosActivos.listaArriendos.length > 0){
+            $scope.arriendoActivos = listaArriendosActivos.listaArriendos;
+          }else{
+            sweetService.warning("No hay ningún check-in activo.");
+            $state.go("app.content");
+          }
+        })
+      }
+
+      $scope.openArriendo = function(arriendo){
+        $scope.arriendoSeleccionado = arriendo;
+        $scope.cliente = {
+          id : {
+            id : arriendo.clienteId,
+            tipodocumento : arriendo.tipodocumentoId
+          }
+        }
+      }
+
       $scope.init = function(){
         $scope.buscarTiposDocumento();
         $scope.buscarServiciosDisponibles();
         $scope.buscarServiciosInactivos();
+        $scope.getArriendosActivos();
+        $scope.arriendoActivos = [];
         $scope.totalMonto = 0;
         $scope.serviciosSeleccionados = [];
         $scope.isEditing = false;
@@ -229,7 +252,7 @@ define(['app-module', 'sweetService', 'servicioService', 'tipoDocumentoService',
         $scope.servicioSeleccionado = {
             id : null
         };
-        $scope.arriendo = undefined;
+        $scope.arriendoSeleccionado = undefined;
       }
 
       $scope.init();

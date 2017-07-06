@@ -4,8 +4,8 @@
   <br>
   <div>
     <div class="btn-group" data-toggle="buttons">
-      <label ng-repeat="arriendo in arriendoActivos" class="btn btn-default" ng-class="{active: arriendoSeleccionado.id == arriendo.id}" ng-click="">
-        <input type="radio" ng-click="openArriendo(arriendo)"></input>
+      <label ng-repeat="arriendo in arriendoActivos" class="btn btn-default" ng-class="{active: arriendoSeleccionado.id == arriendo.id}"  ng-click="openArriendo(arriendo)">
+        <input type="radio"></input>
         <label>Check-in:</label> <br> {{arriendo.id}} <br> Cliente: {{arriendo.clienteId}} <br> Habitacion: {{arriendo.habitacionId}}
       </label>
     </div>
