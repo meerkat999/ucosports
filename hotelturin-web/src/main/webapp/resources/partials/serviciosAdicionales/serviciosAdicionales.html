@@ -1,0 +1,72 @@
+<div style="display: inline-grid;" ng-show="serviciosDisponibles.length > 0">
+
+<br>
+<h4>Agregar Servicio Adicional</h4>
+
+  <fieldset ng-disabled="seBloqueanLosCamposDeCedula">
+    <label>Tipo de Documento:</label>
+    <div class="input-group">
+      <span class="input-group-addon"><i class="glyphicon glyphicon-list-alt"></i></span>
+      <select  class="form-control" placeholder="Tipo de Identificación" ng-model="tipodocumento" ng-change="validarEnTiempoRealCamposCedula()"
+        ng-options="tipo.id as tipo.nombre for tipo in listaTiposDocumentos"></select>
+
+      <span class="input-group-addon"><i class="glyphicon glyphicon-copyright-mark"></i></span>
+      <input class="form-control" number placeholder="Número de Identificación" type="text" ng-change="validarEnTiempoRealCamposCedula()" maxlength="10" number ng-model="cedulaVerificar" ></input>
+
+      <span class="input-group-addon"><i class="glyphicon glyphicon-copyright-mark"></i></span>
+      <input class="form-control" number placeholder="Confirmación de Número" type="text" ng-change="validarEnTiempoRealCamposCedula()"  maxlength="10" number  ng-model="confirmacionCedula"></input>
+    </div>
+  </fieldset>
+
+  <div class="form-group">
+    <br>
+    <button type="button" class="btn btn-primary" ng-click="init()">Nueva Verificación </button>
+  </div>
+
+  <div ng-if="mostrarVistaRegistro()">
+    <div ui-view="registro" style="display: flex;"></div>
+  </div>
+
+  <div ng-show="mostrarVistaServicioAdicional()">
+    <h4>Servicios Adicionales Disponibles para el/la señor/a {{cliente.nombreCompleto}}.</h4>
+    <br>
+  </div>
+
+  <div ng-show="mostrarVistaServicioAdicional()" style="display: flex; width: 100%;">
+
+    <div style="width: 100%;">
+      <div data-toggle="buttons">
+        <label ng-repeat="servicio in serviciosDisponibles" class="btn btn-default" ng-click="addServicio(servicio)">
+          <label>{{servicio.nombre}}</label> <br> {{servicio.valor | currency}}
+        </label>
+      </div>
+      <br>
+      <label class="btn btn-default" ng-click="limpiarServicios()">
+        <label>Limpiar todos</label>
+      </label>
+    </div>
+    <div style="width: 100%;">
+      <div ng-repeat="servicioSeleccionado in serviciosSeleccionados track by $index" style="display: inline-flex; width: 100%;">
+        <div style="display: inherit;text-align: left;width: 100%;">
+          <div>{{servicioSeleccionado.nombre}}</div><div style="margin: 0 auto;">{{servicioSeleccionado.valor | currency}}</div>
+        </div>
+        <div class="btn btn-default" ng-click="deleteServicio($index)">Quitar</div>
+      </div>
+      <div ng-show="serviciosSeleccionados.length > 0" style="text-align: center;width: 100%;">Total: {{totalMonto | currency}}</div>
+    </div>
+
+  </div>
+
+  <div ng-show="mostrarVistaServicioAdicional() && serviciosSeleccionados.length > 0">
+    <button ng-if="arriendo === undefined" class="btn btn-primary" ng-click="finishFactura()">
+      Facturar inmediatamente
+    </button>
+    <button ng-if="arriendo !== undefined" class="btn btn-primary" ng-click="anadirALaCuenta()">
+      Añadir a la cuenta
+    </button>
+    <button class="btn btn-danger" ng-click="init()">
+      Cancelar
+    </button>
+  </div>
+
+</div>

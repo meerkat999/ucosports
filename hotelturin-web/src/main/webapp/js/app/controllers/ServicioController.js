@@ -1,6 +1,44 @@
-define(['app-module', 'sweetService', 'servicioService'], function (app) {
-    app.controller('servicioController',['$scope','$state', 'sweetService', 'servicioService',
-        function ($scope, $state, sweetService, servicioService) {
+define(['app-module', 'sweetService', 'servicioService', 'tipoDocumentoService', 'clienteService', 'arriendoService'], function (app) {
+    app.controller('servicioController',['$scope','$state', 'sweetService', 'servicioService', 'tipoDocumentoService', 'clienteService', 'arriendoService',
+        function ($scope, $state, sweetService, servicioService, tipoDocumentoService, clienteService, arriendoService) {
+
+          $scope.validarEnTiempoRealCamposCedula = function(){
+            if(!$scope.campoVacio($scope.tipodocumento) &&
+               !$scope.campoVacio($scope.cedulaVerificar) &&
+               !$scope.campoVacio($scope.confirmacionCedula) &&
+               $scope.cedulaVerificar === $scope.confirmacionCedula
+            ){
+              var id = {
+                tipodocumento : $scope.tipodocumento,
+                id : $scope.cedulaVerificar
+              };
+              clienteService.getById(id).then(function(cliente){
+                if(cliente !== undefined && cliente.id !== undefined){
+                  arriendoService.getByClienteKeyCheckInActive(cliente.id).then(function(arriendo){
+                    if(arriendo !== undefined && arriendo.id !== undefined){
+                      $scope.arriendo = arriendo;
+                      sweetService.info("Cliente Registrado con Checkin","El cliente " + cliente.nombreCompleto + " ya se encuentra registrado. \n Tiene un checkin activo, se facturará para la habitación " + arriendo.habitacionId + " . \n Puedes continuar con el proceso.");
+                    }else{
+                      sweetService.info("Cliente Registrado","El cliente " + cliente.nombreCompleto + " ya se encuentra registrado. \n Puedes continuar con el proceso.");
+                    }
+                  })
+                  $scope.cliente = cliente;
+                  $scope.seBloqueanLosCamposDeCedula = true;
+                }else{
+                  $state.go('app.serviciosAdicionales.registro');
+                  sweetService.info("Cliente no Registrado","Se te habilitará un módulo para registrar el nuevo cliente.");
+                  $scope.esNecesarioRegistrar = true;
+                  $scope.nuevoCliente = {
+                    id : {
+                      id : $scope.cedulaVerificar,
+                      tipodocumento : $scope.tipodocumento
+                    }
+                  };
+                  $scope.seBloqueanLosCamposDeCedula = true;
+                }
+              });
+            }
+          }
 
       $scope.agregar = function(){
           servicioService.add($scope.Servicio).then(function(data){
@@ -17,13 +55,13 @@ define(['app-module', 'sweetService', 'servicioService'], function (app) {
           servicioService.update($scope.Servicio).then(function(data){
             if(data !== null){
           	   sweetService.success("El Servicio adicional " + data.nombre + " fue editado satisfactoriamente");
-          	   $state.go("app.administracion.adminServicios.modificarServicios")     	  
+          	   $state.go("app.administracion.adminServicios.modificarServicios")
             }
           },function(error){
             sweetService.error("Ha ocurrido un error al intentar Actualizar el Servicio adicional. Si el problema persiste, comúniquese con el área de sistemas.");
           })
       }
-      
+
       $scope.desactivar = function(servicio){
           servicioService.desactivar(servicio).then(function(data){
             if(data !== null){
@@ -33,9 +71,9 @@ define(['app-module', 'sweetService', 'servicioService'], function (app) {
             }
           },function(error){
             sweetService.error("Ha ocurrido un error al intentar Desactivar el Servicio adicional. Si el problema persiste, comúniquese con el área de sistemas.");
-          })      
-      }   
-      
+          })
+      }
+
       $scope.activar = function(servicio){
           servicioService.activar(servicio).then(function(data){
             if(data !== null){
@@ -45,8 +83,8 @@ define(['app-module', 'sweetService', 'servicioService'], function (app) {
             }
           },function(error){
             sweetService.error("Ha ocurrido un error al intentar Activar el Servicio adicional. Si el problema persiste, comúniquese con el área de sistemas.");
-          })      
-      }   
+          })
+      }
 
       $scope.campoVacio = function(campo){
           return campo == undefined || campo == "";
@@ -95,7 +133,7 @@ define(['app-module', 'sweetService', 'servicioService'], function (app) {
             }
           })
         }
-      
+
       $scope.registrar = function(){
         if($scope.validarFormularioRegistro() == true){
               $scope.agregar();
@@ -114,29 +152,84 @@ define(['app-module', 'sweetService', 'servicioService'], function (app) {
           $scope.init();
           $state.go("app.administracion.adminServicios.modificarServicios")
         }
-        
+
         $scope.goActivarServicios = function(){
             $scope.init();
             $state.go("app.administracion.adminServicios.activarServicios")
           }
-        
+
         $scope.goEditar = function(servicio){
           $scope.Servicio = servicio;
           $scope.isEditing = true;
           $state.go("app.administracion.adminServicios.modificarServicios.editarServicio")
         }
-        	
-               
+
+      $scope.mostrarVistaRegistro = function(){
+        return $scope.esNecesarioRegistrar === true && $scope.cliente === null;
+      }
+
+      $scope.mostrarVistaServicioAdicional = function(){
+        return $scope.cliente !== null;
+      }
+
+      $scope.buscarTiposDocumento = function(){
+        tipoDocumentoService.getAll().then(function(lista){
+          if(lista !== null && lista !== undefined){
+            $scope.listaTiposDocumentos = lista;
+          }
+        }, function(error){
+          sweetService.error("No se pudieron obtener los tipos de documento.");
+        })
+      }
+
+      $scope.serviceSeleccionado = function(id){
+        return $scope.serviciosSeleccionados.indexOf(id) > -1;
+      }
+
+      $scope.selectUnselectServicio = function(id){
+        if($scope.serviceSeleccionado(id) === true){
+          delete $scope.serviciosSeleccionados[$scope.serviciosSeleccionados.indexOf(id)];
+        }else{
+          $scope.serviciosSeleccionados.push(id);
+        }
+      }
+
+      $scope.addServicio = function(servicio){
+        $scope.totalMonto += servicio.valor;
+        $scope.serviciosSeleccionados.push(servicio);
+      }
+
+      $scope.deleteServicio = function(index){
+        $scope.totalMonto -= $scope.serviciosSeleccionados[index].valor;
+        $scope.serviciosSeleccionados.splice(index, 1);
+      }
+
+      $scope.limpiarServicios = function(){
+        $scope.totalMonto = 0;
+        $scope.serviciosSeleccionados = [];
+      }
+
       $scope.init = function(){
+        $scope.buscarTiposDocumento();
         $scope.buscarServiciosDisponibles();
         $scope.buscarServiciosInactivos();
+        $scope.totalMonto = 0;
+        $scope.serviciosSeleccionados = [];
         $scope.isEditing = false;
+        $scope.esNecesarioRegistrar = undefined;
+        $scope.cliente = null;
+        $scope.seBloqueanLosCamposDeCedula = false;
+        $scope.tipodocumento = null;
+        $scope.cedulaVerificar = null;
+        $scope.confirmacionCedula = null;
         $scope.listServicios = [];
+        $scope.serviciosAdicionalesRegistro = true;
         $scope.serviciosDisponibles = [];
         $scope.serviciosInactivos = [];
         $scope.servicioSeleccionado = {
             id : null
         };
+        $scope.arriendo = undefined;
       }
 
       $scope.init();

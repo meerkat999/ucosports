@@ -6,8 +6,8 @@
      <h4>Para la habitación:</h4>
      <div>
        <div class="btn-group" data-toggle="buttons">
-         <label ng-repeat="arriendo in arriendoActivos" class="btn btn-default" ng-class="{active: arriendoSeleccionado.id == arriendo.id}" ng-click="">
-           <input type="radio" ng-click="openArriendo(arriendo)"></input>
+         <label ng-repeat="arriendo in arriendoActivos" class="btn btn-default" ng-class="{active: arriendoSeleccionado.id == arriendo.id}" ng-click="openArriendo(arriendo)">
+           <input type="radio" ></input>
            <label>Check-in:</label> <br> {{arriendo.id}} <br> Cliente: {{arriendo.clienteId}} <br> Habitacion: {{arriendo.habitacionId}}
          </label>
        </div>
@@ -16,8 +16,6 @@
 
   <fieldset ng-disabled="seBloqueanLosCamposDeCedula">
     <label>Tipo de Documento:</label>
-
-
     <div class="input-group">
     <span class="input-group-addon"><i class="glyphicon glyphicon-list-alt"></i></span>
     <select  class="form-control" placeholder="Tipo de Identificación"ng-model="tipodocumento" ng-change="validarEnTiempoRealCamposCedula()"
@@ -28,7 +26,6 @@
 
     <span class="input-group-addon"><i class="glyphicon glyphicon-copyright-mark"></i></span>
     <input class="form-control" number placeholder="Confirmación de Número" type="text" ng-change="validarEnTiempoRealCamposCedula()"  maxlength="10" number  ng-model="confirmacionCedula"></input>
-
   </fieldset>
   </div>
   <div class="form-group">
@@ -47,7 +44,7 @@
 
     <div>
       <br>
-      <button class="btn btn-primary" ng-click="finishAddAcompanante()">
+      <button class="btn btn-primary" ng-click="finishAddAcompanante() && arriendoSeleccionado.id !== undefined">
         Agregar
       </button>
       <button class="btn btn-danger" ng-click="reset()">

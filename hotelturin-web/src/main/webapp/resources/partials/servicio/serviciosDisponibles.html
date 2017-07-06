@@ -1,10 +1,9 @@
-      <div id="contenedorservicios"ng-controller="servicioController">
-	      <div id="serviciosdisponibles">
-	        <h3>Servicios Disponibles</h1>
-	          <div id="item" class="btn-group" data-toggle="buttons" ng-repeat="servicio in serviciosDisponibles">
-	            <label  class="btn btn-lg btn-success" ng-click="">
-	              <label>{{servicio.nombre}}</label> <br> $ {{servicio.precio | currency}}
-	            </label>
-	          </div>
-	      </div>
-      </div>
+
+<div id="serviciosdisponibles">
+  <h3>Servicios Disponibles</h1>
+    <div id="item" class="btn-group" data-toggle="buttons" ng-repeat="servicio in serviciosDisponibles">
+      <label  class="btn btn-lg btn-success" ng-click="">
+        <label>{{servicio.nombre}}</label> <br> $ {{servicio.precio | currency}}
+      </label>
+    </div>
+</div>

@@ -92,8 +92,8 @@
         <label>Habitaciones Disponibles</label>
         <div>
           <div class="btn-group" data-toggle="buttons">
-            <label id="itemhab" ng-repeat="habitacion in habitacionesDisponibles | filter:filtrarPorCapacidad()" class="btn btn-primary" ng-class="{active: habitacionSeleccionada.id == habitacion.id}" ng-click="">
-              <input type="radio" ng-click="openHabitacion(habitacion)"></input>
+            <label id="itemhab" ng-repeat="habitacion in habitacionesDisponibles | filter:filtrarPorCapacidad()" class="btn btn-primary" ng-class="{active: habitacionSeleccionada.id == habitacion.id}" ng-click="openHabitacion(habitacion)">
+              <input type="radio"></input>
               <label>{{habitacion.id}}</label> <br> {{habitacion.nombre}} <br> Capacidad: {{habitacion.capacidad}} <br> Precio: {{habitacion.precio}}
             </label>
           </div>

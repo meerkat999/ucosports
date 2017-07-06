@@ -2,7 +2,7 @@ define(['app-module', 'sweetService', 'clienteService', 'tipoDocumentoService'],
     app.controller('clienteController',['$scope','$state', 'sweetService', 'clienteService', 'tipoDocumentoService', '$filter', '$rootScope',
         function ($scope, $state, sweetService, clienteService, tipoDocumentoService, $filter, $rootScope) {
 
-      $scope.funcionesCheckin = function() {
+      $scope.funcionesExternas = function() {
         if($scope.checkin == true && $scope.currentState === "Nuevo"){
           if($scope.registarAcompanante == true){
             $scope.$parent.acompanantes.push($scope.cliente);
@@ -13,6 +13,9 @@ define(['app-module', 'sweetService', 'clienteService', 'tipoDocumentoService'],
           $state.go("app.checkinMenu.nuevo");
         }else if($scope.checkin == true && $scope.currentState === "AddAcompanante"){
           $scope.$parent.$parent.cliente = $scope.cliente;
+        }else if($scope.serviciosAdicionalesRegistro === true){
+          $scope.$parent.$parent.cliente = $scope.cliente;
+          $state.go("app.serviciosAdicionales");
         }
       }
 
@@ -22,7 +25,7 @@ define(['app-module', 'sweetService', 'clienteService', 'tipoDocumentoService'],
             var fecha = $filter('date')(new Date(data.fechaRegistro), "yyyy/MM/dd 'a las' h:mma")
             sweetService.success("Cliente " + data.nombreCompleto + " fue registrado satisfactoriamente en la fecha " + fecha);
             $scope.cliente = data;
-            $scope.funcionesCheckin();
+            $scope.funcionesExternas();
           }
         },function(error){
           sweetService.error("Ha ocurrido un error al intentar añadir al cliente. Si el problema persiste, comúniquese con el área de sistemas.");
