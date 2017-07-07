@@ -18,6 +18,7 @@ requirejs.config({
       'habitacionService' : 'app/services/habitacionService',
       'servicioController' : 'app/controllers/servicioController',
       'servicioService' : 'app/services/servicioService',
+      'facturaService' : 'app/services/facturaService',
       'checkinController' : 'app/controllers/checkinController',
       'checkinMenuController' : 'app/controllers/checkinMenuController',
       'checkoutController' : 'app/controllers/checkoutController',

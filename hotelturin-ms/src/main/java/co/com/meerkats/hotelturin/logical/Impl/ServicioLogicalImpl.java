@@ -121,6 +121,18 @@ public class ServicioLogicalImpl extends LogicalCommonImpl<Servicio,ServicioDTO>
 		return buildDTO(repository.save(servicioEntity));
 	}
 
+	@Override
+	public Servicio getEntityForOtherEntity(Integer clienteConsumoId) throws Exception {
+		if(clienteConsumoId == null){
+			throw new Exception("Error al intentar obtener un servicio con el dto nulo.");
+		}
+		Servicio servicio = repository.findById(clienteConsumoId);
+		if(servicio == null){
+			throw new Exception("Error al intentar obtener un servicio inexistente.");
+		}
+		return servicio;
+	}
+
 
 
 

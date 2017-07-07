@@ -29,7 +29,15 @@
 
     <div>Se realizará el check-in para el/la señor/a {{cliente.nombreCompleto}}</div>
 
-    <div>
+
+    <div style="
+    border-style: groove;
+    border-radius: 6px;
+    padding-right: 10px;
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    ">
         <label>
           ¿Número de noches definidas?:
           <input class="form-control" type="checkbox" ng-model="conoceElNumeroDeNoches.value"
@@ -46,7 +54,16 @@
         </div>
     </div>
 
-      <br>
+    <br>
+
+    <div style="
+    border-style: groove;
+    border-radius: 6px;
+    padding-right: 10px;
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    ">
       <div>
         <label>Número de Acompañantes:</label>
         <input class="form-control" number type="text" maxlength="2" ng-model="numeroAcompanantes"></input>
@@ -75,6 +92,7 @@
               <input class="form-control" number placeholder="Número de Identificación" type="text" ng-change="validarEnTiempoRealCamposCedulaAcompanante()" maxlength="10" number ng-model="cedulaVerificarAcompanante" ></input>
               <input class="form-control" number placeholder="Confirmación de Número" type="text" ng-change="validarEnTiempoRealCamposCedulaAcompanante()"  maxlength="10" number  ng-model="confirmacionCedulaAcompanante"></input>
             </fieldset>
+            <br>
             <button ng-show = "acompanante"  class="btn btn-primary" ng-click="anadirAcompanante()">
               Añadir
             </button>
@@ -86,6 +104,7 @@
           </div>
         </div>
       </div>
+    </div>
 
       <br>
       <div>

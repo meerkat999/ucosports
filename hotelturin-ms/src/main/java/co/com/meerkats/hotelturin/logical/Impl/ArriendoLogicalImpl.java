@@ -24,13 +24,11 @@ import co.com.meerkats.hotelturin.dto.ClienteKeyDTO;
 import co.com.meerkats.hotelturin.dto.EstadoDTO;
 import co.com.meerkats.hotelturin.dto.HabitacionDTO;
 import co.com.meerkats.hotelturin.dto.ListArriendoDTO;
-import co.com.meerkats.hotelturin.dto.TipoDocumentoDTO;
 import co.com.meerkats.hotelturin.logical.IAcompananteLogical;
 import co.com.meerkats.hotelturin.logical.IArriendoLogical;
 import co.com.meerkats.hotelturin.logical.IClienteLogical;
 import co.com.meerkats.hotelturin.logical.IEstadoLogical;
 import co.com.meerkats.hotelturin.logical.IHabitacionLogical;
-import co.com.meerkats.hotelturin.logical.ITipoDocumentoLogical;
 import co.com.meerkats.hotelturin.repository.IArriendoRepository;
 import co.com.meerkats.hotelturin.utils.DateUtil;
 
@@ -42,9 +40,6 @@ public class ArriendoLogicalImpl extends LogicalCommonImpl<Arriendo, ArriendoDTO
 	
 	@Inject
 	private IHabitacionLogical habitacionLogical;
-	
-	@Inject
-	private ITipoDocumentoLogical tipoDocumentoLogical;
 	
 	@Inject
 	private IClienteLogical clienteLogical;
@@ -99,7 +94,7 @@ public class ArriendoLogicalImpl extends LogicalCommonImpl<Arriendo, ArriendoDTO
 		List<ClienteDTO> acompanantes = arriendoDTO.getAcompanantes();
 		
 		validarHabitacion(habitacionId);
-		validarTipoDocumentoYCliente(cedula, tipodocumentoId);
+		clienteLogical.validarTipoDocumentoYCliente(cedula, tipodocumentoId);
 		validarCheckInActivoCliente(cedula, tipodocumentoId);
 
 		Arriendo arriendo = new Arriendo();
@@ -149,20 +144,6 @@ public class ArriendoLogicalImpl extends LogicalCommonImpl<Arriendo, ArriendoDTO
 		};
 	}
 
-	private void validarTipoDocumentoYCliente(String cedula, Integer tipodocumentoId) throws Exception {
-		TipoDocumentoDTO documentoDTO = new TipoDocumentoDTO();
-		documentoDTO.setId(tipodocumentoId);
-		if(tipoDocumentoLogical.getById(documentoDTO) == null){
-			throw new Exception("Error al intentar obtener un tipo documento inexistente.");
-		}
-		ClienteKeyDTO keyDto = new ClienteKeyDTO();
-		keyDto.setId(cedula);
-		keyDto.setTipodocumento(tipodocumentoId);
-		if(clienteLogical.getById(keyDto) == null){
-			throw new Exception("Error al intentar obtener un cliente inexistente.");
-		}
-	}
-
 	private void validarHabitacion(String habitacionId) throws Exception {
 		HabitacionDTO habitacionDTO = new HabitacionDTO();
 		habitacionDTO.setId(habitacionId);
@@ -179,7 +160,7 @@ public class ArriendoLogicalImpl extends LogicalCommonImpl<Arriendo, ArriendoDTO
 	public ArriendoDTO getByClienteKeyCheckInActive(ClienteKeyDTO clienteKeyDTO) throws Exception {
 		ArriendoDTO dto = null;
 		if(clienteKeyDTO != null && clienteKeyDTO.getId() != null && clienteKeyDTO.getTipodocumento() != null){
-			validarTipoDocumentoYCliente(clienteKeyDTO.getId() , clienteKeyDTO.getTipodocumento());
+			clienteLogical.validarTipoDocumentoYCliente(clienteKeyDTO.getId() , clienteKeyDTO.getTipodocumento());
 			dto = buildDTO(repository.findByClienteIdAndTipodocumentoIdAndEstadoId(clienteKeyDTO.getId(), clienteKeyDTO.getTipodocumento(), StatesEnum.ACTIVO.getValue()));
 		}
 		return dto;

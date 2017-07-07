@@ -17,6 +17,7 @@ public interface IServicioLogical  extends ILogicalCommon<Servicio,ServicioDTO> 
 	ServicioDTO update(ServicioDTO servicio) throws Exception;
 	ServicioDTO desactivar(ServicioDTO servicio) throws Exception;
 	ServicioDTO activar(ServicioDTO servicio) throws Exception;
+	Servicio getEntityForOtherEntity(Integer clienteConsumoId) throws Exception;
 	
 } 
 

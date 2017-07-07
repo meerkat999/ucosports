@@ -151,9 +151,9 @@ define(['app-module','clienteService', 'tipoDocumentoService', 'sweetService', '
         habitacionService.getByState(estado).then(function(data){
           if(data !== null && data.listaHabitaciones !== null){
             $scope.habitacionesDisponibles = data.listaHabitaciones;
-            if($scope.habitacionesDisponibles.length == 0){
-              sweetService.warning("No quedan habitaciones disponibles para generar un check-in");
-              $state.go("app.content");
+            if($scope.habitacionesDisponibles.length === 0 && $scope.currentState === "Nuevo"){
+                $state.go("app.content");
+                sweetService.warning("No quedan habitaciones disponibles para generar un check-in");
             }
           }
         })
@@ -251,8 +251,8 @@ define(['app-module','clienteService', 'tipoDocumentoService', 'sweetService', '
 
       $scope.print = function(){
     	   $scope.isprinting = true;
-        printElement(document.getElementById("printThis"));
-        window.print();
+        //printElement(document.getElementById("printThis"));
+        //window.print();
         $scope.reset();
       }
 

@@ -34,4 +34,18 @@ public class EstadoLogicalImpl extends LogicalCommonImpl<Estado, EstadoDTO> impl
 		return dto;
 	}
 
+	@Override
+	public Estado getEntityForOtherEntity(Integer estadoId) throws Exception {
+		if(estadoId == null){
+			throw new Exception("No se puede obtener una entidad estado son el id nulo.");
+		}
+		Estado estado = repository.findOne(estadoId);
+		if(estado == null){
+			throw new Exception("Error al obtener un estado inexistente.");
+		}
+		return estado;
+	}
+	
+	
+
 }

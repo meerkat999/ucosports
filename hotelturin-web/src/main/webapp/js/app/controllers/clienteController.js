@@ -21,7 +21,7 @@ define(['app-module', 'sweetService', 'clienteService', 'tipoDocumentoService'],
 
       $scope.agregar = function(){
         clienteService.add($scope.nuevoCliente).then(function(data){
-          if(data !== null){
+          if(data !== undefined || data.id !== undefined){
             var fecha = $filter('date')(new Date(data.fechaRegistro), "yyyy/MM/dd 'a las' h:mma")
             sweetService.success("Cliente " + data.nombreCompleto + " fue registrado satisfactoriamente en la fecha " + fecha);
             $scope.cliente = data;

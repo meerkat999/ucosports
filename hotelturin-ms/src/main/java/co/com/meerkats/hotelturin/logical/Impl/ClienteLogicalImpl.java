@@ -68,6 +68,13 @@ public class ClienteLogicalImpl extends LogicalCommonImpl<Cliente, ClienteDTO> i
 		return buildDTO(cliente);
 	}
 	
+	private Cliente getByIdEntity(ClienteKeyDTO key) {
+		ClienteKey keyEntity = new ClienteKey();
+		keyEntity.setId(key.getId());
+		keyEntity.setTipoDocumento(key.getTipodocumento());
+		return getById(keyEntity);
+	}
+	
 	private Cliente getById(ClienteKey key){
 		return repository.findOne(key);
 	}
@@ -216,7 +223,27 @@ public class ClienteLogicalImpl extends LogicalCommonImpl<Cliente, ClienteDTO> i
 		row.createCell(10).setCellValue(c.getCorreo());
 	}
 	
-	
+	@Override
+	public ClienteDTO validarTipoDocumentoYCliente(String cedula, Integer tipodocumentoId) throws Exception {
+		return buildDTO(getEntityForOtherEntity(cedula, tipodocumentoId));
+	}
+
+	@Override
+	public Cliente getEntityForOtherEntity(String cedula, Integer tipodocumentoId) throws Exception {
+		TipoDocumentoDTO documentoDTO = new TipoDocumentoDTO();
+		documentoDTO.setId(tipodocumentoId);
+		if(tipodocumentoId == null || tipoDocumentoLogical.getById(documentoDTO) == null){
+			throw new Exception("Error al intentar obtener un tipo documento inexistente.");
+		}
+		ClienteKeyDTO keyDto = new ClienteKeyDTO();
+		keyDto.setId(cedula);
+		keyDto.setTipodocumento(tipodocumentoId);
+		Cliente cliente = getByIdEntity(keyDto);
+		if(cedula == null || cliente == null){
+			throw new Exception("Error al intentar obtener un cliente inexistente.");
+		}
+		return cliente;
+	}
 	
 
 }

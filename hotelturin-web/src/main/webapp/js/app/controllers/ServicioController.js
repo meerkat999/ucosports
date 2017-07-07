@@ -1,6 +1,6 @@
-define(['app-module', 'sweetService', 'servicioService', 'tipoDocumentoService', 'clienteService', 'arriendoService'], function (app) {
-    app.controller('servicioController',['$scope','$state', 'sweetService', 'servicioService', 'tipoDocumentoService', 'clienteService', 'arriendoService',
-        function ($scope, $state, sweetService, servicioService, tipoDocumentoService, clienteService, arriendoService) {
+define(['app-module', 'sweetService', 'servicioService', 'tipoDocumentoService', 'clienteService', 'arriendoService', 'facturaService'], function (app) {
+    app.controller('servicioController',['$scope','$state', 'sweetService', 'servicioService', 'tipoDocumentoService', 'clienteService', 'arriendoService', 'facturaService',
+        function ($scope, $state, sweetService, servicioService, tipoDocumentoService, clienteService, arriendoService, facturaService) {
 
           $scope.validarEnTiempoRealCamposCedula = function(){
             if(!$scope.campoVacio($scope.tipodocumento) &&
@@ -64,7 +64,7 @@ define(['app-module', 'sweetService', 'servicioService', 'tipoDocumentoService',
 
       $scope.desactivar = function(servicio){
           servicioService.desactivar(servicio).then(function(data){
-            if(data !== null){
+            if(data !== undefined && data.id !== undefined){
           	   sweetService.success("El Servicio adicional " + data.nombre + " fue desactivado satisfactoriamente");
           	 $scope.buscarServiciosDisponibles();
           	 $scope.$apply();
@@ -76,7 +76,7 @@ define(['app-module', 'sweetService', 'servicioService', 'tipoDocumentoService',
 
       $scope.activar = function(servicio){
           servicioService.activar(servicio).then(function(data){
-            if(data !== null){
+            if(data !== undefined && data.id !== undefined){
           	   sweetService.success("El Servicio adicional " + data.nombre + " fue Activado satisfactoriamente");
           	 $scope.buscarServiciosInactivos();
           	 $scope.$apply();
@@ -119,6 +119,8 @@ define(['app-module', 'sweetService', 'servicioService', 'tipoDocumentoService',
           servicioService.getByState(estado).then(function(data){
             if(data !== null && data.listaServicios !== null){
               $scope.serviciosDisponibles = data.listaServicios;
+            }else{
+              sweetService.warning("No hay servicios disponibles para facturar");
             }
           })
         }
@@ -215,7 +217,6 @@ define(['app-module', 'sweetService', 'servicioService', 'tipoDocumentoService',
             $scope.arriendoActivos = listaArriendosActivos.listaArriendos;
           }else{
             sweetService.warning("No hay ningún check-in activo.");
-            $state.go("app.content");
           }
         })
       }
@@ -228,6 +229,26 @@ define(['app-module', 'sweetService', 'servicioService', 'tipoDocumentoService',
             tipodocumento : arriendo.tipodocumentoId
           }
         }
+      }
+
+      $scope.finishFactura = function(){
+        $scope.factura = {
+          clienteId : $scope.cliente.id.id,
+          tipodocumentoId : $scope.cliente.id.tipodocumento,
+          numBauche : null,
+          listaServiciosAConsumir : $scope.serviciosSeleccionados
+        }
+        facturaService.facturarconsumoclientesincheckin($scope.factura).then(function(data){
+          if(data !== undefined && data.id !== undefined){
+            sweetService.success("Se ha facturado correctamente.");
+            $scope.limpiarServicios();
+          }else{
+            sweetService.error("Ha ocurrido un error al facturar");
+          }
+        }, function(error){
+          sweetService.error("Ha ocurrido un error al facturar");
+        })
+
       }
 
       $scope.init = function(){

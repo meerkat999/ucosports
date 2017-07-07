@@ -6,5 +6,6 @@ import co.com.meerkats.hotelturin.dto.EstadoDTO;
 public interface IEstadoLogical extends ILogicalCommon<Estado, EstadoDTO>  {
 
 	EstadoDTO getByID(EstadoDTO estadoDTO);
+	Estado getEntityForOtherEntity(Integer estadoId) throws Exception;
 
 }

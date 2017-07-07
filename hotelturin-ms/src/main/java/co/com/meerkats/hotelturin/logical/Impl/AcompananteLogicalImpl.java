@@ -11,12 +11,9 @@ import co.com.meerkats.hotelturin.domain.Acompanante;
 import co.com.meerkats.hotelturin.domain.constants.StatesEnum;
 import co.com.meerkats.hotelturin.dto.AcompananteDTO;
 import co.com.meerkats.hotelturin.dto.ArriendoDTO;
-import co.com.meerkats.hotelturin.dto.ClienteKeyDTO;
-import co.com.meerkats.hotelturin.dto.TipoDocumentoDTO;
 import co.com.meerkats.hotelturin.logical.IAcompananteLogical;
 import co.com.meerkats.hotelturin.logical.IArriendoLogical;
 import co.com.meerkats.hotelturin.logical.IClienteLogical;
-import co.com.meerkats.hotelturin.logical.ITipoDocumentoLogical;
 import co.com.meerkats.hotelturin.repository.IAcompananteRepository;
 
 @RequestScoped
@@ -24,9 +21,6 @@ public class AcompananteLogicalImpl extends LogicalCommonImpl<Acompanante, Acomp
 
 	@Inject
 	private IAcompananteRepository repository;
-	
-	@Inject
-	private ITipoDocumentoLogical tipoDocumentoLogical;
 	
 	@Inject
 	private IClienteLogical clienteLogical;
@@ -63,7 +57,7 @@ public class AcompananteLogicalImpl extends LogicalCommonImpl<Acompanante, Acomp
 	private void validar(AcompananteDTO acompananteDTO) throws Exception {
 		validarDTO(acompananteDTO);
 		validarArriendo(acompananteDTO);
-		validarCliente(acompananteDTO);
+		clienteLogical.validarTipoDocumentoYCliente(acompananteDTO.getCedulaId(), acompananteDTO.getTipoDocumentoId());
 	}
 
 	
@@ -83,20 +77,6 @@ public class AcompananteLogicalImpl extends LogicalCommonImpl<Acompanante, Acomp
 		}
 		if(arriendo.getEstadoId() != StatesEnum.ACTIVO.getValue()){
 			throw new Exception("Error al intentar guardar un acompanante con un arriendo que no esta activo.");
-		}
-	}
-	
-	private void validarCliente(AcompananteDTO acompananteDTO) throws Exception {
-		TipoDocumentoDTO documentoDTO = new TipoDocumentoDTO();
-		documentoDTO.setId(acompananteDTO.getTipoDocumentoId());
-		if(tipoDocumentoLogical.getById(documentoDTO) == null){
-			throw new Exception("Error al intentar guardar un acompanante con tipo de identificación inválido.");
-		}
-		ClienteKeyDTO clienteKeyDTO = new ClienteKeyDTO();
-		clienteKeyDTO.setId(acompananteDTO.getCedulaId());
-		clienteKeyDTO.setTipodocumento(acompananteDTO.getTipoDocumentoId());
-		if(clienteLogical.getById(clienteKeyDTO) == null){
-			throw new Exception("Error al intentar guardar un acompanante que no esta registrado/inexistente.");
 		}
 	}
 

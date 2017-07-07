@@ -20,4 +20,7 @@ public interface IClienteLogical extends ILogicalCommon<Cliente, ClienteDTO> {
 
 	File exportAll();
 	
+	ClienteDTO validarTipoDocumentoYCliente(String cedula, Integer tipodocumentoId) throws Exception;
+	Cliente getEntityForOtherEntity(String cedula, Integer tipodocumentoId) throws Exception;
+	
 }

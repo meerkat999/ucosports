@@ -2,7 +2,7 @@ package co.com.meerkats.hotelturin.domain.constants;
 
 public enum StatesEnum {
 
-	ACTIVO(1), INACTIVO(2), OCUPADA(3);
+	ACTIVO(1), INACTIVO(2), OCUPADA(3), PAGADO(4);
 	
 	private Integer value;
 	

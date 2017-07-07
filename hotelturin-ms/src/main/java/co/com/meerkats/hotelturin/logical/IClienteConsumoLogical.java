@@ -9,5 +9,11 @@ public interface IClienteConsumoLogical extends ILogicalCommon<ClienteConsumo, C
 
 	List<ClienteConsumo> findAll();
 
+	ClienteConsumo save(ClienteConsumoDTO clienteConsumoDTO) throws Exception;
+
+	ClienteConsumo getEntityForOtherEntity(Integer clienteConsumoId) throws Exception;
+
+	ClienteConsumoDTO update(ClienteConsumoDTO clienteConsumoDTO) throws Exception;
+
 
 }
