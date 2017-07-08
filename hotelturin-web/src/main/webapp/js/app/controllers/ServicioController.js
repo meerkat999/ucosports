@@ -1,6 +1,6 @@
-define(['app-module', 'sweetService', 'servicioService', 'tipoDocumentoService', 'clienteService', 'arriendoService', 'facturaService'], function (app) {
-    app.controller('servicioController',['$scope','$state', 'sweetService', 'servicioService', 'tipoDocumentoService', 'clienteService', 'arriendoService', 'facturaService',
-        function ($scope, $state, sweetService, servicioService, tipoDocumentoService, clienteService, arriendoService, facturaService) {
+define(['app-module', 'sweetService', 'servicioService', 'tipoDocumentoService', 'clienteService', 'arriendoService', 'facturaService', 'mediopagoService'], function (app) {
+    app.controller('servicioController',['$scope','$state', 'sweetService', 'servicioService', 'tipoDocumentoService', 'clienteService', 'arriendoService', 'facturaService', 'mediopagoService',
+        function ($scope, $state, sweetService, servicioService, tipoDocumentoService, clienteService, arriendoService, facturaService, mediopagoService) {
 
           $scope.validarEnTiempoRealCamposCedula = function(){
             if(!$scope.campoVacio($scope.tipodocumento) &&
@@ -145,6 +145,7 @@ define(['app-module', 'sweetService', 'servicioService', 'tipoDocumentoService',
 
         $scope.goRegistrarServicio = function(){
           $scope.init();
+          $scope.isAdmin = true;
           $scope.Servicio={};
           $scope.isEditing = false;
           $state.go("app.administracion.adminServicios.registrarServicio")
@@ -152,16 +153,19 @@ define(['app-module', 'sweetService', 'servicioService', 'tipoDocumentoService',
 
         $scope.goModificarServicios = function(){
           $scope.init();
+          $scope.isAdmin = true;
           $state.go("app.administracion.adminServicios.modificarServicios")
         }
 
         $scope.goActivarServicios = function(){
             $scope.init();
+            $scope.isAdmin = true;
             $state.go("app.administracion.adminServicios.activarServicios")
           }
 
         $scope.goEditar = function(servicio){
           $scope.Servicio = servicio;
+          $scope.isAdmin = true;
           $scope.isEditing = true;
           $state.go("app.administracion.adminServicios.modificarServicios.editarServicio")
         }
@@ -212,13 +216,15 @@ define(['app-module', 'sweetService', 'servicioService', 'tipoDocumentoService',
       }
 
       $scope.getArriendosActivos = function(){
-        arriendoService.getByState({estadoId : 1}).then(function(listaArriendosActivos){
-          if(listaArriendosActivos !== undefined && listaArriendosActivos.listaArriendos !== undefined && listaArriendosActivos.listaArriendos.length > 0){
-            $scope.arriendoActivos = listaArriendosActivos.listaArriendos;
-          }else{
-            sweetService.warning("No hay ningún check-in activo.");
-          }
-        })
+        if($scope.isAdmin !== true){
+          arriendoService.getByState({estadoId : 1}).then(function(listaArriendosActivos){
+            if(listaArriendosActivos !== undefined && listaArriendosActivos.listaArriendos !== undefined && listaArriendosActivos.listaArriendos.length > 0){
+              $scope.arriendoActivos = listaArriendosActivos.listaArriendos;
+            }else{
+              sweetService.warning("No hay ningún check-in activo.");
+            }
+          })
+        }
       }
 
       $scope.openArriendo = function(arriendo){
@@ -235,7 +241,6 @@ define(['app-module', 'sweetService', 'servicioService', 'tipoDocumentoService',
         $scope.factura = {
           clienteId : $scope.cliente.id.id,
           tipodocumentoId : $scope.cliente.id.tipodocumento,
-          numBauche : null,
           listaServiciosAConsumir : $scope.serviciosSeleccionados
         }
         facturaService.facturarconsumoclientesincheckin($scope.factura).then(function(data){
@@ -251,10 +256,67 @@ define(['app-module', 'sweetService', 'servicioService', 'tipoDocumentoService',
 
       }
 
+      $scope.buscarMediosPago = function(){
+        mediopagoService.getAll().then(function(lista){
+          if(lista != undefined && lista.length > 0){
+            $scope.mediospago = lista;
+            $scope.mediospagoseleccionados = [];
+            $scope.mediospagoseleccionados.push($scope.mediospago[0]);
+          }
+        })
+      }
+
+      $scope.addMedioPago = function(medioPago){
+        $scope.mediospagoseleccionados.push(medioPago);
+      }
+
+      $scope.deleteMedioPago = function(index){
+        $scope.valoresMediosPago[index] = 0;
+        $scope.updateMedioPago(index);
+        $scope.mediospagoseleccionados.splice(index, 1);
+      }
+
+      $scope.yaFueAnadido = function(){
+        return function(mediopago){
+          if($scope.mediospagoseleccionados.indexOf(mediopago) > -1){
+            return false;
+          }
+          return true;
+        }
+      }
+
+      $scope.limpiarMedioPago = function(index){
+        $scope.valoresMediosPago[index] = 0;
+        $scope.mediospagoseleccionados[index].valor = 0;
+        $scope.updateMedioPago(index);
+      }
+
+      $scope.completarMedioPago = function(index){
+        $scope.valoresMediosPago[index] = $scope.totalMonto - $scope.mediosPagoMonto;
+        $scope.mediospagoseleccionados[index].valor = $scope.totalMonto - $scope.mediosPagoMonto;
+        $scope.updateMedioPago(index);
+      }
+
+      $scope.updateMedioPago = function(index){
+        $scope.mediosPagoMonto = 0;
+        var valorActual = parseInt($scope.valoresMediosPago[index]);
+        if($scope.mediospagoseleccionados[index] !== null){
+          $scope.mediospagoseleccionados[index].valor = isNaN(valorActual) ? 0 : valorActual;
+          $scope.mediospagoseleccionados[index].numBauche = $scope.bauches[index];
+          for (valor of $scope.valoresMediosPago) {
+            $scope.mediosPagoMonto += valor === "" ? 0 : parseInt(valor);
+          }
+          if($scope.mediospagoseleccionados[index].needDevuelta === false && $scope.mediosPagoMonto > $scope.totalMonto){
+            sweetService.warning("Cuidado, el medio de pago no acepta devolución para el cliente. \n Supera el valor del total con " + (($scope.totalMonto - $scope.mediosPagoMonto) * -1) + " pesos.");
+          }
+        }
+      }
+
       $scope.init = function(){
         $scope.buscarTiposDocumento();
         $scope.buscarServiciosDisponibles();
         $scope.buscarServiciosInactivos();
+        $scope.buscarMediosPago();
         $scope.getArriendosActivos();
         $scope.arriendoActivos = [];
         $scope.totalMonto = 0;
@@ -274,6 +336,9 @@ define(['app-module', 'sweetService', 'servicioService', 'tipoDocumentoService',
             id : null
         };
         $scope.arriendoSeleccionado = undefined;
+        $scope.valoresMediosPago = [];
+        $scope.bauches = [];
+        $scope.mediosPagoMonto = 0;
       }
 
       $scope.init();

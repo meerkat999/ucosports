@@ -1,5 +1,7 @@
 package co.com.meerkats.hotelturin.logical.Impl;
 
+import java.util.List;
+
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 
@@ -16,8 +18,15 @@ public class MedioPagoLogicalImpl extends LogicalCommonImpl<MedioPago,MedioPagoD
 
 	@Override
 	public MedioPagoDTO buildDTO(MedioPago entity) {
-		// TODO Auto-generated method stub
-		return null;
+		MedioPagoDTO dto = null;
+		if(entity != null & entity.getId() != null){
+			dto = new MedioPagoDTO();
+			dto.setId(entity.getId());
+			dto.setNombre(entity.getNombre());
+			dto.setNeedBauche(entity.isNeedBauche());
+			dto.setNeedDevuelta(entity.isNeedDevuelta());
+		}
+		return dto;
 	}
 
 	@Override
@@ -30,6 +39,11 @@ public class MedioPagoLogicalImpl extends LogicalCommonImpl<MedioPago,MedioPagoD
 			throw new Exception("Error obteniendo un medio de pago inexistente.");
 		}
 		return medioPago;
+	}
+
+	@Override
+	public List<MedioPagoDTO> findALL() {
+		return listEntitiesToListDTOs(repository.findAll());
 	}
 
 

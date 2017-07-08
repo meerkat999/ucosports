@@ -32,10 +32,6 @@ public class Factura implements Serializable {
 	private Cliente cliente;
 	
 	@ManyToOne
-	@JoinColumn(name="mediodepago_id")
-	private MedioPago medioDePago;
-	
-	@ManyToOne
 	@JoinColumn(name="estado_id")
 	private Estado estado;
 	
@@ -44,9 +40,6 @@ public class Factura implements Serializable {
 	
 	@Column(name = "factura_fecha")
 	private Date fecha;
-	
-	@Column(name = "factura_num_bauche")
-	private String num_bauche;
 	
 	@ManyToOne
 	@JoinColumn(name="arriendo_id")
@@ -76,14 +69,6 @@ public class Factura implements Serializable {
 		this.cliente = cliente;
 	}
 
-	public MedioPago getMedioDePago() {
-		return medioDePago;
-	}
-
-	public void setMedioDePago(MedioPago medioDePago) {
-		this.medioDePago = medioDePago;
-	}
-
 	public Estado getEstado() {
 		return estado;
 	}
@@ -106,14 +91,6 @@ public class Factura implements Serializable {
 
 	public void setFecha(Date fecha) {
 		this.fecha = fecha;
-	}
-
-	public String getNum_bauche() {
-		return num_bauche;
-	}
-
-	public void setNum_bauche(String num_bauche) {
-		this.num_bauche = num_bauche;
 	}
 
 	public Arriendo getArriendo() {

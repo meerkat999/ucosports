@@ -22,6 +22,12 @@ public class MedioPago implements Serializable {
 	
 	@Column(name="mediodepago_nombre")
 	private String nombre;
+	
+	@Column(name="mediodepago_need_bauche")
+	private String needBauche;
+	
+	@Column(name="mediodepago_need_devuelta")
+	private String needDevuelta;
 
 	public Integer getId() {
 		return id;
@@ -38,5 +44,39 @@ public class MedioPago implements Serializable {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
+
+	public String getNeedBauche() {
+		return needBauche;
+	}
+
+	public void setNeedBauche(String needBauche) {
+		this.needBauche = needBauche;
+	}
+
+	public Boolean isNeedBauche(){
+		return "1".equals(getNeedBauche()) == true;
+	}
+	
+	public void setIsNeedBauche(Boolean isNeed){
+		this.needBauche = isNeed == true ? "1" : "0";
+	}
+
+	public String getNeedDevuelta() {
+		return needDevuelta;
+	}
+
+	public void setNeedDevuelta(String needDevuelta) {
+		this.needDevuelta = needDevuelta;
+	}
+	
+	public Boolean isNeedDevuelta(){
+		return "1".equals(getNeedDevuelta()) == true;
+	}
+	
+	public void setIsNeedDevuelta(Boolean isNeed){
+		this.needDevuelta = isNeed == true ? "1" : "0";
+	}
+	
+	
 	
 }

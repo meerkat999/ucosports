@@ -12,7 +12,6 @@ import co.com.meerkats.hotelturin.domain.Cliente;
 import co.com.meerkats.hotelturin.domain.ClienteConsumo;
 import co.com.meerkats.hotelturin.domain.Estado;
 import co.com.meerkats.hotelturin.domain.Factura;
-import co.com.meerkats.hotelturin.domain.MedioPago;
 import co.com.meerkats.hotelturin.domain.constants.StatesEnum;
 import co.com.meerkats.hotelturin.dto.ClienteConsumoDTO;
 import co.com.meerkats.hotelturin.dto.ConsumoPorServicioDTO;
@@ -23,7 +22,6 @@ import co.com.meerkats.hotelturin.logical.IClienteLogical;
 import co.com.meerkats.hotelturin.logical.IConsumoPorServicioLogical;
 import co.com.meerkats.hotelturin.logical.IEstadoLogical;
 import co.com.meerkats.hotelturin.logical.IFacturaLogical;
-import co.com.meerkats.hotelturin.logical.IMedioPagoLogical;
 import co.com.meerkats.hotelturin.repository.IFacturaRepository;
 
 @RequestScoped
@@ -44,9 +42,6 @@ public class FacturaLogicalImpl extends LogicalCommonImpl<Factura, FacturaDTO> i
 	@Inject
 	private IConsumoPorServicioLogical consumoPorServicioLogical;
 	
-	@Inject
-	private IMedioPagoLogical medioPagoLogical;
-	
 	@Override
 	public FacturaDTO buildDTO(Factura entity) {
 		FacturaDTO dto = null;
@@ -56,27 +51,15 @@ public class FacturaLogicalImpl extends LogicalCommonImpl<Factura, FacturaDTO> i
 			dto.setTipodocumentoId(entity.getCliente().getId().getTipoDocumento());
 			dto.setFecha(entity.getFecha());
 			dto.setId(entity.getId());
-			dto.setMediodepagoId(entity.getMedioDePago().getId());
 			dto.setValor(entity.getValor());
-			dto.setNumBauche(entity.getNum_bauche());
 		}
 		return dto;
 	}
 
 	private FacturaDTO buildDTOPrivateSinCheckin(Factura entity, List<ServicioDTO> listaServiciosAConsumir) {
-		FacturaDTO dto = null;
-		if(entity != null && entity.getId() != null){
-			dto = new FacturaDTO();
-			dto.setClienteconsumoId(entity.getClienteConsumo().getId());
-			dto.setClienteId(entity.getCliente().getId().getId());
-			dto.setTipodocumentoId(entity.getCliente().getId().getTipoDocumento());
-			dto.setFecha(entity.getFecha());
-			dto.setId(entity.getId());
-			dto.setMediodepagoId(entity.getMedioDePago().getId());
-			dto.setValor(entity.getValor());
-			dto.setNumBauche(entity.getNum_bauche());
-			dto.setListaServiciosAConsumir(listaServiciosAConsumir);
-		}
+		FacturaDTO dto = buildDTO(entity);
+		dto.setClienteconsumoId(entity.getClienteConsumo().getId());
+		dto.setListaServiciosAConsumir(listaServiciosAConsumir);
 		return dto;
 	}
 
@@ -90,7 +73,6 @@ public class FacturaLogicalImpl extends LogicalCommonImpl<Factura, FacturaDTO> i
 		
 		Cliente cliente = clienteLogical.getEntityForOtherEntity(facturaDTO.getClienteId(), facturaDTO.getTipodocumentoId());
 		Estado estado = estadoLogical.getEntityForOtherEntity(StatesEnum.PAGADO.getValue());
-		MedioPago medioDePago = medioPagoLogical.getEntityForOtherEntity(1);
 		
 		ClienteConsumoDTO clienteConsumoDTO = new ClienteConsumoDTO();
 		clienteConsumoDTO.setClienteId(cliente.getId().getId());
@@ -106,9 +88,7 @@ public class FacturaLogicalImpl extends LogicalCommonImpl<Factura, FacturaDTO> i
 		factura.setCliente(cliente);
 		factura.setEstado(estado);
 		factura.setFecha(new Date());
-		factura.setNum_bauche(facturaDTO.getNumBauche());
 		factura.setClienteConsumo(clienteConsumo);
-		factura.setMedioDePago(medioDePago);
 		
 		Double valor = 0d;
 		

@@ -27,6 +27,7 @@ requirejs.config({
       'clienteService' : 'app/services/clienteService',
       'acompananteService' : 'app/services/acompananteService',
       'arriendoService' : 'app/services/arriendoService',
+      'mediopagoService' : 'app/services/mediopagoService',
       'tipoDocumentoService' : 'app/services/tipoDocumentoService',
       'sweetService' : 'app/services/util/sweetService',
       'numberDirective' : 'app/directives/numberDirective'

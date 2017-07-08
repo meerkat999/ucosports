@@ -16,8 +16,6 @@ public class FacturaDTO implements Serializable {
 	
 	private Double valor;
 	
-	private Integer mediodepagoId;
-	
 	private Date fecha;
 	
 	private Integer arriendoId;
@@ -25,10 +23,10 @@ public class FacturaDTO implements Serializable {
 	private String habitacionId;
 	
 	private Integer clienteconsumoId;
-	
-	private String numBauche;
-	
+
 	private List<ServicioDTO> listaServiciosAConsumir;
+	
+	private List<MedioPagoDTO> listaMediosPago;
 
 	public Integer getId() {
 		return id;
@@ -60,14 +58,6 @@ public class FacturaDTO implements Serializable {
 
 	public void setValor(Double valor) {
 		this.valor = valor;
-	}
-
-	public Integer getMediodepagoId() {
-		return mediodepagoId;
-	}
-
-	public void setMediodepagoId(Integer mediodepagoId) {
-		this.mediodepagoId = mediodepagoId;
 	}
 
 	public Date getFecha() {
@@ -102,20 +92,20 @@ public class FacturaDTO implements Serializable {
 		this.clienteconsumoId = clienteconsumoId;
 	}
 
-	public String getNumBauche() {
-		return numBauche;
-	}
-
-	public void setNumBauche(String numBauche) {
-		this.numBauche = numBauche;
-	}
-
 	public List<ServicioDTO> getListaServiciosAConsumir() {
 		return listaServiciosAConsumir;
 	}
 
 	public void setListaServiciosAConsumir(List<ServicioDTO> listaServiciosAConsumir) {
 		this.listaServiciosAConsumir = listaServiciosAConsumir;
+	}
+
+	public List<MedioPagoDTO> getListaMediosPago() {
+		return listaMediosPago;
+	}
+
+	public void setListaMediosPago(List<MedioPagoDTO> listaMediosPago) {
+		this.listaMediosPago = listaMediosPago;
 	}
 
 }

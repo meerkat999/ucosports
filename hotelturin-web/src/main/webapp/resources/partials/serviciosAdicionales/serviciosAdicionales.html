@@ -43,44 +43,113 @@
     <button type="button" class="btn btn-primary" ng-click="init()">Nueva Consulta</button>
   </div>
 
-  <div ng-show="mostrarVistaServicioAdicional()">
-    <h4 ng-if="cliente.nombreCompleto !== undefined">Servicios Adicionales a consumir por el/la señor/a {{cliente.nombreCompleto}}.</h4>
-    <h4 ng-if="arriendoSeleccionado !== undefined">Servicios Adicionales a consumir la habitacion {{arriendoSeleccionado.habitacionId}}</h4>
-    <br>
-  </div>
+  <div style="
+  border-style: groove;
+  border-radius: 6px;
+  padding-right: 10px;
+  padding-left: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-top: 10px;
+  " ng-show="mostrarVistaServicioAdicional()">
 
-  <div ng-show="mostrarVistaServicioAdicional()" style="display: table; width: 100%;">
+    <div >
+      <h4 ng-if="cliente.nombreCompleto !== undefined">Servicios Adicionales a consumir por el/la señor/a {{cliente.nombreCompleto}}.</h4>
+      <h4 ng-if="arriendoSeleccionado !== undefined">Servicios Adicionales a consumir la habitacion {{arriendoSeleccionado.habitacionId}}</h4>
+      <br>
+    </div>
 
-    <div style="
-    display: table-cell;
-    width: 420px;
-    max-width: 420px;">
-      <div data-toggle="buttons">
-        <label ng-repeat="servicio in serviciosDisponibles" class="btn btn-default" ng-click="addServicio(servicio)">
-          <label>{{servicio.nombre}}</label> <br> {{servicio.valor | currency}}
+    <div style="display: table; width: 100%;">
+
+      <div style="
+      display: table-cell;
+      width: 420px;
+      max-width: 420px;">
+        <div data-toggle="buttons">
+          <label ng-repeat="servicio in serviciosDisponibles" class="btn btn-default" ng-click="addServicio(servicio)">
+            <label>{{servicio.nombre}}</label> <br> {{servicio.valor | currency}}
+          </label>
+        </div>
+        <br>
+        <label class="btn btn-default" ng-click="limpiarServicios()">
+          <label>Limpiar todos</label>
         </label>
       </div>
-      <br>
-      <label class="btn btn-default" ng-click="limpiarServicios()">
-        <label>Limpiar todos</label>
-      </label>
-    </div>
-    <div style="display: table-cell;width: 500px;">
-      <div style="display: table;">
-        <div ng-repeat="servicioSeleccionado in serviciosSeleccionados track by $index" style="display: table-row; width: 100%;">
-          <div style="display: table-cell;text-align: left; width: 100%;">{{servicioSeleccionado.nombre}}</div>
-          <div style="display: table-cell;padding-right: 10px;    text-align: left;">{{servicioSeleccionado.valor | currency}}</div>
-          <div style="text-align: left" class="btn btn-default" ng-click="deleteServicio($index)">Quitar</div>
+      <div style="display: table-cell;width: 500px;">
+        <div style="display: table;">
+          <div ng-repeat="servicioSeleccionado in serviciosSeleccionados track by $index" style="display: table-row; width: 100%;">
+            <div style="display: table-cell;text-align: left; width: 100%;">{{servicioSeleccionado.nombre}}</div>
+            <div style="display: table-cell;padding-right: 10px;    text-align: left;">{{servicioSeleccionado.valor | currency}}</div>
+            <div style="text-align: left" class="btn btn-default" ng-click="deleteServicio($index)">Quitar</div>
+          </div>
+          <div ng-show="serviciosSeleccionados.length > 0" style="text-align: center;width: 100%;">Total: {{totalMonto | currency}}</div>
         </div>
-        <div ng-show="serviciosSeleccionados.length > 0" style="text-align: center;width: 100%;">Total: {{totalMonto | currency}}</div>
+        <br>
       </div>
-      <br>
+
     </div>
 
   </div>
 
 </div>
+
+
 <br>
+
+<div ng-show = "serviciosSeleccionados.length > 0" style="
+border-style: groove;
+border-radius: 6px;
+padding-right: 10px;
+padding-left: 10px;
+padding-top: 10px;
+padding-bottom: 10px;
+margin-top: 10px;
+">
+
+  <h4>Medios de Pago</h4>
+
+  <div>
+    <label>Monto a pagar: </label>
+    <div>{{totalMonto | currency}}</div>
+  </div>
+  <br>
+
+  <div style="display: table;">
+    <div ng-repeat="mediopago in mediospagoseleccionados track by $index" style="display: table-row;">
+      <div style="display: table-cell;">{{mediopago.nombre}}</div>
+      <input style="display: table-cell; margin-right: 10px;margin-left: 10px;" number value="totalMonto" ng-model="valoresMediosPago[$index]" ng-change="updateMedioPago($index)" type="text" ></input>
+      <input style="display: table-cell; margin-right: 10px;margin-left: 10px;" number ng-model="bauches[$index]" ng-change="updateMedioPago($index)" placeholder="Número de Bauche" ng-disabled="mediopago.needBauche === false" type="text"></input>
+      <label ng-show="totalMonto - mediosPagoMonto > 0" style="display: table-cell; margin-right: 10px;margin-left: 10px;" class="btn btn-default" ng-click="completarMedioPago($index)">
+          Completar
+      </label>
+      <label style="display: table-cell; margin-right: 10px;margin-left: 10px;" class="btn btn-default" ng-click="limpiarMedioPago($index)">
+          Limpiar
+      </label>
+      <label style="display: table-cell; margin-right: 10px;margin-left: 10px;" class="btn btn-default" ng-click="deleteMedioPago($index)">
+          Quitar
+      </label>
+    </div>
+    <br>
+    <div style="display: table-row;">
+      <div style="display: table-cell;" ng-show="totalMonto - mediosPagoMonto > 0">Restante:</div>
+      <div style="display: table-cell;" ng-show="totalMonto - mediosPagoMonto < 0">Devuelta:</div>
+      <div style="display: table-cell;" ng-show="totalMonto - mediosPagoMonto > 0"> {{totalMonto - mediosPagoMonto}} </div>
+      <div style="display: table-cell;" ng-show="totalMonto - mediosPagoMonto < 0"> {{(totalMonto - mediosPagoMonto)*-1}} </div>
+    </div>
+    <br>
+    <div style="display: table-row;" ng-hide="mediospagoseleccionados.length === mediospago.length">
+      <div style="display: table-cell;">Añadir Medio de Pago</div>
+      <select  style="display: table-cell; margin-right: 10px;margin-left: 10px;" ng-model="mediopagoAnadido" ng-options="mediopago.nombre for mediopago in mediospago | filter: yaFueAnadido()"></select>
+      <label style="display: table-cell; margin-right: 10px;margin-left: 10px;"  class="btn btn-default" ng-click="addMedioPago(mediopagoAnadido)">
+          Añadir
+      </label>
+    </div>
+  </div>
+
+</div>
+
+<br>
+
 <div ng-show="mostrarVistaServicioAdicional() && serviciosSeleccionados.length > 0">
   <button ng-if="arriendoSeleccionado === undefined" class="btn btn-primary" ng-click="finishFactura()">
     Facturar inmediatamente
