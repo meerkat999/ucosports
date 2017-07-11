@@ -215,11 +215,7 @@ define(['app-module','clienteService', 'tipoDocumentoService', 'sweetService', '
             $scope.arriendoFecha = $filter('date')(new Date(arriendo.dateCheckin), "yyyy/MM/dd 'a las' h:mma")
             var fecha = $filter('date')(new Date(arriendo.dateCheckin), "yyyy/MM/dd 'a las' h:mma");
             sweetService.success("El check-in se registró correctamente el "
-              + fecha + ". \n Para el cliente " + $scope.cliente.nombreCompleto + " en la habitación " + $scope.habitacionSeleccionada.id + ".",
-              function(){
-            	$scope.isprinting = true;
-                $scope.print();
-              });
+              + fecha + ". \n Para el cliente " + $scope.cliente.nombreCompleto + " en la habitación " + $scope.habitacionSeleccionada.id + ".");
           }
         }, function(error){
           alert("Ha ocurrido un error creando el check-in. Inténtelo de nuevo o comuníquese con el área de sistemas");
@@ -247,31 +243,6 @@ define(['app-module','clienteService', 'tipoDocumentoService', 'sweetService', '
         }, function(error){
           sweetService.error("Se ha producido un error al intentar validar el estado de checkin del cliente. Comuníquese con el área de sistemas.")
         })
-      }
-
-      $scope.print = function(){
-    	   $scope.isprinting = true;
-        //printElement(document.getElementById("printThis"));
-        //window.print();
-        $scope.reset();
-      }
-
-      function printElement(elem) {
-    	  $scope.isprinting=true;
-          var domClone = elem.cloneNode(true);
-          var $printSection = document.getElementById("printSection");
-
-          if (!$printSection) {
-              var $printSection = document.createElement("div");
-              $printSection.id = "printSection";
-              document.body.appendChild($printSection);
-              $scope.isprinting = true;
-          }
-
-          $printSection.innerHTML = "";
-          $scope.isprinting = true;
-
-          $printSection.appendChild(domClone);
       }
 
       $scope.getArriendosActivosConEspacio = function(){

@@ -38,6 +38,9 @@ public class Factura implements Serializable {
 	@Column(name = "factura_valor")
 	private Double valor;
 	
+	@Column(name = "factura_devuelta")
+	private Double devuelta;
+	
 	@Column(name = "factura_fecha")
 	private Date fecha;
 	
@@ -116,5 +119,15 @@ public class Factura implements Serializable {
 	public void setClienteConsumo(ClienteConsumo clienteConsumo) {
 		this.clienteConsumo = clienteConsumo;
 	}
+
+	public Double getDevuelta() {
+		return devuelta;
+	}
+
+	public void setDevuelta(Double devuelta) {
+		this.devuelta = devuelta;
+	}
+	
+	
 	
 }

@@ -1,5 +1,6 @@
 package co.com.meerkats.hotelturin.logical.Impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -13,15 +14,22 @@ import co.com.meerkats.hotelturin.domain.ClienteConsumo;
 import co.com.meerkats.hotelturin.domain.Estado;
 import co.com.meerkats.hotelturin.domain.Factura;
 import co.com.meerkats.hotelturin.domain.constants.StatesEnum;
+import co.com.meerkats.hotelturin.dto.ArriendoDTO;
 import co.com.meerkats.hotelturin.dto.ClienteConsumoDTO;
+import co.com.meerkats.hotelturin.dto.ClienteKeyDTO;
 import co.com.meerkats.hotelturin.dto.ConsumoPorServicioDTO;
 import co.com.meerkats.hotelturin.dto.FacturaDTO;
+import co.com.meerkats.hotelturin.dto.HabitacionDTO;
+import co.com.meerkats.hotelturin.dto.MedioPagoDTO;
 import co.com.meerkats.hotelturin.dto.ServicioDTO;
+import co.com.meerkats.hotelturin.logical.IArriendoLogical;
 import co.com.meerkats.hotelturin.logical.IClienteConsumoLogical;
 import co.com.meerkats.hotelturin.logical.IClienteLogical;
 import co.com.meerkats.hotelturin.logical.IConsumoPorServicioLogical;
 import co.com.meerkats.hotelturin.logical.IEstadoLogical;
 import co.com.meerkats.hotelturin.logical.IFacturaLogical;
+import co.com.meerkats.hotelturin.logical.IHabitacionLogical;
+import co.com.meerkats.hotelturin.logical.IMedioPagoPorFacturaLogical;
 import co.com.meerkats.hotelturin.repository.IFacturaRepository;
 
 @RequestScoped
@@ -42,6 +50,15 @@ public class FacturaLogicalImpl extends LogicalCommonImpl<Factura, FacturaDTO> i
 	@Inject
 	private IConsumoPorServicioLogical consumoPorServicioLogical;
 	
+	@Inject
+	private IMedioPagoPorFacturaLogical medioPagoPorFacturaLogical;
+	
+	@Inject
+	private IArriendoLogical arriendoLogical;
+	
+	@Inject
+	private IHabitacionLogical habitacionLogical;
+	
 	@Override
 	public FacturaDTO buildDTO(Factura entity) {
 		FacturaDTO dto = null;
@@ -52,14 +69,35 @@ public class FacturaLogicalImpl extends LogicalCommonImpl<Factura, FacturaDTO> i
 			dto.setFecha(entity.getFecha());
 			dto.setId(entity.getId());
 			dto.setValor(entity.getValor());
+			dto.setDevuelta(entity.getDevuelta());
+			ClienteKeyDTO keyCliente = new ClienteKeyDTO();
+			keyCliente.setId(entity.getCliente().getId().getId());
+			keyCliente.setTipodocumento(entity.getCliente().getId().getTipoDocumento());
+			dto.setCliente(clienteLogical.getById(keyCliente));
 		}
 		return dto;
 	}
 
-	private FacturaDTO buildDTOPrivateSinCheckin(Factura entity, List<ServicioDTO> listaServiciosAConsumir) {
+	private FacturaDTO buildDTOPrivateSinCheckin(Factura entity, List<ConsumoPorServicioDTO> listaServiciosAConsumir) {
 		FacturaDTO dto = buildDTO(entity);
 		dto.setClienteconsumoId(entity.getClienteConsumo().getId());
-		dto.setListaServiciosAConsumir(listaServiciosAConsumir);
+		ClienteConsumoDTO clienteConsumo = new ClienteConsumoDTO();
+		clienteConsumo.setId(entity.getClienteConsumo().getId());
+		dto.setClienteConsumo(clienteConsumoLogical.getById(clienteConsumo));
+		dto.setListaConsumoPorServicio(listaServiciosAConsumir);
+		return dto;
+	}
+	
+	private FacturaDTO buildDTOPrivateConCheckin(Factura entity, List<ConsumoPorServicioDTO> listaServiciosAConsumir) {
+		FacturaDTO dto = buildDTOPrivateSinCheckin(entity, listaServiciosAConsumir);
+		if(entity.getArriendo() != null){
+			ArriendoDTO arriendoDTO = new ArriendoDTO();
+			arriendoDTO.setId(entity.getArriendo().getId());
+			dto.setArriendo(arriendoLogical.getById(arriendoDTO));
+			HabitacionDTO habitacion = new HabitacionDTO();
+			habitacion.setId(entity.getHabitacion().getId());
+			dto.setHabitacion(habitacionLogical.getById(habitacion));
+		}
 		return dto;
 	}
 
@@ -93,29 +131,48 @@ public class FacturaLogicalImpl extends LogicalCommonImpl<Factura, FacturaDTO> i
 		Double valor = 0d;
 		
 		List<ServicioDTO> listaServiciosAConsumir = facturaDTO.getListaServiciosAConsumir();
+		List<ConsumoPorServicioDTO> listaServiciosAConsumirPersistidos = new ArrayList<>();
 		for (ServicioDTO servicioDTO : listaServiciosAConsumir) {
 			ConsumoPorServicioDTO consumoPorServicioDTO = new ConsumoPorServicioDTO();
 			consumoPorServicioDTO.setClienteConsumoId(clienteConsumo.getId());
 			consumoPorServicioDTO.setServicioAdicionalId(servicioDTO.getId());
 			consumoPorServicioDTO.setServicioAdicionalValor(consumoPorServicioDTO.getServicioAdicionalValor());
 			consumoPorServicioDTO = consumoPorServicioLogical.save(consumoPorServicioDTO);
+			listaServiciosAConsumirPersistidos.add(consumoPorServicioDTO);
 			valor += servicioDTO.getValor();
 		}
 		
 		factura.setValor(valor);
-
+		factura.setDevuelta(calcularDevuelta(valor, facturaDTO.getListaMediosPago()));
 		factura = repository.save(factura);
 		
 		clienteConsumoDTO.setTotal(valor);
 		clienteConsumoDTO.setId(clienteConsumo.getId());
 		
-		clienteConsumoDTO = clienteConsumoLogical.update(clienteConsumoDTO);
+		clienteConsumoLogical.update(clienteConsumoDTO);
+		
+		medioPagoPorFacturaLogical.save(facturaDTO.getListaMediosPago(), cliente, factura, estado);
 		
 		if(factura == null){
 			throw new Exception("Error al guardar la factura");
 		}
 		
-		return buildDTOPrivateSinCheckin(factura, listaServiciosAConsumir);
+		return buildDTOPrivateSinCheckin(factura, listaServiciosAConsumirPersistidos);
+	}
+
+	private Double calcularDevuelta(Double valor, List<MedioPagoDTO> listaMediosPago) {
+		Double valorMedioPagos = 0D;
+		
+		for (MedioPagoDTO medioPagoDTO : listaMediosPago) {
+			valorMedioPagos += medioPagoDTO.getValor();
+		}
+		
+		Double devuelta = 0D;
+		
+		if(valor < valorMedioPagos){
+			devuelta = valorMedioPagos - valor;
+		}
+		return devuelta;
 	}
 
 }

@@ -16,6 +16,8 @@ public class MedioPagoDTO implements Serializable {
 	
 	private Double valor;
 	
+	private String numBauche;
+	
 	public Integer getId() {
 		return id;
 	}
@@ -54,6 +56,14 @@ public class MedioPagoDTO implements Serializable {
 
 	public void setNeedDevuelta(Boolean needDevuelta) {
 		this.needDevuelta = needDevuelta;
+	}
+
+	public String getNumBauche() {
+		return numBauche;
+	}
+
+	public void setNumBauche(String numBauche) {
+		this.numBauche = numBauche;
 	}
 	
 }

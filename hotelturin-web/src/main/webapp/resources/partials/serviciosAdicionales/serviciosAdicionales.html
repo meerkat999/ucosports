@@ -96,7 +96,7 @@
 
 <br>
 
-<div ng-show = "serviciosSeleccionados.length > 0" style="
+<div ng-show = "mostrarMediosPago()" style="
 border-style: groove;
 border-radius: 6px;
 padding-right: 10px;
@@ -114,43 +114,48 @@ margin-top: 10px;
   </div>
   <br>
 
-  <div style="display: table;">
+  <div style="display: table-row;" ng-hide="mediospagoseleccionados.length === mediospago.length">
+    <div style="display: table-cell;">Añadir Medio de Pago</div>
+    <select  style="display: table-cell; margin-right: 10px;margin-left: 10px;" ng-model="mediopagoAnadido" ng-options="mediopago.nombre for mediopago in mediospago | filter: yaFueAnadido()"></select>
+    <label style="display: table-cell; margin-right: 10px;margin-left: 10px;"  class="btn btn-default" ng-click="addMedioPago(mediopagoAnadido)">
+        Añadir
+    </label>
+  </div>
+
+  <div style="display: table; width: 100%">
+
+    <br>
+    <div style="display: table-row;" ng-show="mediospagoseleccionados.length === 0 ">Sin medios de pago añadidos.</div>
     <div ng-repeat="mediopago in mediospagoseleccionados track by $index" style="display: table-row;">
       <div style="display: table-cell;">{{mediopago.nombre}}</div>
       <input style="display: table-cell; margin-right: 10px;margin-left: 10px;" number value="totalMonto" ng-model="valoresMediosPago[$index]" ng-change="updateMedioPago($index)" type="text" ></input>
-      <input style="display: table-cell; margin-right: 10px;margin-left: 10px;" number ng-model="bauches[$index]" ng-change="updateMedioPago($index)" placeholder="Número de Bauche" ng-disabled="mediopago.needBauche === false" type="text"></input>
-      <label ng-show="totalMonto - mediosPagoMonto > 0" style="display: table-cell; margin-right: 10px;margin-left: 10px;" class="btn btn-default" ng-click="completarMedioPago($index)">
+      <input style="display: table-cell; margin-right: 10px;margin-left: 10px;" number ng-model="bauches[$index]" ng-change="updateMedioPago($index)" placeholder="*Número de Bauche" ng-disabled="mediopago.needBauche === false" type="text"></input>
+      <label ng-show="totalMonto - mediosPagoMonto > 0" style="display: table-cell" class="btn btn-default" ng-click="completarMedioPago($index)">
           Completar
       </label>
-      <label style="display: table-cell; margin-right: 10px;margin-left: 10px;" class="btn btn-default" ng-click="limpiarMedioPago($index)">
+      <label style="display: table-cell" class="btn btn-default" ng-click="limpiarMedioPago($index)">
           Limpiar
       </label>
-      <label style="display: table-cell; margin-right: 10px;margin-left: 10px;" class="btn btn-default" ng-click="deleteMedioPago($index)">
+      <label style="display: table-cell" class="btn btn-default" ng-click="deleteMedioPago($index)">
           Quitar
       </label>
     </div>
     <br>
-    <div style="display: table-row;">
-      <div style="display: table-cell;" ng-show="totalMonto - mediosPagoMonto > 0">Restante:</div>
-      <div style="display: table-cell;" ng-show="totalMonto - mediosPagoMonto < 0">Devuelta:</div>
-      <div style="display: table-cell;" ng-show="totalMonto - mediosPagoMonto > 0"> {{totalMonto - mediosPagoMonto}} </div>
-      <div style="display: table-cell;" ng-show="totalMonto - mediosPagoMonto < 0"> {{(totalMonto - mediosPagoMonto)*-1}} </div>
-    </div>
+  </div>
+
+  <div>
     <br>
-    <div style="display: table-row;" ng-hide="mediospagoseleccionados.length === mediospago.length">
-      <div style="display: table-cell;">Añadir Medio de Pago</div>
-      <select  style="display: table-cell; margin-right: 10px;margin-left: 10px;" ng-model="mediopagoAnadido" ng-options="mediopago.nombre for mediopago in mediospago | filter: yaFueAnadido()"></select>
-      <label style="display: table-cell; margin-right: 10px;margin-left: 10px;"  class="btn btn-default" ng-click="addMedioPago(mediopagoAnadido)">
-          Añadir
-      </label>
-    </div>
+    <label ng-show="totalMonto - mediosPagoMonto > 0">Restante:</label>
+    <label ng-show="totalMonto - mediosPagoMonto < 0">Devuelta:</label>
+    <div ng-show="totalMonto - mediosPagoMonto > 0"> {{totalMonto - mediosPagoMonto | currency}} </div>
+    <div ng-show="totalMonto - mediosPagoMonto < 0"> {{(totalMonto - mediosPagoMonto)*-1 | currency}} </div>
   </div>
 
 </div>
 
 <br>
 
-<div ng-show="mostrarVistaServicioAdicional() && serviciosSeleccionados.length > 0">
+<div ng-show="mostrarVistaServicioAdicional() && serviciosSeleccionados.length > 0 && (mediospagoseleccionados.length > 0 || arriendoSeleccionado !== undefined)">
   <button ng-if="arriendoSeleccionado === undefined" class="btn btn-primary" ng-click="finishFactura()">
     Facturar inmediatamente
   </button>
@@ -160,4 +165,137 @@ margin-top: 10px;
   <button class="btn btn-danger" ng-click="init()">
     Cancelar
   </button>
+</div>
+
+<br>
+<div ng-show="mostrarVistaServicioAdicional() && arriendoSeleccionado === undefined">
+
+  <label>Factura resultante para la impresión:</label>
+
+  <div style="display: table; text-align: left; margin: 0 auto;" id="printThis">
+    <div id = "printSectionChild">
+      <div style="margin: 0 0 0 70px; width: 100%;">
+        <img src="./resources/statics/images/logo.png" style="position: absolute; opacity: 0.15;" height="200" width="200">
+      </div>
+      <div style="text-align: center;">
+        <label>
+          FACTURA
+        </label>
+      </div>
+      <div style="text-align: center;">
+        <label>
+          HOTEL TURIN - La Ceja
+        </label>
+      </div>
+      <div style="text-align: center;">
+        <div>
+          RNT: 25465
+        </div>
+      </div>
+      <br>
+      <div style="display: table-row;">
+        <label style="display: table-cell;">
+          Nombre:
+        </label>
+        <div style="display: table-cell;">
+          {{cliente.nombreCompleto}}
+        </div>
+      </div>
+      <div style="display: table-row;">
+        <label style="display: table-cell;">
+          Cédula:
+        </label>
+        <div style="display: table-cell;">
+          {{cliente.id.id}}
+        </div>
+      </div>
+      <div style="display: table-row;">
+        <label style="display: table-cell;">
+          Fecha:
+        </label>
+        <div style="display: table-cell;">
+          {{date | date:'yyyy-MM-dd hh:mm a'}}
+        </div>
+      </div>
+      <div style="display: table-row;">
+        <label style="display: table-cell;">
+          Servicios Adicionales:
+        </label>
+        <div style="display: table-cell;">
+        </div>
+      </div>
+      <div style="display: table-row;" ng-repeat="servicio in serviciosSeleccionados track by $index">
+        <div style="display: table-cell;">
+        </div>
+        <div style="display: table-cell;">
+          {{servicio.nombre}}
+        </div>
+        <div style="display: table-cell;">
+          {{servicio.valor | currency}}
+        </div>
+      </div>
+      <div style="display: table-row;">
+        <label style="display: table-cell;">
+          Total:
+        </label>
+        <div style="display: table-cell;">
+        </div>
+        <div style="display: table-cell;">
+          {{totalMonto | currency}}
+        </div>
+      </div>
+      <div style="display: table-row;">
+        <label style="display: table-cell;">
+          Devuelta:
+        </label>
+        <div style="display: table-cell;" ng-show="totalMonto - mediosPagoMonto < 0">
+          {{(totalMonto - mediosPagoMonto)*-1 | currency}}
+        </div>
+        <div style="display: table-cell;" ng-show="totalMonto - mediosPagoMonto >= 0">
+          $0.00
+        </div>
+      </div>
+      <div style="display: table-row;">
+        <label style="display: table-cell;">
+          Medios de Pago:
+        </label>
+        <div style="display: table-cell;">
+        </div>
+      </div>
+      <div style="display: table-row;" ng-repeat="medioPago in mediospagoseleccionados track by $index">
+        <div style="display: table-cell;">
+        </div>
+        <div style="display: table-cell;">
+          {{medioPago.nombre}}
+        </div>
+        <div style="display: table-cell;">
+          {{medioPago.valor | currency}}
+          <br>
+          <div ng-if="medioPago.needBauche == true">#Num Bauche: {{medioPago.numBauche}}</div>
+        </div>
+      </div>
+      <br>
+      <div style="text-align: center;">
+        <div>
+          Telefono: 5683199
+        </div>
+      </div>
+      <div style="text-align: center;">
+        <div>
+          Correo: hotelturin17@gmail.com
+        </div>
+      </div>
+      <div style="text-align: center;">
+        <div>
+          Instagram/Facebook: @hotelturinlaceja
+        </div>
+      </div>
+      <div style="text-align: center;">
+        <div>
+          Dirección: Calle 19 #21-55
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>

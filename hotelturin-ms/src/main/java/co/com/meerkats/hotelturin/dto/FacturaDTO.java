@@ -10,6 +10,14 @@ public class FacturaDTO implements Serializable {
 
 	private Integer id;
 	
+	private ClienteDTO cliente;
+	
+	private HabitacionDTO habitacion;
+	
+	private ArriendoDTO arriendo;
+	
+	private ClienteConsumoDTO clienteConsumo;
+	
 	private String clienteId;
 	
 	private Integer tipodocumentoId;
@@ -26,7 +34,13 @@ public class FacturaDTO implements Serializable {
 
 	private List<ServicioDTO> listaServiciosAConsumir;
 	
+	private List<ConsumoPorServicioDTO> listaConsumoPorServicio;
+	
 	private List<MedioPagoDTO> listaMediosPago;
+	
+	private List<MedioPagoPorFacturaDTO> listaMediosPagoDetalles;
+	
+	private Double devuelta;
 
 	public Integer getId() {
 		return id;
@@ -106,6 +120,62 @@ public class FacturaDTO implements Serializable {
 
 	public void setListaMediosPago(List<MedioPagoDTO> listaMediosPago) {
 		this.listaMediosPago = listaMediosPago;
+	}
+
+	public Double getDevuelta() {
+		return devuelta;
+	}
+
+	public void setDevuelta(Double devuelta) {
+		this.devuelta = devuelta;
+	}
+
+	public List<MedioPagoPorFacturaDTO> getListaMediosPagoDetalles() {
+		return listaMediosPagoDetalles;
+	}
+
+	public void setListaMediosPagoDetalles(List<MedioPagoPorFacturaDTO> listaMediosPagoDetalles) {
+		this.listaMediosPagoDetalles = listaMediosPagoDetalles;
+	}
+
+	public ClienteDTO getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(ClienteDTO cliente) {
+		this.cliente = cliente;
+	}
+
+	public HabitacionDTO getHabitacion() {
+		return habitacion;
+	}
+
+	public void setHabitacion(HabitacionDTO habitacion) {
+		this.habitacion = habitacion;
+	}
+
+	public ArriendoDTO getArriendo() {
+		return arriendo;
+	}
+
+	public void setArriendo(ArriendoDTO arriendo) {
+		this.arriendo = arriendo;
+	}
+
+	public ClienteConsumoDTO getClienteConsumo() {
+		return clienteConsumo;
+	}
+
+	public void setClienteConsumo(ClienteConsumoDTO clienteConsumo) {
+		this.clienteConsumo = clienteConsumo;
+	}
+
+	public List<ConsumoPorServicioDTO> getListaConsumoPorServicio() {
+		return listaConsumoPorServicio;
+	}
+
+	public void setListaConsumoPorServicio(List<ConsumoPorServicioDTO> listaConsumoPorServicio) {
+		this.listaConsumoPorServicio = listaConsumoPorServicio;
 	}
 
 }

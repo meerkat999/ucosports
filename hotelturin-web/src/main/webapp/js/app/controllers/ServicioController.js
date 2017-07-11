@@ -175,6 +175,7 @@ define(['app-module', 'sweetService', 'servicioService', 'tipoDocumentoService',
       }
 
       $scope.mostrarVistaServicioAdicional = function(){
+        $scope.date = new Date();
         return $scope.cliente !== null;
       }
 
@@ -213,6 +214,7 @@ define(['app-module', 'sweetService', 'servicioService', 'tipoDocumentoService',
       $scope.limpiarServicios = function(){
         $scope.totalMonto = 0;
         $scope.serviciosSeleccionados = [];
+        $scope.mediospagoseleccionados = undefined;
       }
 
       $scope.getArriendosActivos = function(){
@@ -238,22 +240,51 @@ define(['app-module', 'sweetService', 'servicioService', 'tipoDocumentoService',
       }
 
       $scope.finishFactura = function(){
+        $scope.date = new Date();
         $scope.factura = {
           clienteId : $scope.cliente.id.id,
           tipodocumentoId : $scope.cliente.id.tipodocumento,
-          listaServiciosAConsumir : $scope.serviciosSeleccionados
+          listaServiciosAConsumir : $scope.serviciosSeleccionados,
+          listaMediosPago : $scope.mediospagoseleccionados
         }
-        facturaService.facturarconsumoclientesincheckin($scope.factura).then(function(data){
-          if(data !== undefined && data.id !== undefined){
-            sweetService.success("Se ha facturado correctamente.");
-            $scope.limpiarServicios();
-          }else{
+        if($scope.validarMediosPago()){
+          facturaService.facturarconsumoclientesincheckin($scope.factura).then(function(data){
+            if(data !== undefined && data.id !== undefined){
+              $scope.facturaResultante = data;
+              sweetService.success("Se ha facturado correctamente.");
+              $scope.print();
+            }else{
+              sweetService.error("Ha ocurrido un error al facturar");
+            }
+          }, function(error){
             sweetService.error("Ha ocurrido un error al facturar");
-          }
-        }, function(error){
-          sweetService.error("Ha ocurrido un error al facturar");
-        })
+          })
+        }
+      }
 
+      $scope.print = function(){
+        printElement(document.getElementById("printThis"));
+        window.print();
+        setTimeout(function () { $scope.init(); }, 100);
+
+      }
+
+      function printElement(elem) {
+        $scope.isprinting=true;
+          var domClone = elem.cloneNode(true);
+          var $printSection = document.getElementById("printSection");
+
+          if (!$printSection) {
+              var $printSection = document.createElement("div");
+              $printSection.id = "printSection";
+              document.body.appendChild($printSection);
+              $scope.isprinting = true;
+          }
+
+          $printSection.innerHTML = "";
+          $scope.isprinting = true;
+
+          $printSection.appendChild(domClone);
       }
 
       $scope.buscarMediosPago = function(){
@@ -261,13 +292,17 @@ define(['app-module', 'sweetService', 'servicioService', 'tipoDocumentoService',
           if(lista != undefined && lista.length > 0){
             $scope.mediospago = lista;
             $scope.mediospagoseleccionados = [];
-            $scope.mediospagoseleccionados.push($scope.mediospago[0]);
+            //$scope.mediospagoseleccionados.push($scope.mediospago[0]);
           }
         })
       }
 
       $scope.addMedioPago = function(medioPago){
-        $scope.mediospagoseleccionados.push(medioPago);
+        if(medioPago === null || medioPago === undefined || medioPago.id === undefined){
+          sweetService.warning("Debe seleccionar un medio de pago válido.");
+        }else{
+          $scope.mediospagoseleccionados.push(medioPago);
+        }
       }
 
       $scope.deleteMedioPago = function(index){
@@ -306,10 +341,26 @@ define(['app-module', 'sweetService', 'servicioService', 'tipoDocumentoService',
           for (valor of $scope.valoresMediosPago) {
             $scope.mediosPagoMonto += valor === "" ? 0 : parseInt(valor);
           }
-          if($scope.mediospagoseleccionados[index].needDevuelta === false && $scope.mediosPagoMonto > $scope.totalMonto){
-            sweetService.warning("Cuidado, el medio de pago no acepta devolución para el cliente. \n Supera el valor del total con " + (($scope.totalMonto - $scope.mediosPagoMonto) * -1) + " pesos.");
-          }
         }
+      }
+
+      $scope.validarMediosPago = function(){
+        if($scope.totalMonto - $scope.mediosPagoMonto > 0){
+          sweetService.warning("Los medios de pago no cubren el monto total a pagar.");
+          return false;
+        }
+        for (medioPago of $scope.mediospagoseleccionados){
+          if((medioPago.needBauche == true && medioPago.numBauche == undefined) ||
+              (medioPago.needBauche == true && medioPago.numBauche == "")){
+                sweetService.warning("Falta el número de bauche para el medio de pago " + medioPago.nombre + ".");
+                return false;
+              }
+        }
+        return true;
+      }
+
+      $scope.mostrarMediosPago = function(){
+        return $scope.serviciosSeleccionados.length > 0 && $scope.arriendoSeleccionado === undefined;
       }
 
       $scope.init = function(){
@@ -339,6 +390,8 @@ define(['app-module', 'sweetService', 'servicioService', 'tipoDocumentoService',
         $scope.valoresMediosPago = [];
         $scope.bauches = [];
         $scope.mediosPagoMonto = 0;
+        $scope.facturaResultante = {};
+        $scope.date = new Date();
       }
 
       $scope.init();

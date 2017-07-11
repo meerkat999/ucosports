@@ -1,7 +1,6 @@
 package co.com.meerkats.hotelturin.logical.Impl;
 
 import java.util.Date;
-import java.util.List;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -44,12 +43,6 @@ public class ClienteConsumoLogicaImpl extends LogicalCommonImpl<ClienteConsumo, 
 			clienteConsumoDTO.setTipodocumentoId(entity.getCliente().getId().getTipoDocumento());
 		}
 		return clienteConsumoDTO;
-	}
-
-	@Override
-	public List<ClienteConsumo> findAll() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override
@@ -114,6 +107,15 @@ public class ClienteConsumoLogicaImpl extends LogicalCommonImpl<ClienteConsumo, 
 		
 		return buildDTO(clienteConsumo);
 		
+	}
+
+	@Override
+	public ClienteConsumoDTO getById(ClienteConsumoDTO clienteConsumoDTO) {
+		ClienteConsumo clienteConsumo = null;
+		if(clienteConsumoDTO != null && clienteConsumoDTO.getId() != null){
+			clienteConsumo = repository.findOne(clienteConsumoDTO.getId());
+		}
+		return buildDTO(clienteConsumo);
 	}
 
 }
