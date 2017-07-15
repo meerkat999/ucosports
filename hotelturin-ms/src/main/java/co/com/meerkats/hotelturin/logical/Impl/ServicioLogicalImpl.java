@@ -77,7 +77,7 @@ public class ServicioLogicalImpl extends LogicalCommonImpl<Servicio,ServicioDTO>
 	@Override
 	@Transactional(value=TxType.REQUIRED, rollbackOn=Exception.class)
 	public ServicioDTO update(ServicioDTO servicio) throws Exception {
-		Servicio servicioEntity = repository.findById(servicio.getId());
+		Servicio servicioEntity = repository.findOne(servicio.getId());
 		if(servicioEntity == null){
 			throw new Exception("Error, se está intentando editar un servicio inexistente");
 		}
@@ -94,7 +94,7 @@ public class ServicioLogicalImpl extends LogicalCommonImpl<Servicio,ServicioDTO>
 	@Override
 	@Transactional(value=TxType.REQUIRED, rollbackOn=Exception.class)
 	public ServicioDTO desactivar(ServicioDTO servicio) throws Exception {
-		Servicio servicioEntity = repository.findById(servicio.getId());
+		Servicio servicioEntity = repository.findOne(servicio.getId());
 		if(servicioEntity == null){
 			throw new Exception("Error, se está intentando editar un servicio inexistente");
 		}
@@ -109,7 +109,7 @@ public class ServicioLogicalImpl extends LogicalCommonImpl<Servicio,ServicioDTO>
 	@Override
 	@Transactional(value=TxType.REQUIRED, rollbackOn=Exception.class)
 	public ServicioDTO activar(ServicioDTO servicio) throws Exception {
-		Servicio servicioEntity = repository.findById(servicio.getId());
+		Servicio servicioEntity = repository.findOne(servicio.getId());
 		if(servicioEntity == null){
 			throw new Exception("Error, se está intentando editar un servicio inexistente");
 		}
@@ -126,11 +126,21 @@ public class ServicioLogicalImpl extends LogicalCommonImpl<Servicio,ServicioDTO>
 		if(clienteConsumoId == null){
 			throw new Exception("Error al intentar obtener un servicio con el dto nulo.");
 		}
-		Servicio servicio = repository.findById(clienteConsumoId);
+		Servicio servicio = repository.findOne(clienteConsumoId);
 		if(servicio == null){
 			throw new Exception("Error al intentar obtener un servicio inexistente.");
 		}
 		return servicio;
+	}
+
+	@Override
+	public ServicioDTO findyByClienteConsumoAndEstadoId(Integer clienteConsumoId, Integer estadoId) {
+		return buildDTO(repository.findyByClienteConsumoAndEstadoId(clienteConsumoId, estadoId));
+	}
+	
+	@Override
+	public ServicioDTO findyByClienteConsumo(Integer clienteConsumoId) {
+		return buildDTO(repository.findyByClienteConsumo(clienteConsumoId));
 	}
 
 

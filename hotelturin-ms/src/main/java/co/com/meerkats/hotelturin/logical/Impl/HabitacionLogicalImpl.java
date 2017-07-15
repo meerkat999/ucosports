@@ -120,7 +120,7 @@ public class HabitacionLogicalImpl extends LogicalCommonImpl<Habitacion,Habitaci
 	@Override
 	@Transactional(value=TxType.REQUIRED, rollbackOn=Exception.class)
 	public HabitacionDTO update(HabitacionDTO habitacionDTO) throws Exception {
-		Habitacion habitacionEntity = repository.findById(habitacionDTO.getId());
+		Habitacion habitacionEntity = repository.findOne(habitacionDTO.getId());
 		if(habitacionEntity == null){
 			throw new Exception("Error, se está intentando editar una habitacion inexistente");
 		}
@@ -140,7 +140,7 @@ public class HabitacionLogicalImpl extends LogicalCommonImpl<Habitacion,Habitaci
 	@Override
 	@Transactional(value=TxType.REQUIRED, rollbackOn=Exception.class)
 	public HabitacionDTO desactivar(HabitacionDTO habitacionDTO) throws Exception {
-		Habitacion habitacionEntity = repository.findById(habitacionDTO.getId());
+		Habitacion habitacionEntity = repository.findOne(habitacionDTO.getId());
 		if(habitacionEntity == null){
 			throw new Exception("Error, se está intentando editar una Habitacion inexistente");
 		}
@@ -155,7 +155,7 @@ public class HabitacionLogicalImpl extends LogicalCommonImpl<Habitacion,Habitaci
 	@Override
 	@Transactional(value=TxType.REQUIRED, rollbackOn=Exception.class)
 	public HabitacionDTO activar(HabitacionDTO habitacionDTO) throws Exception {
-		Habitacion habitacionEntity = repository.findById(habitacionDTO.getId());
+		Habitacion habitacionEntity = repository.findOne(habitacionDTO.getId());
 		if(habitacionEntity == null){
 			throw new Exception("Error, se está intentando editar un servicio inexistente");
 		}

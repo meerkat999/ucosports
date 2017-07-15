@@ -18,4 +18,6 @@ public interface IAcompananteRepository extends JpaRepository<Acompanante,Intege
 			+ " select a.arriendo_id from arriendo a where a.estado_id = 1) and cliente_id = :cedula and tipodocumento_id = :tipodocumento", nativeQuery=true)
 	List<Acompanante> findByClienteIdAndTipoDocumentoIdWithArriendoActive(@Param("cedula") String cedulaId, @Param("tipodocumento") Integer tipoDocumentoId);
 
+	List<Acompanante> findByArriendoId(Integer arriendoId);
+
 }

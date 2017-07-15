@@ -1,0 +1,155 @@
+<div>
+  <br>
+  <label>Checkin Activos</label>
+  <br>
+  <div>
+    <div class="btn-group" data-toggle="buttons">
+      <label ng-repeat="arriendo in arriendoActivos" class="btn btn-default" ng-class="{active: arriendoSeleccionado.id == arriendo.id}"  ng-click="openArriendo(arriendo)">
+        <input type="radio"></input>
+        <label>Check-in:</label> <br> {{arriendo.id}} <br> Cliente: {{arriendo.clienteId}} <br> Habitacion: {{arriendo.habitacionId}}
+      </label>
+    </div>
+  </div>
+  <br>
+
+    <div ng-show = "mostrarMediosPago()" style="
+    border-style: groove;
+    border-radius: 6px;
+    padding-right: 10px;
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-top: 10px;
+    ">
+
+      <h4>Detalles de la facturación</h4>
+      <div style="display: table; text-align: left;">
+        <div style="display: table-row">
+          <div style="display: table-cell">
+            <label>Cliente:</label>
+          </div>
+          <div style="display: table-cell">
+            {{arriendoSeleccionado.cliente.nombreCompleto}}
+          </div>
+        </div>
+        <div style="display: table-row">
+          <div style="display: table-cell">
+            <label>Cédula:</label>
+          </div>
+          <div style="display: table-cell">
+            {{arriendoSeleccionado.cliente.id.id}}
+          </div>
+        </div>
+        <div style="display: table-row">
+          <div style="display: table-cell">
+            <label>Habitación:</label>
+          </div>
+          <div style="display: table-cell">
+            {{arriendoSeleccionado.habitacionId}}
+          </div>
+        </div>
+        <div style="display: table-row">
+          <div style="display: table-cell">
+            <label>Fecha Check-in:</label>
+          </div>
+          <div style="display: table-cell">
+            {{arriendoSeleccionado.dateCheckin | date:"yyyy/MM/dd 'a las' h:mma"}}
+          </div>
+        </div>
+        <div style="display: table-row">
+          <div style="display: table-cell">
+            <label>Fecha Check-out:</label>
+          </div>
+          <div style="display: table-cell" ng-show="arriendoSeleccionado.dateCheckout !== null">
+            {{arriendoSeleccionado.dateCheckin | date:"yyyy/MM/dd 'a las' h:mma"}}
+          </div>
+          <div style="display: table-cell" ng-show="arriendoSeleccionado.dateCheckout === null">
+            Aún sin Check-out
+          </div>
+        </div>
+        <div style="display: table-row">
+          <div style="display: table-cell">
+            <label>Número de noches definidas en check-in:</label>
+          </div>
+          <div style="display: table-cell">
+            {{arriendoSeleccionado.numeroNoches}}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div ng-show = "mostrarMediosPago()" style="
+    border-style: groove;
+    border-radius: 6px;
+    padding-right: 10px;
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-top: 10px;
+    ">
+
+      <h4>Medios de Pago</h4>
+
+      <div>
+        <label>Monto a pagar: </label>
+        <div>{{totalMonto | currency}}</div>
+      </div>
+      <br>
+
+      <div style="display: table-row;" ng-hide="mediospagoseleccionados.length === mediospago.length">
+        <div style="display: table-cell;">Añadir Medio de Pago</div>
+        <select  style="display: table-cell; margin-right: 10px;margin-left: 10px;" ng-model="mediopagoAnadido" ng-options="mediopago.nombre for mediopago in mediospago | filter: yaFueAnadido()"></select>
+        <label style="display: table-cell; margin-right: 10px;margin-left: 10px;"  class="btn btn-default" ng-click="addMedioPago(mediopagoAnadido)">
+            Añadir
+        </label>
+      </div>
+
+      <div style="display: table; width: 100%">
+
+        <br>
+        <div style="display: table-row;" ng-show="mediospagoseleccionados.length === 0 ">Sin medios de pago añadidos.</div>
+        <div ng-repeat="mediopago in mediospagoseleccionados track by $index" style="display: table-row;">
+          <div style="display: table-cell;">{{mediopago.nombre}}</div>
+          <input style="display: table-cell; margin-right: 10px;margin-left: 10px;" number value="totalMonto" ng-model="valoresMediosPago[$index]" ng-change="updateMedioPago($index)" type="text" ></input>
+          <input style="display: table-cell; margin-right: 10px;margin-left: 10px;" number ng-model="bauches[$index]" ng-change="updateMedioPago($index)" placeholder="*Número de Bauche" ng-disabled="mediopago.needBauche === false" type="text"></input>
+          <label ng-show="totalMonto - mediosPagoMonto > 0" style="display: table-cell" class="btn btn-default" ng-click="completarMedioPago($index)">
+              Completar
+          </label>
+          <label style="display: table-cell" class="btn btn-default" ng-click="limpiarMedioPago($index)">
+              Limpiar
+          </label>
+          <label style="display: table-cell" class="btn btn-default" ng-click="deleteMedioPago($index)">
+              Quitar
+          </label>
+        </div>
+      <br>
+    </div>
+
+    <div>
+      <br>
+      <label ng-show="totalMonto - mediosPagoMonto > 0">Restante:</label>
+      <label ng-show="totalMonto - mediosPagoMonto < 0">Devuelta:</label>
+      <div ng-show="totalMonto - mediosPagoMonto > 0"> {{totalMonto - mediosPagoMonto | currency}} </div>
+      <div ng-show="totalMonto - mediosPagoMonto < 0"> {{(totalMonto - mediosPagoMonto)*-1 | currency}} </div>
+    </div>
+
+  </div>
+
+  <br>
+
+
+  <div ng-show="arriendoSeleccionado">
+
+    <br>
+    <div>
+      <label class="btn btn-default" ng-click="questionCheckOut()">
+        Facturar
+      </label>
+      <label class="btn btn-default" ng-click="arriendoSeleccionado = undefined">
+        Cerrar
+      </label>
+    </div>
+  </div>
+
+
+</div>

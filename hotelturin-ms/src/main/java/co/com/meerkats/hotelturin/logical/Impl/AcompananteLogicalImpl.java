@@ -11,6 +11,8 @@ import co.com.meerkats.hotelturin.domain.Acompanante;
 import co.com.meerkats.hotelturin.domain.constants.StatesEnum;
 import co.com.meerkats.hotelturin.dto.AcompananteDTO;
 import co.com.meerkats.hotelturin.dto.ArriendoDTO;
+import co.com.meerkats.hotelturin.dto.ClienteDTO;
+import co.com.meerkats.hotelturin.dto.ClienteKeyDTO;
 import co.com.meerkats.hotelturin.logical.IAcompananteLogical;
 import co.com.meerkats.hotelturin.logical.IArriendoLogical;
 import co.com.meerkats.hotelturin.logical.IClienteLogical;
@@ -37,8 +39,18 @@ public class AcompananteLogicalImpl extends LogicalCommonImpl<Acompanante, Acomp
 			dto.setArriendoId(entity.getArriendoId());
 			dto.setTipoDocumentoId(entity.getTipoDocumentoId());
 			dto.setCedulaId(entity.getClienteId());
+			ClienteDTO cliente = buscarCliente(entity);
+			dto.setCliente(cliente);
 		}
 		return dto;
+	}
+
+	private ClienteDTO buscarCliente(Acompanante entity) {
+		ClienteKeyDTO key = new ClienteKeyDTO();
+		key.setId(entity.getClienteId());
+		key.setTipodocumento(entity.getTipoDocumentoId());
+		ClienteDTO cliente = clienteLogical.getById(key);
+		return cliente;
 	}
 
 	@Override
@@ -108,6 +120,11 @@ public class AcompananteLogicalImpl extends LogicalCommonImpl<Acompanante, Acomp
 		arriendoDTO.setId(acompananteDTO.getArriendoId());
 		arriendoLogical.addNumAcompanantes(arriendoDTO, 1);
 		return add(acompananteDTO);
+	}
+
+	@Override
+	public List<AcompananteDTO> buscarAcompanantesByArriendo(AcompananteDTO acompananteDTO) {
+		return listEntitiesToListDTOs(repository.findByArriendoId(acompananteDTO.getArriendoId()));
 	}
 
 }

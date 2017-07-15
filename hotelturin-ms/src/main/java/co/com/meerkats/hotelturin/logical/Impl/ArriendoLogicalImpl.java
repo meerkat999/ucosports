@@ -19,6 +19,7 @@ import co.com.meerkats.hotelturin.domain.Arriendo;
 import co.com.meerkats.hotelturin.domain.constants.StatesEnum;
 import co.com.meerkats.hotelturin.dto.AcompananteDTO;
 import co.com.meerkats.hotelturin.dto.ArriendoDTO;
+import co.com.meerkats.hotelturin.dto.ClienteConsumoDTO;
 import co.com.meerkats.hotelturin.dto.ClienteDTO;
 import co.com.meerkats.hotelturin.dto.ClienteKeyDTO;
 import co.com.meerkats.hotelturin.dto.EstadoDTO;
@@ -26,6 +27,7 @@ import co.com.meerkats.hotelturin.dto.HabitacionDTO;
 import co.com.meerkats.hotelturin.dto.ListArriendoDTO;
 import co.com.meerkats.hotelturin.logical.IAcompananteLogical;
 import co.com.meerkats.hotelturin.logical.IArriendoLogical;
+import co.com.meerkats.hotelturin.logical.IClienteConsumoLogical;
 import co.com.meerkats.hotelturin.logical.IClienteLogical;
 import co.com.meerkats.hotelturin.logical.IEstadoLogical;
 import co.com.meerkats.hotelturin.logical.IHabitacionLogical;
@@ -50,6 +52,9 @@ public class ArriendoLogicalImpl extends LogicalCommonImpl<Arriendo, ArriendoDTO
 	@Inject
 	private IEstadoLogical estadoLogical;
 	
+	@Inject
+	private IClienteConsumoLogical clienteConsumoLogical;
+	
 	@Override
 	public ArriendoDTO buildDTO(Arriendo entity) {
 		ArriendoDTO arriendoDTO = null;
@@ -65,8 +70,48 @@ public class ArriendoLogicalImpl extends LogicalCommonImpl<Arriendo, ArriendoDTO
 			arriendoDTO.setNumeroAcompanantes(entity.getNumeroAcompanantes());
 			arriendoDTO.setNumeroNoches(entity.getNumeroNoches());
 			arriendoDTO.setTipodocumentoId(entity.getTipodocumentoId());
+			ClienteConsumoDTO clienteConsumo = buscarConsumo(entity);
+			ClienteDTO cliente = buscarCliente(entity);
+			HabitacionDTO habitacion = buscarHabitacion(entity);
+			arriendoDTO.setHabitacion(habitacion);
+			arriendoDTO.setCliente(cliente);
+			arriendoDTO.setClienteConsumo(clienteConsumo);
+			List<AcompananteDTO> acompanantes = buscarAcompanantes(entity);
+			arriendoDTO.setAcompanantesDTO(acompanantes);
 		}
 		return arriendoDTO;
+	}
+
+	private List<AcompananteDTO> buscarAcompanantes(Arriendo entity) {
+		AcompananteDTO acompananteDTO = new AcompananteDTO();
+		acompananteDTO.setArriendoId(entity.getId());
+		List<AcompananteDTO> acompanantes = acompananteLogical.buscarAcompanantesByArriendo(acompananteDTO);
+		return acompanantes;
+	}
+
+	private HabitacionDTO buscarHabitacion(Arriendo entity) {
+		HabitacionDTO habitaciondto = new HabitacionDTO();
+		habitaciondto.setId(entity.getHabitacionId());
+		HabitacionDTO habitacion = habitacionLogical.getById(habitaciondto);
+		return habitacion;
+	}
+
+	private ClienteDTO buscarCliente(Arriendo entity) {
+		ClienteKeyDTO key = new ClienteKeyDTO();
+		key.setId(entity.getClienteId());
+		key.setTipodocumento(entity.getTipodocumentoId());
+		ClienteDTO cliente = clienteLogical.getById(key);
+		return cliente;
+	}
+
+	private ClienteConsumoDTO buscarConsumo(Arriendo entity) {
+		ClienteConsumoDTO clienteConsumo = null;
+		try {
+			clienteConsumo = clienteConsumoLogical.getClienteConsumoByClienteIdAndTipodocumentoidDTO(entity.getClienteId(), entity.getTipodocumentoId());
+		} catch (Exception e) {
+			System.out.println("INFO No se obtuvo cliente consumo para el arriendo");
+		}
+		return clienteConsumo;
 	}
 
 	@Override
@@ -320,9 +365,7 @@ public class ArriendoLogicalImpl extends LogicalCommonImpl<Arriendo, ArriendoDTO
 	}
 
 	private void validarCapacidadHabitacion(Arriendo arriendo) throws Exception {
-		HabitacionDTO habitacionDTO = new HabitacionDTO();
-		habitacionDTO.setId(arriendo.getHabitacionId());
-		HabitacionDTO habitacion = habitacionLogical.getById(habitacionDTO);
+		HabitacionDTO habitacion = buscarHabitacion(arriendo);
 		if(habitacion == null || habitacion.getEstado() == StatesEnum.INACTIVO.getValue()){
 			throw new Exception("No se puede añadir el acompañante en una habitación inexistente o inactiva");
 		}

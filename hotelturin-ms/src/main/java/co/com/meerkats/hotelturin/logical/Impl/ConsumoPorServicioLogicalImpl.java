@@ -1,5 +1,8 @@
 package co.com.meerkats.hotelturin.logical.Impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
@@ -31,6 +34,7 @@ public class ConsumoPorServicioLogicalImpl extends LogicalCommonImpl<ConsumoPorS
 		ConsumoPorServicioDTO consumoPorServicioDTO = null;
 		if(entity != null && entity.getId() != null){
 			consumoPorServicioDTO = new ConsumoPorServicioDTO();
+			consumoPorServicioDTO.setId(entity.getId());
 			consumoPorServicioDTO.setClienteConsumoId(entity.getClienteConsumo().getId());
 			consumoPorServicioDTO.setServicioAdicionalId(entity.getServicio().getId());
 			consumoPorServicioDTO.setServicioAdicionalValor(entity.getServicioValor());
@@ -62,5 +66,19 @@ public class ConsumoPorServicioLogicalImpl extends LogicalCommonImpl<ConsumoPorS
 		return buildDTO(consumoPorServicio);
 	}
 
+	@Override
+	@Transactional(value=TxType.REQUIRED, rollbackOn=Exception.class)
+	public List<ConsumoPorServicioDTO> save(List<ConsumoPorServicioDTO> consumos) throws Exception {
+		List<ConsumoPorServicioDTO> resultado = new ArrayList<>();
+		for (ConsumoPorServicioDTO consumoPorServicioDTO : consumos) {
+			resultado.add(save(consumoPorServicioDTO));
+		}
+		return resultado;
+	}
+
+	@Override
+	public List<ConsumoPorServicioDTO> findByClienteConsumo(Integer clienteconsumoId) {
+		return listEntitiesToListDTOs(repository.findByClienteConsumo(clienteconsumoId));
+	}
 
 }

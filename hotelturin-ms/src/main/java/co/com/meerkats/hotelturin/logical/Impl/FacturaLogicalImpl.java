@@ -120,7 +120,7 @@ public class FacturaLogicalImpl extends LogicalCommonImpl<Factura, FacturaDTO> i
 		clienteConsumoDTO.setTotal(0D);
 		clienteConsumoDTO.setEstado_id(estado.getId());
 		
-		ClienteConsumo clienteConsumo = clienteConsumoLogical.save(clienteConsumoDTO);
+		ClienteConsumo clienteConsumo = clienteConsumoLogical.save(clienteConsumoDTO, StatesEnum.PAGADO.getValue());
 		
 		Factura factura = new Factura();
 		factura.setCliente(cliente);

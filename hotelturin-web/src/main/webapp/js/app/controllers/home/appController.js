@@ -10,8 +10,8 @@ define(['app-module'], function (app) {
       $scope.goCheckOut = function(){
         $state.go("app.checkout");
       }
-      $scope.goServiciosAdicionales = function(){
-        $state.go("app.serviciosAdicionales");
+      $scope.goFacturacion = function(){
+        $state.go("app.facturacion");
       }
       $scope.init = function(){
         $state.go("app.content");

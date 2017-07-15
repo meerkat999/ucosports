@@ -1,6 +1,8 @@
-define(['app-module', 'sweetService', 'servicioService', 'tipoDocumentoService', 'clienteService', 'arriendoService', 'facturaService', 'mediopagoService'], function (app) {
-    app.controller('servicioController',['$scope','$state', 'sweetService', 'servicioService', 'tipoDocumentoService', 'clienteService', 'arriendoService', 'facturaService', 'mediopagoService',
-        function ($scope, $state, sweetService, servicioService, tipoDocumentoService, clienteService, arriendoService, facturaService, mediopagoService) {
+define(['app-module', 'sweetService', 'servicioService', 'tipoDocumentoService', 'clienteService', 'arriendoService', 'facturaService', 'mediopagoService', 'consumoporservicioService'], function (app) {
+    app.controller('servicioController',['$scope','$state', 'sweetService', 'servicioService', 'tipoDocumentoService',
+    'clienteService', 'arriendoService', 'facturaService', 'mediopagoService', 'consumoporservicioService',
+        function ($scope, $state, sweetService, servicioService, tipoDocumentoService, clienteService, arriendoService,
+          facturaService, mediopagoService, consumoporservicioService) {
 
           $scope.validarEnTiempoRealCamposCedula = function(){
             if(!$scope.campoVacio($scope.tipodocumento) &&
@@ -361,6 +363,22 @@ define(['app-module', 'sweetService', 'servicioService', 'tipoDocumentoService',
 
       $scope.mostrarMediosPago = function(){
         return $scope.serviciosSeleccionados.length > 0 && $scope.arriendoSeleccionado === undefined;
+      }
+
+      $scope.anadirALaCuenta = function(){
+        $scope.anadirALaCuentaObject = {
+          clienteId : $scope.cliente.id.id,
+          tipodocumentoId : $scope.cliente.id.tipodocumento,
+          consumos : $scope.serviciosSeleccionados
+        }
+        consumoporservicioService.addorupdate($scope.anadirALaCuentaObject).then(function(data){
+          if(data !== undefined && data.id !== undefined){
+            sweetService.success("Se han añadido correctamente los servicios adicionales. El saldo es  "+ data.saldo + " \n Se podrán cobrar en la sección de Facturación de Hospedajes o en el momento del Checkout.")
+            $scope.init();
+          }
+        }, function(error){
+          sweetService.error("Error al intentar agregar los productos nuevos, contáctese con el área de sistemas.")
+        })
       }
 
       $scope.init = function(){

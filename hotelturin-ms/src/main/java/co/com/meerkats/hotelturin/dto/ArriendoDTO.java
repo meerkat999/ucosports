@@ -29,6 +29,14 @@ public class ArriendoDTO implements Serializable {
 	private Date dateCheckout;
 	
 	private List<ClienteDTO> acompanantes;
+	
+	private List<AcompananteDTO> acompanantesDTO;
+	
+	private ClienteConsumoDTO clienteConsumo;
+	
+	private ClienteDTO cliente;
+	
+	private HabitacionDTO habitacion;
 
 	public Integer getId() {
 		return id;
@@ -116,6 +124,38 @@ public class ArriendoDTO implements Serializable {
 
 	public void setAcompanantes(List<ClienteDTO> acompanantes) {
 		this.acompanantes = acompanantes;
+	}
+
+	public ClienteConsumoDTO getClienteConsumo() {
+		return clienteConsumo;
+	}
+
+	public void setClienteConsumo(ClienteConsumoDTO clienteConsumo) {
+		this.clienteConsumo = clienteConsumo;
+	}
+
+	public ClienteDTO getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(ClienteDTO cliente) {
+		this.cliente = cliente;
+	}
+
+	public HabitacionDTO getHabitacion() {
+		return habitacion;
+	}
+
+	public void setHabitacion(HabitacionDTO habitacion) {
+		this.habitacion = habitacion;
+	}
+
+	public List<AcompananteDTO> getAcompanantesDTO() {
+		return acompanantesDTO;
+	}
+
+	public void setAcompanantesDTO(List<AcompananteDTO> acompanantesDTO) {
+		this.acompanantesDTO = acompanantesDTO;
 	}
 	
 }

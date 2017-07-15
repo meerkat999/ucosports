@@ -13,6 +13,8 @@ public class AcompananteDTO implements Serializable {
 	private Integer tipoDocumentoId;
 	
 	private Integer arriendoId;
+	
+	private ClienteDTO cliente;
 
 	public Integer getId() {
 		return id;
@@ -44,6 +46,14 @@ public class AcompananteDTO implements Serializable {
 
 	public void setArriendoId(Integer arriendoId) {
 		this.arriendoId = arriendoId;
+	}
+
+	public ClienteDTO getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(ClienteDTO cliente) {
+		this.cliente = cliente;
 	}
 	
 	

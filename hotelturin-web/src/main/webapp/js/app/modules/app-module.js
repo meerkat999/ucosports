@@ -38,11 +38,29 @@ define(['angularAMD', 'angular-ui-router', 'angular-resource'], function (angula
           })
         }
       })
-      .state('app.serviciosAdicionales', {
-        url: '/serviciosAdicionales',
+      .state('app.facturacion', {
+        url: '/facturacion',
         views: {
           'content@app': angularAMD.route({
-            templateUrl : 'resources/partials/serviciosAdicionales/serviciosAdicionales.html' + "?bust=" + (new Date()).getTime(),
+            templateUrl : 'resources/partials/facturacion/facturacionmenu.html' + "?bust=" + (new Date()).getTime(),
+            controller : 'facturacionMenuController'
+          })
+        }
+      })
+      .state('app.facturacion.hospedajes', {
+        url: '/hospedajes',
+        views: {
+          'content@app.facturacion': angularAMD.route({
+            templateUrl : 'resources/partials/facturacion/facturacionHospedajes.html' + "?bust=" + (new Date()).getTime(),
+            controller : 'facturacionHospedajeController'
+          })
+        }
+      })
+      .state('app.facturacion.serviciosAdicionales', {
+        url: '/serviciosAdicionales',
+        views: {
+          'content@app.facturacion': angularAMD.route({
+            templateUrl : 'resources/partials/facturacion/serviciosAdicionales.html' + "?bust=" + (new Date()).getTime(),
             controller : 'servicioController'
           })
         }

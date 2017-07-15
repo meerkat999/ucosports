@@ -11,7 +11,5 @@ import co.com.meerkats.hotelturin.domain.Habitacion;
 public interface IHabitacionRepository extends JpaRepository<Habitacion,String>{
 	
 	List<Habitacion> findByEstado(Integer estado_id);
-	Habitacion findById(String habitacion_id);
-	
 	
 }

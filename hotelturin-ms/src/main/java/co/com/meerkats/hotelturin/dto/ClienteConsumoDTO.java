@@ -2,6 +2,7 @@ package co.com.meerkats.hotelturin.dto;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 public class ClienteConsumoDTO implements Serializable {
 
@@ -21,6 +22,8 @@ public class ClienteConsumoDTO implements Serializable {
 	
 	private Integer estado_id;
 
+	private List<ServicioDTO> consumos;
+	
 	public String getClienteId() {
 		return clienteId;
 	}
@@ -38,6 +41,9 @@ public class ClienteConsumoDTO implements Serializable {
 	}
 
 	public Double getSaldo() {
+		if(saldo == null){
+			return 0D;
+		}
 		return saldo;
 	}
 
@@ -46,6 +52,9 @@ public class ClienteConsumoDTO implements Serializable {
 	}
 
 	public Double getTotal() {
+		if(total == null){
+			return 0D;
+		}
 		return total;
 	}
 
@@ -75,6 +84,14 @@ public class ClienteConsumoDTO implements Serializable {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public List<ServicioDTO> getConsumos() {
+		return consumos;
+	}
+
+	public void setConsumos(List<ServicioDTO> consumos) {
+		this.consumos = consumos;
 	}
 	
 }
