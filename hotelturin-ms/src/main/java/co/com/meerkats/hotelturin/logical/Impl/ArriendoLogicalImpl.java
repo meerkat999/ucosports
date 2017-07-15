@@ -76,8 +76,8 @@ public class ArriendoLogicalImpl extends LogicalCommonImpl<Arriendo, ArriendoDTO
 			arriendoDTO.setHabitacion(habitacion);
 			arriendoDTO.setCliente(cliente);
 			arriendoDTO.setClienteConsumo(clienteConsumo);
-			List<AcompananteDTO> acompanantes = buscarAcompanantes(entity);
-			arriendoDTO.setAcompanantesDTO(acompanantes);
+			//List<AcompananteDTO> acompanantes = buscarAcompanantes(entity);
+			//arriendoDTO.setAcompanantesDTO(acompanantes);
 		}
 		return arriendoDTO;
 	}
