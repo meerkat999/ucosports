@@ -4,7 +4,7 @@
 <h4>Agregar Servicio Adicional</h4>
 
   <fieldset ng-disabled="seBloqueanLosCamposDeCedula" ng-show="cliente === null">
-    <h4>Consumo por Cliente</h4>
+    <h4>Consumo por Cliente sin Check-in Activo</h4>
     <label>Tipo de Documento:</label>
     <div class="input-group">
       <span class="input-group-addon"><i class="glyphicon glyphicon-list-alt"></i></span>
@@ -55,7 +55,7 @@
 
     <div >
       <h4 ng-if="cliente.nombreCompleto !== undefined">Servicios Adicionales a consumir por el/la señor/a {{cliente.nombreCompleto}}.</h4>
-      <h4 ng-if="arriendoSeleccionado !== undefined">Servicios Adicionales a consumir la habitacion {{arriendoSeleccionado.habitacionId}}</h4>
+      <h4 ng-if="arriendoSeleccionado !== undefined">Servicios Adicionales a consumir por la habitacion {{arriendoSeleccionado.habitacionId}}</h4>
       <br>
     </div>
 
@@ -156,10 +156,10 @@ margin-top: 10px;
 <br>
 
 <div ng-show="mostrarVistaServicioAdicional() && serviciosSeleccionados.length > 0 && (mediospagoseleccionados.length > 0 || arriendoSeleccionado !== undefined)">
-  <button ng-if="arriendoSeleccionado === undefined" class="btn btn-primary" ng-click="finishFactura()">
+  <button ng-if="mostrarMediosPago()" class="btn btn-primary" ng-click="finishFactura()">
     Facturar inmediatamente
   </button>
-  <button ng-if="arriendoSeleccionado !== undefined" class="btn btn-primary" ng-click="anadirALaCuenta()">
+  <button ng-if="arriendoSeleccionado !== undefined && needFactura == false" class="btn btn-primary" ng-click="anadirALaCuenta()">
     Añadir a la cuenta
   </button>
   <button class="btn btn-danger" ng-click="init()">
@@ -168,7 +168,7 @@ margin-top: 10px;
 </div>
 
 <br>
-<div ng-show="mostrarVistaServicioAdicional() && arriendoSeleccionado === undefined">
+<div ng-show="mostrarMediosPago()">
 
   <label>Factura resultante para la impresión:</label>
 
@@ -195,6 +195,23 @@ margin-top: 10px;
       <br>
       <div style="display: table-row;">
         <label style="display: table-cell;">
+          Fecha Facturación:
+        </label>
+        <div style="display: table-cell;">
+          {{facturaResultante.fecha | date:'yyyy-MM-dd hh:mm a'}}
+        </div>
+      </div>
+      <br>
+      <div style="display: table-row;">
+        <label style="display: table-cell;">
+          Factura:
+        </label>
+        <div style="display: table-cell;">
+          {{facturaResultante.id}}
+        </div>
+      </div>
+      <div style="display: table-row;">
+        <label style="display: table-cell;">
           Nombre:
         </label>
         <div style="display: table-cell;">
@@ -211,14 +228,6 @@ margin-top: 10px;
       </div>
       <div style="display: table-row;">
         <label style="display: table-cell;">
-          Fecha:
-        </label>
-        <div style="display: table-cell;">
-          {{date | date:'yyyy-MM-dd hh:mm a'}}
-        </div>
-      </div>
-      <div style="display: table-row;">
-        <label style="display: table-cell;">
           Servicios Adicionales:
         </label>
         <div style="display: table-cell;">
@@ -231,7 +240,7 @@ margin-top: 10px;
           {{servicio.nombre}}
         </div>
         <div style="display: table-cell;">
-          {{servicio.valor | currency}}
+          &nbsp;&nbsp;{{servicio.valor | currency}}
         </div>
       </div>
       <div style="display: table-row;">
@@ -241,7 +250,7 @@ margin-top: 10px;
         <div style="display: table-cell;">
         </div>
         <div style="display: table-cell;">
-          {{totalMonto | currency}}
+          &nbsp;&nbsp;{{totalMonto | currency}}
         </div>
       </div>
       <div style="display: table-row;">

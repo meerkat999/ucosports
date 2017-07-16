@@ -65,10 +65,10 @@ define(['angularAMD', 'angular-ui-router', 'angular-resource'], function (angula
           })
         }
       })
-      .state('app.serviciosAdicionales.registro', {
+      .state('app.facturacion.serviciosAdicionales.registro', {
         url: '/registro',
         views: {
-          'registro@app.serviciosAdicionales': angularAMD.route({
+          'registro@app.facturacion.serviciosAdicionales': angularAMD.route({
             templateUrl : 'resources/partials/cliente/registrarCliente.html' + "?bust=" + (new Date()).getTime(),
             controller : 'clienteController'
           })

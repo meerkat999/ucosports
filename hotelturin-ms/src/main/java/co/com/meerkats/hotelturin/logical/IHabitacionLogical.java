@@ -18,4 +18,5 @@ public interface IHabitacionLogical extends ILogicalCommon<Habitacion,Habitacion
 	HabitacionDTO update(HabitacionDTO habitacion) throws Exception;
 	HabitacionDTO activar(HabitacionDTO habitacion) throws Exception;
 	HabitacionDTO desactivar(HabitacionDTO habitacion) throws Exception;
+	Habitacion getEntityForOtherEntity(String habitacionId) throws Exception;
 }

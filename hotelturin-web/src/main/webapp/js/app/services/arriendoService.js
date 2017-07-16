@@ -21,6 +21,9 @@ define(['app-module', 'restService'], function (app) {
           },
           getArriendosActivosConEspacio : function(){
             return restService.GETArray(path + 'getArriendosActivosConEspacio');
+          },
+          getByStateAndNoHaveFactura : function(){
+            return restService.GETArray(path + 'getByStateAndNoHaveFactura');
           }
         }
 

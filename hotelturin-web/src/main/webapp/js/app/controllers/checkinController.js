@@ -1,7 +1,9 @@
-define(['app-module','clienteService', 'tipoDocumentoService', 'sweetService', 'habitacionService', 'arriendoService', 'acompananteService'], function (app) {
+define(['app-module','clienteService', 'tipoDocumentoService', 'sweetService', 'habitacionService', 'arriendoService',
+'acompananteService', 'moment'], function (app) {
     app.controller('checkinController',['$scope','$state', 'clienteService', 'tipoDocumentoService',
     'sweetService', 'habitacionService', '$filter', 'arriendoService','acompananteService',
-    function ($scope, $state, clienteService, tipoDocumentoService, sweetService, habitacionService, $filter, arriendoService, acompananteService) {
+    function ($scope, $state, clienteService, tipoDocumentoService, sweetService, habitacionService, $filter,
+      arriendoService, acompananteService) {
 
       $scope.campoVacio = function(campo){
         return campo == undefined || campo == "";
@@ -215,7 +217,10 @@ define(['app-module','clienteService', 'tipoDocumentoService', 'sweetService', '
             $scope.arriendoFecha = $filter('date')(new Date(arriendo.dateCheckin), "yyyy/MM/dd 'a las' h:mma")
             var fecha = $filter('date')(new Date(arriendo.dateCheckin), "yyyy/MM/dd 'a las' h:mma");
             sweetService.success("El check-in se registró correctamente el "
-              + fecha + ". \n Para el cliente " + $scope.cliente.nombreCompleto + " en la habitación " + $scope.habitacionSeleccionada.id + ".");
+              + fecha + ". \n Para el cliente " + $scope.cliente.nombreCompleto + " en la habitación " + $scope.habitacionSeleccionada.id + ".",
+            function(success){
+              $scope.print();
+            });
           }
         }, function(error){
           alert("Ha ocurrido un error creando el check-in. Inténtelo de nuevo o comuníquese con el área de sistemas");
@@ -286,6 +291,31 @@ define(['app-module','clienteService', 'tipoDocumentoService', 'sweetService', '
         }
       }
 
+      $scope.print = function(){
+        printElement(document.getElementById("printThis"));
+        window.print();
+        setTimeout(function () { $scope.init(); }, 100);
+        $scope.reset();
+      }
+
+      function printElement(elem) {
+        $scope.isprinting=true;
+          var domClone = elem.cloneNode(true);
+          var $printSection = document.getElementById("printSection");
+
+          if (!$printSection) {
+              var $printSection = document.createElement("div");
+              $printSection.id = "printSection";
+              document.body.appendChild($printSection);
+              $scope.isprinting = true;
+          }
+
+          $printSection.innerHTML = "";
+          $scope.isprinting = true;
+
+          $printSection.appendChild(domClone);
+      }
+
 
       $scope.reset = function(){
         $scope.buscarTiposDocumento();
@@ -321,6 +351,25 @@ define(['app-module','clienteService', 'tipoDocumentoService', 'sweetService', '
         $scope.cedulaVerificarAcompanante = null;
         $scope.isprinting=false;
         $scope.arriendoSeleccionado = undefined;
+      }
+
+      $scope.calcularFechaSalida = function(){
+        var fechaActual = new Date();
+        var hour = fechaActual.getHours();
+        if(hour < 5){
+          $scope.fechaSalida = fechaActual.setHours(12);
+        }else{
+          fechaActual.setTime(fechaActual.getTime() + ($scope.numeroNoches * 24 * 60 * 60 * 1000));
+          fechaActual = fechaActual.setHours(12);
+          fechaActual = new Date(fechaActual);
+          fechaActual = fechaActual.setMinutes(0);
+          $scope.fechaSalida = fechaActual;
+        }
+      }
+
+      $scope.limpiarNoches = function(){
+        $scope.fechaSalida = undefined;
+        $scope.numeroNoches = 0;
       }
 
       $scope.init = function(){

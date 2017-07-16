@@ -66,6 +66,13 @@ public class ArriendoServiceRest {
 		return logical.getByState(arriendoDTO);
 	}
 	
+	@GET
+	@Path("/getByStateAndNoHaveFactura")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<ArriendoDTO> getByStateAndNoHaveFactura(){
+		return logical.getByStateAndNoHaveFactura();
+	}
+	
 	@POST
 	@Path("/add")
 	@Produces(MediaType.APPLICATION_JSON)

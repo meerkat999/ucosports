@@ -46,9 +46,12 @@
         <div ng-show="conoceElNumeroDeNoches.value == 'SI'">
           <br>
           <label>Número de Noches:</label>
-          <input class="form-control" number type="text" maxlength="2" ng-model="numeroNoches"></input>
+          <input class="form-control" number type="text" maxlength="2" ng-change="calcularFechaSalida()" ng-model="numeroNoches"></input>
           <br>
-          <button class="btn btn-warning" ng-click="numeroNoches = 0">
+          <label ng-show="fechaSalida !== undefined">Fecha de Salida (Informativo):</label>
+          <div ng-show="fechaSalida !== undefined">{{fechaSalida | date:"yyyy/MM/dd 'a las' h:mma"}}</div>
+          <br>
+          <button class="btn btn-warning" ng-click="limpiarNoches()">
             Limpiar
           </button>
         </div>
@@ -121,7 +124,9 @@
 
       <div style="display: grid;" id="printThis">
         <div id = "printSectionChild">
-        <div  ng-show="isprinting==true" id="logocheckin">logo</div>
+          <div style="margin: 0 0 0 70px; width: 100%;">
+            <img src="./resources/statics/images/logo.png" style="position: absolute; opacity: 0.15;" height="200" width="200">
+          </div>
            <h3>Check-in</h3>
           <div><label>Cliente:</label> {{cliente.nombreCompleto}}</div>
           <div ng-if="habitacionSeleccionada.id"><label>Habitacion:</label> {{habitacionSeleccionada.id}} - {{habitacionSeleccionada.nombre}} <br> </div>

@@ -12,9 +12,7 @@ import co.com.meerkats.hotelturin.domain.ConsumoPorServicio;
 @Eager
 public interface IConsumoPorServicioRepository extends JpaRepository<ConsumoPorServicio,Integer> {
 
-	@Query(value = "select * from consumoporservicio where "
-			+ " consumoporservicio_id in (select consumoporservicio_id from "
-			+ " clienteconsumo where clienteconsumo_id = :clienteconsumoid )", nativeQuery = true)
+	@Query(value = "select * from consumoporservicio where clienteconsumo_id = :clienteconsumoid ", nativeQuery = true)
 	List<ConsumoPorServicio> findByClienteConsumo(@Param("clienteconsumoid") Integer clienteconsumoId);
 	
 }

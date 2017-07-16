@@ -3,6 +3,7 @@ package co.com.meerkats.hotelturin.logical.Impl;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -23,6 +24,7 @@ import co.com.meerkats.hotelturin.dto.ClienteConsumoDTO;
 import co.com.meerkats.hotelturin.dto.ClienteDTO;
 import co.com.meerkats.hotelturin.dto.ClienteKeyDTO;
 import co.com.meerkats.hotelturin.dto.EstadoDTO;
+import co.com.meerkats.hotelturin.dto.FacturaDTO;
 import co.com.meerkats.hotelturin.dto.HabitacionDTO;
 import co.com.meerkats.hotelturin.dto.ListArriendoDTO;
 import co.com.meerkats.hotelturin.logical.IAcompananteLogical;
@@ -30,6 +32,7 @@ import co.com.meerkats.hotelturin.logical.IArriendoLogical;
 import co.com.meerkats.hotelturin.logical.IClienteConsumoLogical;
 import co.com.meerkats.hotelturin.logical.IClienteLogical;
 import co.com.meerkats.hotelturin.logical.IEstadoLogical;
+import co.com.meerkats.hotelturin.logical.IFacturaLogical;
 import co.com.meerkats.hotelturin.logical.IHabitacionLogical;
 import co.com.meerkats.hotelturin.repository.IArriendoRepository;
 import co.com.meerkats.hotelturin.utils.DateUtil;
@@ -55,6 +58,9 @@ public class ArriendoLogicalImpl extends LogicalCommonImpl<Arriendo, ArriendoDTO
 	@Inject
 	private IClienteConsumoLogical clienteConsumoLogical;
 	
+	@Inject
+	private IFacturaLogical facturaLogical;
+	
 	@Override
 	public ArriendoDTO buildDTO(Arriendo entity) {
 		ArriendoDTO arriendoDTO = null;
@@ -76,8 +82,8 @@ public class ArriendoLogicalImpl extends LogicalCommonImpl<Arriendo, ArriendoDTO
 			arriendoDTO.setHabitacion(habitacion);
 			arriendoDTO.setCliente(cliente);
 			arriendoDTO.setClienteConsumo(clienteConsumo);
-			//List<AcompananteDTO> acompanantes = buscarAcompanantes(entity);
-			//arriendoDTO.setAcompanantesDTO(acompanantes);
+			List<AcompananteDTO> acompanantes = buscarAcompanantes(entity);
+			arriendoDTO.setAcompanantesDTO(acompanantes);
 		}
 		return arriendoDTO;
 	}
@@ -294,12 +300,16 @@ public class ArriendoLogicalImpl extends LogicalCommonImpl<Arriendo, ArriendoDTO
 			throw new Exception("Error al intentar generar un checkIn con un checkout ya generado.");
 		}
 	}
+	
+	private List<ArriendoDTO> findAll() {
+		return listEntitiesToListDTOs(repository.findAll());
+	}
 
 	@Override
 	public File exportAll() {
 		File file = null;
 		try {
-			List<Arriendo> all = repository.findAll();
+			List<ArriendoDTO> all = findAll();
 			XSSFWorkbook workbook = new XSSFWorkbook();
 			XSSFSheet sheet = workbook.createSheet();
 			sheet.setDefaultColumnWidth(20);
@@ -319,36 +329,48 @@ public class ArriendoLogicalImpl extends LogicalCommonImpl<Arriendo, ArriendoDTO
 
 	private void createHeaders(XSSFSheet sheet) {
 		XSSFRow titulos = sheet.createRow(0);
-		titulos.createCell(0).setCellValue("Fecha Check-in");
-		titulos.createCell(1).setCellValue("Habitacion");
-		titulos.createCell(2).setCellValue("Tipo Documento");
-		titulos.createCell(3).setCellValue("Cedula");
-		titulos.createCell(4).setCellValue("Num Acompanantes");
-		titulos.createCell(5).setCellValue("Num Noches Definidas");
-		titulos.createCell(6).setCellValue("Estado");
-		titulos.createCell(7).setCellValue("Fecha Check-out");
+		titulos.createCell(0).setCellValue("# Check-in");
+		titulos.createCell(1).setCellValue("Fecha Check-in");
+		titulos.createCell(2).setCellValue("Habitacion");
+		titulos.createCell(3).setCellValue("Tipo Documento");
+		titulos.createCell(4).setCellValue("Cedula");
+		titulos.createCell(5).setCellValue("Nombre");
+		titulos.createCell(6).setCellValue("Fecha Nacimiento");
+		titulos.createCell(7).setCellValue("Celular");
+		titulos.createCell(8).setCellValue("Num Acompanantes");
+		titulos.createCell(9).setCellValue("Num Noches Definidas");
+		titulos.createCell(10).setCellValue("Estado");
+		titulos.createCell(11).setCellValue("Fecha Check-out");
 	}
 	
-	private void buildRows(List<Arriendo> all, XSSFSheet sheet, Arriendo c) {
-		XSSFRow row = sheet.createRow(all.indexOf(c) + 1);
-		createRows(c, row);
+	private void buildRows(List<ArriendoDTO> all, XSSFSheet sheet, ArriendoDTO c) {
+		XSSFRow row = sheet.createRow(sheet.getLastRowNum() + 1);
+		createRows(c, row, c.getCliente());
+		c.getAcompanantesDTO().stream().forEach(a -> {
+			XSSFRow row2 = sheet.createRow(sheet.getLastRowNum() + 1);
+			createRows(c, row2, a.getCliente());
+		});
 	}
 
-	private void createRows(Arriendo c, XSSFRow row) {
-		row.createCell(0).setCellValue(DateUtil.dateToString(c.getDateCheckin(), DateUtil.FORMATO_DOS));
-		row.createCell(1).setCellValue(c.getHabitacionId());
-		row.createCell(2).setCellValue(c.getTipodocumentoId());
-		row.createCell(3).setCellValue(c.getClienteId());
-		row.createCell(4).setCellValue(c.getNumeroAcompanantes());
+	private void createRows(ArriendoDTO c, XSSFRow row, ClienteDTO clienteDTO) {
+		row.createCell(0).setCellValue(c.getId());
+		row.createCell(1).setCellValue(DateUtil.dateToString(c.getDateCheckin(), DateUtil.FORMATO_DOS));
+		row.createCell(2).setCellValue(c.getHabitacionId());
+		row.createCell(3).setCellValue(clienteDTO.getId().getTipodocumento());
+		row.createCell(4).setCellValue(clienteDTO.getId().getId());
+		row.createCell(5).setCellValue(clienteDTO.getNombreCompleto());
+		row.createCell(6).setCellValue(DateUtil.dateToString(clienteDTO.getFechaNacimiento(), DateUtil.FORMATO_DOS));
+		row.createCell(7).setCellValue(clienteDTO.getCelular());
+		row.createCell(8).setCellValue(c.getNumeroAcompanantes());
 		if(c.getNumeroNoches() != null || c.getNumeroNoches() == 0){
-			row.createCell(5).setCellValue(c.getNumeroNoches());
+			row.createCell(9).setCellValue(c.getNumeroNoches());
 		}else{
 			if(c.getDateCheckout() != null){
-				row.createCell(5).setCellValue(DateUtil.daysBetween(c.getDateCheckout(), c.getDateCheckin()));
+				row.createCell(9).setCellValue(DateUtil.daysBetween(c.getDateCheckout(), c.getDateCheckin()));
 			}
 		}
-		row.createCell(6).setCellValue(c.getEstadoId());
-		row.createCell(7).setCellValue(DateUtil.dateToString(c.getDateCheckout(), DateUtil.FORMATO_DOS));
+		row.createCell(10).setCellValue(c.getEstadoId());
+		row.createCell(11).setCellValue(DateUtil.dateToString(c.getDateCheckout(), DateUtil.FORMATO_DOS));
 	}
 
 	@Override
@@ -377,6 +399,37 @@ public class ArriendoLogicalImpl extends LogicalCommonImpl<Arriendo, ArriendoDTO
 	@Override
 	public List<ArriendoDTO> findByArriendosConCapacidadEnHabitacion() {
 		return listEntitiesToListDTOs(repository.findByArriendosConCapacidadEnHabitacion());
+	}
+
+	@Override
+	public Arriendo getEntityForOtherEntity(Integer arriendoId) throws Exception {
+		
+		if(arriendoId == null){
+			throw new Exception("No se puede obtener un arriendo con el dto nulo.");
+		}
+		
+		Arriendo arriendo = repository.findOne(arriendoId);
+		
+		if(arriendo == null){
+			throw new Exception("No se puedo buscar un arriendo inexistente.");
+		}
+		
+		return arriendo;
+	}
+
+	@Override
+	public List<ArriendoDTO> getByStateAndNoHaveFactura() {
+		ArriendoDTO arriendoDTO = new ArriendoDTO();
+		arriendoDTO.setEstadoId(StatesEnum.ACTIVO.getValue());
+		ListArriendoDTO listaArriendosActivos = getByState(arriendoDTO);
+		List<ArriendoDTO> respuesta = new ArrayList<>();
+		listaArriendosActivos.getListaArriendos().stream().forEach(a -> {
+			FacturaDTO factura = facturaLogical.getByArriendoIdAndClienteIdAndTipoDocumentoIDandEstadoId(a.getId(), a.getClienteId(), a.getTipodocumentoId(), StatesEnum.PAGADO.getValue());
+			if(factura == null){
+				respuesta.add(a);
+			}
+		});
+		return respuesta;
 	}
 	
 

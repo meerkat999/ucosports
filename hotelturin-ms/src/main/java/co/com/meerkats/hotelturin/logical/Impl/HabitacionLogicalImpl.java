@@ -167,5 +167,12 @@ public class HabitacionLogicalImpl extends LogicalCommonImpl<Habitacion,Habitaci
 		return buildDTO(repository.save(habitacionEntity));
 	}
 
+	@Override
+	public Habitacion getEntityForOtherEntity(String habitacionId) throws Exception {
+		HabitacionDTO habitacionDTO = new HabitacionDTO();
+		habitacionDTO.setId(habitacionId);
+		return validarExistenciaHabitacion(habitacionDTO);
+	}
+
 }
 

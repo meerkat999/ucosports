@@ -9,10 +9,12 @@ import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.transaction.Transactional.TxType;
 
+import co.com.meerkats.hotelturin.domain.Arriendo;
 import co.com.meerkats.hotelturin.domain.Cliente;
 import co.com.meerkats.hotelturin.domain.ClienteConsumo;
 import co.com.meerkats.hotelturin.domain.Estado;
 import co.com.meerkats.hotelturin.domain.Factura;
+import co.com.meerkats.hotelturin.domain.Habitacion;
 import co.com.meerkats.hotelturin.domain.constants.StatesEnum;
 import co.com.meerkats.hotelturin.dto.ArriendoDTO;
 import co.com.meerkats.hotelturin.dto.ClienteConsumoDTO;
@@ -80,10 +82,12 @@ public class FacturaLogicalImpl extends LogicalCommonImpl<Factura, FacturaDTO> i
 
 	private FacturaDTO buildDTOPrivateSinCheckin(Factura entity, List<ConsumoPorServicioDTO> listaServiciosAConsumir) {
 		FacturaDTO dto = buildDTO(entity);
-		dto.setClienteconsumoId(entity.getClienteConsumo().getId());
-		ClienteConsumoDTO clienteConsumo = new ClienteConsumoDTO();
-		clienteConsumo.setId(entity.getClienteConsumo().getId());
-		dto.setClienteConsumo(clienteConsumoLogical.getById(clienteConsumo));
+		if(entity.getClienteConsumo() != null){
+			dto.setClienteconsumoId(entity.getClienteConsumo().getId());
+			ClienteConsumoDTO clienteConsumo = new ClienteConsumoDTO();
+			clienteConsumo.setId(entity.getClienteConsumo().getId());
+			dto.setClienteConsumo(clienteConsumoLogical.getById(clienteConsumo));
+		}
 		dto.setListaConsumoPorServicio(listaServiciosAConsumir);
 		return dto;
 	}
@@ -101,6 +105,60 @@ public class FacturaLogicalImpl extends LogicalCommonImpl<Factura, FacturaDTO> i
 		return dto;
 	}
 
+	@Override
+	@Transactional(value=TxType.REQUIRED, rollbackOn=Exception.class)
+	public FacturaDTO facturarHospejade(FacturaDTO facturaDTO) throws Exception {
+		
+		if(facturaDTO == null){
+			throw new Exception("Se está intentando facturar con un dto vacío.");
+		}
+		
+		Cliente cliente = clienteLogical.getEntityForOtherEntity(facturaDTO.getClienteId(), facturaDTO.getTipodocumentoId());
+		Estado estado = estadoLogical.getEntityForOtherEntity(StatesEnum.PAGADO.getValue());
+		Arriendo arriendo = arriendoLogical.getEntityForOtherEntity(facturaDTO.getArriendoId());
+		ClienteConsumo clienteConsumo = buscarClienteConsumo(facturaDTO);
+		Habitacion habitacion = habitacionLogical.getEntityForOtherEntity(facturaDTO.getHabitacionId());
+		
+		Double valor = calcularValorHospedaje(arriendo, clienteConsumo, habitacion);
+		Double devuelta = calcularDevuelta(valor, facturaDTO.getListaMediosPago());
+		
+		Factura factura = new Factura();
+		factura.setArriendo(arriendo);
+		factura.setCliente(cliente);
+		factura.setClienteConsumo(clienteConsumo);
+		factura.setDevuelta(devuelta);
+		factura.setEstado(estado);
+		factura.setFecha(facturaDTO.getFecha());
+		factura.setHabitacion(habitacion);
+		factura.setValor(valor);
+		
+		factura = repository.save(factura);
+		
+		if(factura == null){
+			throw new Exception("No se pudo guardar la factura");
+		}
+		
+		return buildDTOPrivateConCheckin(factura, null);
+	}
+
+	private Double calcularValorHospedaje(Arriendo arriendo, ClienteConsumo clienteConsumo, Habitacion habitacion) {
+		Double valor = (habitacion.getPrecio() * arriendo.getNumeroNoches());
+		if(clienteConsumo != null){
+			valor += clienteConsumo.getSaldo();
+		}
+		return valor;
+	}
+
+	private ClienteConsumo buscarClienteConsumo(FacturaDTO facturaDTO) {
+		ClienteConsumo clienteConsumo = null;
+		try {
+			clienteConsumo = clienteConsumoLogical.getEntityForOtherEntity(facturaDTO.getClienteconsumoId());
+		} catch (Exception e) {
+			System.out.println("Info, arriendo sin cliente consumo.");
+		}
+		return clienteConsumo;
+	}
+	
 	@Override
 	@Transactional(value=TxType.REQUIRED, rollbackOn=Exception.class)
 	public FacturaDTO facturarConsumoClienteSinCheckin(FacturaDTO facturaDTO) throws Exception {
@@ -173,6 +231,36 @@ public class FacturaLogicalImpl extends LogicalCommonImpl<Factura, FacturaDTO> i
 			devuelta = valorMedioPagos - valor;
 		}
 		return devuelta;
+	}
+
+	@Override
+	public FacturaDTO getByArriendoIdAndClienteIdAndTipoDocumentoIDandEstadoId(Integer arriendoId, String clienteId,
+			Integer tipodocumentoId, Integer estadoId) {
+		return buildDTO(repository.findByArriendoIdAndClienteIdAndTipodocumentoIdAndEstadoId(arriendoId, clienteId, tipodocumentoId, estadoId));
+	}
+
+	@Override
+	public FacturaDTO getByArriendoIdAndClienteIdAndTipoDocumentoIDandEstadoId(FacturaDTO facturaDTO) {
+		return getByArriendoIdAndClienteIdAndTipoDocumentoIDandEstadoId(facturaDTO.getArriendoId(), facturaDTO.getClienteId(), facturaDTO.getTipodocumentoId(), StatesEnum.PAGADO.getValue());
+	}
+
+	@Override
+	@Transactional(value=TxType.REQUIRED, rollbackOn=Exception.class)
+	public FacturaDTO facturarHospedajeAndCheckout(FacturaDTO facturaDTO) throws Exception {
+		
+		if(facturaDTO == null){
+			throw new Exception("Error al generar una factura con el dto nulo");
+		}
+		
+		checkOutArriendo(facturaDTO);
+		
+		return facturarHospejade(facturaDTO);
+	}
+
+	private void checkOutArriendo(FacturaDTO facturaDTO) throws Exception {
+		ArriendoDTO arriendoDTO = new ArriendoDTO();
+		arriendoDTO.setId(facturaDTO.getArriendoId());
+		arriendoLogical.checkOut(arriendoDTO);
 	}
 
 }

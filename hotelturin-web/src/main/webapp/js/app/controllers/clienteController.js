@@ -15,7 +15,7 @@ define(['app-module', 'sweetService', 'clienteService', 'tipoDocumentoService'],
           $scope.$parent.$parent.cliente = $scope.cliente;
         }else if($scope.serviciosAdicionalesRegistro === true){
           $scope.$parent.$parent.cliente = $scope.cliente;
-          $state.go("app.serviciosAdicionales");
+          $state.go("app.facturacion.serviciosAdicionales");
         }
       }
 

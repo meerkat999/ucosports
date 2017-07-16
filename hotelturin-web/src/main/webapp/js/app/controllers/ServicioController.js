@@ -27,7 +27,7 @@ define(['app-module', 'sweetService', 'servicioService', 'tipoDocumentoService',
                   $scope.cliente = cliente;
                   $scope.seBloqueanLosCamposDeCedula = true;
                 }else{
-                  $state.go('app.serviciosAdicionales.registro');
+                  $state.go('app.facturacion.serviciosAdicionales.registro');
                   sweetService.info("Cliente no Registrado","Se te habilitará un módulo para registrar el nuevo cliente.");
                   $scope.esNecesarioRegistrar = true;
                   $scope.nuevoCliente = {
@@ -233,12 +233,20 @@ define(['app-module', 'sweetService', 'servicioService', 'tipoDocumentoService',
 
       $scope.openArriendo = function(arriendo){
         $scope.arriendoSeleccionado = arriendo;
-        $scope.cliente = {
-          id : {
-            id : arriendo.clienteId,
-            tipodocumento : arriendo.tipodocumentoId
-          }
+        $scope.cliente = arriendo.cliente;
+        var factura = {
+          clienteId : arriendo.cliente.id.id,
+          tipodocumentoId : arriendo.cliente.id.tipodocumento,
+          arriendoId : arriendo.id
         }
+        facturaService.getByArriendoAndClienteAndState(factura).then(function(factura){
+          if(factura !== undefined && factura.id !== undefined){
+            $scope.needFactura = true;
+            sweetService.info("Cuidado", "Aunque el cliente tiene un check-in, este ya se facturó. \n Se realizará una nueva factura para los nuevos consumos adicionales.")
+          }else{
+            $scope.needFactura = false;
+          }
+        })
       }
 
       $scope.finishFactura = function(){
@@ -253,8 +261,10 @@ define(['app-module', 'sweetService', 'servicioService', 'tipoDocumentoService',
           facturaService.facturarconsumoclientesincheckin($scope.factura).then(function(data){
             if(data !== undefined && data.id !== undefined){
               $scope.facturaResultante = data;
-              sweetService.success("Se ha facturado correctamente.");
-              $scope.print();
+              sweetService.success("Se ha facturado correctamente.",
+              function(success){
+                $scope.print();
+              });
             }else{
               sweetService.error("Ha ocurrido un error al facturar");
             }
@@ -268,7 +278,6 @@ define(['app-module', 'sweetService', 'servicioService', 'tipoDocumentoService',
         printElement(document.getElementById("printThis"));
         window.print();
         setTimeout(function () { $scope.init(); }, 100);
-
       }
 
       function printElement(elem) {
@@ -329,6 +338,7 @@ define(['app-module', 'sweetService', 'servicioService', 'tipoDocumentoService',
       }
 
       $scope.completarMedioPago = function(index){
+        $scope.mediosPagoMonto = $scope.mediosPagoMonto === undefined ? 0 : $scope.mediosPagoMonto;
         $scope.valoresMediosPago[index] = $scope.totalMonto - $scope.mediosPagoMonto;
         $scope.mediospagoseleccionados[index].valor = $scope.totalMonto - $scope.mediosPagoMonto;
         $scope.updateMedioPago(index);
@@ -362,7 +372,8 @@ define(['app-module', 'sweetService', 'servicioService', 'tipoDocumentoService',
       }
 
       $scope.mostrarMediosPago = function(){
-        return $scope.serviciosSeleccionados.length > 0 && $scope.arriendoSeleccionado === undefined;
+        return ($scope.serviciosSeleccionados.length > 0 && $scope.arriendoSeleccionado === undefined) ||
+                ($scope.serviciosSeleccionados.length > 0 && $scope.arriendoSeleccionado !== undefined && $scope.needFactura === true) ;
       }
 
       $scope.anadirALaCuenta = function(){

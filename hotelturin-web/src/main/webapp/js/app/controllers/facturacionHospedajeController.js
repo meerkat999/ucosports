@@ -1,13 +1,19 @@
-define(['app-module', 'arriendoService', 'sweetService'], function (app) {
+define(['app-module', 'arriendoService', 'sweetService', 'facturaService'], function (app) {
     app.controller('facturacionHospedajeController',['$scope','$state', 'arriendoService', 'mediopagoService', 'sweetService',
-     function ($scope, $state, arriendoService, mediopagoService, sweetService) {
+    'facturaService', '$filter',
+     function ($scope, $state, arriendoService, mediopagoService, sweetService, facturaService, $filter) {
 
      $scope.getArriendosActivos = function(){
-       arriendoService.getByState({estadoId : 1}).then(function(listaArriendosActivos){
-         if(listaArriendosActivos !== undefined && listaArriendosActivos.listaArriendos !== undefined && listaArriendosActivos.listaArriendos.length > 0){
-           $scope.arriendoActivos = listaArriendosActivos.listaArriendos;
+       arriendoService.getByStateAndNoHaveFactura().then(function(listaArriendosActivos){
+         if(listaArriendosActivos !== undefined && listaArriendosActivos.length > 0){
+           $scope.arriendoActivos = listaArriendosActivos;
+           var prueba = $filter('filter')($scope.arriendoActivos, $scope.nochesDefinidas());
+           if(prueba.length == 0){
+             sweetService.warning("No hay ningún check-in activo o todos los check-ins con noches predefinidas ya están facturados.");
+             $state.go("app.facturacion");
+           }
          }else{
-           sweetService.warning("No hay ningún check-in activo.");
+           sweetService.warning("No hay ningún check-in activo o todos los check-ins con noches predefinidas ya están facturados.");
            $state.go("app.facturacion");
          }
        })
@@ -18,6 +24,24 @@ define(['app-module', 'arriendoService', 'sweetService'], function (app) {
          sweetService.warning("Este hospedaje no tiene un número de noches definido. \n La factura se debe de realizar en el check-out.")
        }else{
           $scope.arriendoSeleccionado = arriendo;
+          var saldo = arriendo.clienteConsumo === null ? 0 : arriendo.clienteConsumo.saldo === undefined ? 0 : arriendo.clienteConsumo.saldo;
+          $scope.totalMonto = (arriendo.numeroNoches * arriendo.habitacion.precio) + saldo;
+          $scope.date = new Date();
+          $scope.calcularFechaSalida();
+       }
+     }
+
+     $scope.calcularFechaSalida = function(){
+       var fechaActual = new Date($scope.arriendoSeleccionado.dateCheckin);
+       var hour = fechaActual.getHours();
+       if(hour < 5){
+         $scope.fechaSalida = fechaActual.setHours(12);
+       }else{
+         fechaActual.setTime(fechaActual.getTime() + ($scope.arriendoSeleccionado.numeroNoches * 24 * 60 * 60 * 1000));
+         fechaActual = fechaActual.setHours(12);
+         fechaActual = new Date(fechaActual);
+         fechaActual = fechaActual.setMinutes(0);
+         $scope.fechaSalida = fechaActual;
        }
      }
 
@@ -61,6 +85,7 @@ define(['app-module', 'arriendoService', 'sweetService'], function (app) {
      }
 
      $scope.completarMedioPago = function(index){
+       $scope.mediosPagoMonto = $scope.mediosPagoMonto === undefined ? 0 : $scope.mediosPagoMonto;
        $scope.valoresMediosPago[index] = $scope.totalMonto - $scope.mediosPagoMonto;
        $scope.mediospagoseleccionados[index].valor = $scope.totalMonto - $scope.mediosPagoMonto;
        $scope.updateMedioPago(index);
@@ -97,6 +122,67 @@ define(['app-module', 'arriendoService', 'sweetService'], function (app) {
        return $scope.arriendoSeleccionado !== undefined;
      }
 
+     $scope.nochesDefinidas = function(){
+       return function(arriendo){
+         return arriendo.numeroNoches > 0;
+       }
+     }
+
+     $scope.mostrarBotonFactura = function(){
+       return $scope.arriendoSeleccionado !==  undefined && $scope.totalMonto - $scope.mediosPagoMonto <= 0;
+     }
+
+     $scope.finishFactura = function(){
+       if($scope.validarMediosPago()){
+         $scope.factura = {
+           clienteId : $scope.arriendoSeleccionado.cliente.id.id,
+           tipodocumentoId : $scope.arriendoSeleccionado.cliente.id.tipodocumento,
+           arriendoId : $scope.arriendoSeleccionado.id,
+           clienteconsumoId : $scope.arriendoSeleccionado.clienteConsumo !== null ? $scope.arriendoSeleccionado.clienteConsumo.id : null,
+           habitacionId : $scope.arriendoSeleccionado.habitacion.id,
+           fecha : $scope.date,
+           listaMediosPago : $scope.mediospagoseleccionados,
+           listaConsumoPorServicio : null
+         }
+         facturaService.facturarHospedaje($scope.factura).then(function(data){
+           if(data !== undefined && data.id !== undefined){
+             $scope.facturaResultante = data;
+             sweetService.success("Se ha facturado correctamente.", function(success){
+               $scope.print();
+             });
+
+           }else{
+             sweetService.warning("No se ha podido generar la factura. Comuníquese con el área de sistemas.")
+           }
+         });
+       }
+     }
+
+     $scope.print = function(){
+       printElement(document.getElementById("printThis"));
+       window.print();
+       setTimeout(function () { $scope.init(); }, 100);
+       $scope.init();
+     }
+
+     function printElement(elem) {
+       $scope.isprinting=true;
+         var domClone = elem.cloneNode(true);
+         var $printSection = document.getElementById("printSection");
+
+         if (!$printSection) {
+             var $printSection = document.createElement("div");
+             $printSection.id = "printSection";
+             document.body.appendChild($printSection);
+             $scope.isprinting = true;
+         }
+
+         $printSection.innerHTML = "";
+         $scope.isprinting = true;
+
+         $printSection.appendChild(domClone);
+     }
+
       $scope.init = function(){
         $scope.buscarMediosPago();
         $scope.getArriendosActivos();
@@ -105,6 +191,7 @@ define(['app-module', 'arriendoService', 'sweetService'], function (app) {
         $scope.mediospago = [];
         $scope.bauches = [];
         $scope.valoresMediosPago = [];
+        $scope.factura = undefined;
       }
 
       $scope.init();
