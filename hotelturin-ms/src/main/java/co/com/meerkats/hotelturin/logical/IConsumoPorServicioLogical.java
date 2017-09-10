@@ -14,5 +14,7 @@ public interface IConsumoPorServicioLogical extends ILogicalCommon<ConsumoPorSer
 
 	List<ConsumoPorServicioDTO> findByClienteConsumo(Integer clienteconsumoId);
 
+	Long countService(Integer id);
+
 	
 }

@@ -105,7 +105,7 @@
       <div style="display: table; text-align: left; margin: 0 auto;" id="printThis">
         <div id = "printSectionChild">
           <div style="margin: 0 0 0 70px; width: 100%;">
-            <img src="./resources/statics/images/logo.png" style="position: absolute; opacity: 0.15;" height="200" width="200">
+            <img src="./resources/statics/images/logo.png" style="position: absolute; opacity: 0.3;" height="200" width="200">
           </div>
           <div style="text-align: center;">
             <label>
@@ -128,10 +128,18 @@
               Fecha Facturación:
             </label>
             <div style="display: table-cell;">
-              {{date | date:'yyyy-MM-dd hh:mm a'}}
+              {{facturaResultante.fecha | date:'yyyy-MM-dd hh:mm a'}}
             </div>
           </div>
           <br>
+          <div style="display: table-row;">
+            <label style="display: table-cell;">
+              Factura:
+            </label>
+            <div style="display: table-cell;">
+              {{facturaResultante.id}}
+            </div>
+          </div>
           <div style="display: table-row;">
             <label style="display: table-cell;">
               Nombre:
@@ -208,8 +216,11 @@
             <label style="display: table-cell;">
               Precio Total Hospedaje
             </label>
-            <div style="display: table-cell;">
+            <div style="display: table-cell;" ng-show="arriendoSeleccionado.numeroNoches > 0">
               {{(arriendoSeleccionado.numeroNoches * arriendoSeleccionado.habitacion.precio) | currency}}
+            </div>
+            <div style="display: table-cell;" ng-show="numeroNochesCalculado > 0">
+              {{(numeroNochesCalculado * arriendoSeleccionado.habitacion.precio) | currency}}
             </div>
           </div>
           <div style="display: table-row;" ng-show="arriendoSeleccionado.clienteConsumo !== null">

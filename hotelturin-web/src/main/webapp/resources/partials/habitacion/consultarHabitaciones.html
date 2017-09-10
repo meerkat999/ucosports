@@ -10,7 +10,7 @@
       <div id="ocupadas">
 		        <h3>Habitaciones Ocupadas</h1>
 	          <div id ="item" class="btn-group" data-toggle="buttons" ng-repeat="habitacion in habitacionesOcupadas">
-		            <label  class="btn btn-lg btn-danger" ng-class="{active: habitacionSeleccionada.id == habitacion.id}" ng-click="">
+		            <label  class="btn btn-lg btn-danger" ng-click="openHabitacionInformacion(habitacion)" ng-class="{active: habitacionSeleccionada.id == habitacion.id}" ng-click="">
 		              	<label>{{habitacion.id}}</label> <br> {{habitacion.nombre}} <br> Capacidad: {{habitacion.capacidad}} Persona(s) <br> Precio: $ {{habitacion.precio}}
 		            </label>
 	          </div>

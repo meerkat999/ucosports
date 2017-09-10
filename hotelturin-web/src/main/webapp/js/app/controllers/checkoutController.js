@@ -97,7 +97,7 @@ define(['app-module', 'arriendoService', 'sweetService', 'habitacionService', 'f
             if($scope.numeroNochesCalculado == 0){
               $scope.numeroNochesCalculado++;
             }
-            if(hour < 5){
+            if(hour < 5 && $scope.numeroNochesCalculado > 0){
               $scope.numeroNochesCalculado++;
               checkin.setTime(checkin.getTime() + (($scope.numeroNochesCalculado-1) * 24 * 60 * 60 * 1000));
             }else{
@@ -198,7 +198,8 @@ define(['app-module', 'arriendoService', 'sweetService', 'habitacionService', 'f
                  habitacionId : $scope.arriendoSeleccionado.habitacion.id,
                  fecha : $scope.date,
                  listaMediosPago : $scope.mediospagoseleccionados,
-                 listaConsumoPorServicio : null
+                 listaConsumoPorServicio : null,
+                 numeroNochesCalculado : $scope.numeroNochesCalculado
                }
                facturaService.facturarHospedajeAndCheckout($scope.factura).then(function(data){
                  if(data !== undefined && data.id !== undefined){
@@ -212,6 +213,31 @@ define(['app-module', 'arriendoService', 'sweetService', 'habitacionService', 'f
                  }
                });
              }
+           }
+
+           $scope.print = function(){
+             printElement(document.getElementById("printThis"));
+             window.print();
+             setTimeout(function () { $scope.init(); }, 100);
+             $scope.init();
+           }
+
+           function printElement(elem) {
+             $scope.isprinting=true;
+               var domClone = elem.cloneNode(true);
+               var $printSection = document.getElementById("printSection");
+
+               if (!$printSection) {
+                   var $printSection = document.createElement("div");
+                   $printSection.id = "printSection";
+                   document.body.appendChild($printSection);
+                   $scope.isprinting = true;
+               }
+
+               $printSection.innerHTML = "";
+               $scope.isprinting = true;
+
+               $printSection.appendChild(domClone);
            }
 
       $scope.init = function(){

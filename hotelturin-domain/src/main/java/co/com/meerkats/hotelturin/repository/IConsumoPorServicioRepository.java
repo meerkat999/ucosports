@@ -14,5 +14,8 @@ public interface IConsumoPorServicioRepository extends JpaRepository<ConsumoPorS
 
 	@Query(value = "select * from consumoporservicio where clienteconsumo_id = :clienteconsumoid ", nativeQuery = true)
 	List<ConsumoPorServicio> findByClienteConsumo(@Param("clienteconsumoid") Integer clienteconsumoId);
+
+	@Query(value = "select count(*) from consumoporservicio where servicioadicional_id = :servicioId", nativeQuery = true)
+	Long countByServicio(@Param("servicioId") Integer servicioId);
 	
 }

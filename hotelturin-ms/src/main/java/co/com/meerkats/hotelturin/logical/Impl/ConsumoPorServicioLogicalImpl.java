@@ -81,4 +81,9 @@ public class ConsumoPorServicioLogicalImpl extends LogicalCommonImpl<ConsumoPorS
 		return listEntitiesToListDTOs(repository.findByClienteConsumo(clienteconsumoId));
 	}
 
+	@Override
+	public Long countService(Integer id) {
+		return repository.countByServicio(id);
+	}
+
 }

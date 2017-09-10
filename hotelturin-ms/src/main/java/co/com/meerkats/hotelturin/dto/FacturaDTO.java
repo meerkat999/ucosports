@@ -31,6 +31,8 @@ public class FacturaDTO implements Serializable {
 	private String habitacionId;
 	
 	private Integer clienteconsumoId;
+	
+	private Integer numeroNochesCalculado;
 
 	private List<ServicioDTO> listaServiciosAConsumir;
 	
@@ -176,6 +178,14 @@ public class FacturaDTO implements Serializable {
 
 	public void setListaConsumoPorServicio(List<ConsumoPorServicioDTO> listaConsumoPorServicio) {
 		this.listaConsumoPorServicio = listaConsumoPorServicio;
+	}
+
+	public Integer getNumeroNochesCalculado() {
+		return numeroNochesCalculado;
+	}
+
+	public void setNumeroNochesCalculado(Integer numeroNochesCalculado) {
+		this.numeroNochesCalculado = numeroNochesCalculado;
 	}
 
 }

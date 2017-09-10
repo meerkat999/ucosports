@@ -24,6 +24,9 @@ define(['app-module', 'restService'], function (app) {
           },
           getByStateAndNoHaveFactura : function(){
             return restService.GETArray(path + 'getByStateAndNoHaveFactura');
+          },
+          getByRoomActive : function(habitacion){
+            return restService.POST(path + 'getByRoomActive', habitacion);
           }
         }
 

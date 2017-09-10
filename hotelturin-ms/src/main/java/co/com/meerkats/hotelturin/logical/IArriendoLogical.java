@@ -6,6 +6,7 @@ import java.util.List;
 import co.com.meerkats.hotelturin.domain.Arriendo;
 import co.com.meerkats.hotelturin.dto.ArriendoDTO;
 import co.com.meerkats.hotelturin.dto.ClienteKeyDTO;
+import co.com.meerkats.hotelturin.dto.HabitacionDTO;
 import co.com.meerkats.hotelturin.dto.ListArriendoDTO;
 
 public interface IArriendoLogical extends ILogicalCommon<Arriendo, ArriendoDTO> {
@@ -20,5 +21,6 @@ public interface IArriendoLogical extends ILogicalCommon<Arriendo, ArriendoDTO> 
 	List<ArriendoDTO> findByArriendosConCapacidadEnHabitacion();
 	Arriendo getEntityForOtherEntity(Integer integer) throws Exception;
 	List<ArriendoDTO> getByStateAndNoHaveFactura();
+	ArriendoDTO getByRoomActive(HabitacionDTO habitacionDTO);
 
 }

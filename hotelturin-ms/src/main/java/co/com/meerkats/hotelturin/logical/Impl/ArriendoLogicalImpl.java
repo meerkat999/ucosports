@@ -431,6 +431,16 @@ public class ArriendoLogicalImpl extends LogicalCommonImpl<Arriendo, ArriendoDTO
 		});
 		return respuesta;
 	}
+
+	@Override
+	public ArriendoDTO getByRoomActive(HabitacionDTO habitacionDTO) {
+		ArriendoDTO arriendodto = null;		
+		if(habitacionDTO != null && habitacionDTO.getId() != null){				
+			Arriendo arriendoEncontrado = repository.findByHabitacionIdAndEstadoId(habitacionDTO.getId(), StatesEnum.ACTIVO.getValue());
+			arriendodto = buildDTO(arriendoEncontrado);
+		}
+		return arriendodto;
+	}
 	
 
 }

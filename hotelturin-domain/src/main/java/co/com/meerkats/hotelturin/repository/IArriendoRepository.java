@@ -18,5 +18,7 @@ public interface IArriendoRepository extends JpaRepository<Arriendo,Integer> {
 	@Query(value = "select arriendo.* from arriendo left join habitacion on (arriendo.habitacion_id = habitacion.habitacion_id) "
 			+ " where arriendo.arriendo_num_acompanantes + 1 < habitacion.habitacion_capacidad and arriendo.estado_id = 1 and habitacion.estado_id = 3;", nativeQuery = true)
 	List<Arriendo> findByArriendosConCapacidadEnHabitacion();
+
+	Arriendo findByHabitacionIdAndEstadoId(String habitacionId, Integer estado_id);
 	
 }

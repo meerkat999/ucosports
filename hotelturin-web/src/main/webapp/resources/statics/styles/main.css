@@ -94,6 +94,7 @@ float: right;
 @media print {
   body * {
     visibility:hidden;
+    height: auto;
   }
   #printSection, #printSection * {
     visibility:visible;

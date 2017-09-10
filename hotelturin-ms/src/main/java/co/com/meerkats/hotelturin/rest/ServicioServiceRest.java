@@ -1,5 +1,6 @@
 package co.com.meerkats.hotelturin.rest;
 
+import java.io.File;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -9,7 +10,8 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.ResponseBuilder;
 
 import co.com.meerkats.hotelturin.dto.EstadoDTO;
 import co.com.meerkats.hotelturin.dto.ListServicioDTO;
@@ -78,6 +80,16 @@ public class ServicioServiceRest {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public ServicioDTO getById(ServicioDTO serviciodto){
 		return logical.getById(serviciodto);
+	}
+	
+	@GET
+	@Path("/exportAllCount")
+	@Produces("application/vnd.ms-excel")
+	public Response exportAll(){
+		File file = logical.exportAllCount();
+	    ResponseBuilder response = Response.ok((Object) file);
+	    response.header("Content-Disposition", "attachment; filename=reporteServicios.xlsx");
+	    return response.build();
 	}
 	
 }

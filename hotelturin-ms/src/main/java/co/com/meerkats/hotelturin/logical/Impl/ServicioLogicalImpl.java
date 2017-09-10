@@ -1,5 +1,8 @@
 package co.com.meerkats.hotelturin.logical.Impl;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
 
 import javax.enterprise.context.RequestScoped;
@@ -7,11 +10,16 @@ import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.transaction.Transactional.TxType;
 
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 import co.com.meerkats.hotelturin.domain.Servicio;
 import co.com.meerkats.hotelturin.domain.constants.StatesEnum;
 import co.com.meerkats.hotelturin.dto.EstadoDTO;
 import co.com.meerkats.hotelturin.dto.ListServicioDTO;
 import co.com.meerkats.hotelturin.dto.ServicioDTO;
+import co.com.meerkats.hotelturin.logical.IConsumoPorServicioLogical;
 import co.com.meerkats.hotelturin.logical.IServicioLogical;
 import co.com.meerkats.hotelturin.repository.IServicioRepository;
 
@@ -20,6 +28,9 @@ public class ServicioLogicalImpl extends LogicalCommonImpl<Servicio,ServicioDTO>
 
 	@Inject
 	private IServicioRepository repository;
+	
+	@Inject
+	private IConsumoPorServicioLogical consumoPorServicioLogical;
 
 	@Override
 	public List<ServicioDTO> getAll() {
@@ -141,6 +152,56 @@ public class ServicioLogicalImpl extends LogicalCommonImpl<Servicio,ServicioDTO>
 	@Override
 	public ServicioDTO findyByClienteConsumo(Integer clienteConsumoId) {
 		return buildDTO(repository.findyByClienteConsumo(clienteConsumoId));
+	}
+
+	@Override
+	public File exportAllCount() {
+		File file = null;
+		try {
+			List<ServicioDTO> all = findAll();
+			XSSFWorkbook workbook = new XSSFWorkbook();
+			XSSFSheet sheet = workbook.createSheet();
+			sheet.setDefaultColumnWidth(20);
+			createHeaders(sheet);
+			all.stream().forEach(c -> {
+				buildRows(all, sheet, c);
+			});
+			file = new File("pruebaHospedajes.xlsx");
+			FileOutputStream fileOutputStream = new FileOutputStream(file);
+			workbook.write(fileOutputStream);
+			workbook.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return file;
+	}
+
+	private void buildRows(List<ServicioDTO> all, XSSFSheet sheet, ServicioDTO c) {
+		XSSFRow row = sheet.createRow(sheet.getLastRowNum() + 1);
+		Long count = consumoPorServicioLogical.countService(c.getId());
+		createRows(c, row, count);
+		
+	}
+
+	private void createRows(ServicioDTO c, XSSFRow row, Long count) {
+		row.createCell(0).setCellValue(c.getId());
+		row.createCell(1).setCellValue(c.getNombre());
+		row.createCell(2).setCellValue(c.getValor());
+		row.createCell(3).setCellValue(count);
+		row.createCell(4).setCellValue(c.getEstado());
+	}
+
+	private void createHeaders(XSSFSheet sheet) {
+		XSSFRow titulos = sheet.createRow(0);
+		titulos.createCell(0).setCellValue("# Servicio Adicional");
+		titulos.createCell(1).setCellValue("Nombre");
+		titulos.createCell(2).setCellValue("Precio");
+		titulos.createCell(3).setCellValue("# de Veces Consumido");
+		titulos.createCell(4).setCellValue("Estado");
+	}
+
+	private List<ServicioDTO> findAll() {
+		return listEntitiesToListDTOs(repository.findAll());
 	}
 
 

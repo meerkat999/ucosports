@@ -117,9 +117,10 @@ public class FacturaLogicalImpl extends LogicalCommonImpl<Factura, FacturaDTO> i
 		Estado estado = estadoLogical.getEntityForOtherEntity(StatesEnum.PAGADO.getValue());
 		Arriendo arriendo = arriendoLogical.getEntityForOtherEntity(facturaDTO.getArriendoId());
 		ClienteConsumo clienteConsumo = buscarClienteConsumo(facturaDTO);
+		actualizarClienteConsumo(estado, clienteConsumo);
 		Habitacion habitacion = habitacionLogical.getEntityForOtherEntity(facturaDTO.getHabitacionId());
 		
-		Double valor = calcularValorHospedaje(arriendo, clienteConsumo, habitacion);
+		Double valor = calcularValorHospedaje(arriendo, clienteConsumo, habitacion, facturaDTO.getNumeroNochesCalculado());
 		Double devuelta = calcularDevuelta(valor, facturaDTO.getListaMediosPago());
 		
 		Factura factura = new Factura();
@@ -141,8 +142,27 @@ public class FacturaLogicalImpl extends LogicalCommonImpl<Factura, FacturaDTO> i
 		return buildDTOPrivateConCheckin(factura, null);
 	}
 
-	private Double calcularValorHospedaje(Arriendo arriendo, ClienteConsumo clienteConsumo, Habitacion habitacion) {
-		Double valor = (habitacion.getPrecio() * arriendo.getNumeroNoches());
+	private void actualizarClienteConsumo(Estado estado, ClienteConsumo clienteConsumo) throws Exception {
+		if(clienteConsumo != null){
+			clienteConsumo.setEstado(estado);
+			ClienteConsumoDTO consumo = new ClienteConsumoDTO();
+			consumo.setId(clienteConsumo.getId());
+			consumo.setEstado_id(estado.getId());
+			consumo.setSaldo(0D);
+			consumo.setTotal(clienteConsumo.getTotal());
+			clienteConsumoLogical.update(consumo);
+		}
+	}
+
+	private Double calcularValorHospedaje(Arriendo arriendo, ClienteConsumo clienteConsumo, Habitacion habitacion, Integer numeroNochesCalculado) throws Exception {
+		Double valor = 0D;
+		if(arriendo.getNumeroNoches() != null){
+			valor = (habitacion.getPrecio() * arriendo.getNumeroNoches());
+		}else if(numeroNochesCalculado != null){
+			valor = (habitacion.getPrecio() * numeroNochesCalculado);
+		}else{
+			throw new Exception("No se pudo calcular el valor del monto a pagar.");
+		}
 		if(clienteConsumo != null){
 			valor += clienteConsumo.getSaldo();
 		}

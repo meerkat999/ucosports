@@ -1,5 +1,6 @@
 package co.com.meerkats.hotelturin.logical;
 
+import java.io.File;
 import java.util.List;
 
 import co.com.meerkats.hotelturin.domain.Servicio;
@@ -18,7 +19,8 @@ public interface IServicioLogical  extends ILogicalCommon<Servicio,ServicioDTO> 
 	ServicioDTO activar(ServicioDTO servicio) throws Exception;
 	Servicio getEntityForOtherEntity(Integer clienteConsumoId) throws Exception;
 	ServicioDTO findyByClienteConsumoAndEstadoId(Integer clienteConsumoId, Integer estadoId);
-	ServicioDTO findyByClienteConsumo(Integer clienteConsumoId);	
+	ServicioDTO findyByClienteConsumo(Integer clienteConsumoId);
+	File exportAllCount();	
 	
 } 
 

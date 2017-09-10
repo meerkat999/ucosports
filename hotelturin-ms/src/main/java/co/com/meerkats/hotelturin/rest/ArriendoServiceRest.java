@@ -15,6 +15,7 @@ import javax.ws.rs.core.Response.ResponseBuilder;
 
 import co.com.meerkats.hotelturin.dto.ArriendoDTO;
 import co.com.meerkats.hotelturin.dto.ClienteKeyDTO;
+import co.com.meerkats.hotelturin.dto.HabitacionDTO;
 import co.com.meerkats.hotelturin.dto.ListArriendoDTO;
 import co.com.meerkats.hotelturin.logical.IArriendoLogical;
 
@@ -88,5 +89,14 @@ public class ArriendoServiceRest {
 	public ArriendoDTO checkOut(ArriendoDTO arriendoDTO) throws Exception{
 		return logical.checkOut(arriendoDTO);
 	}
+	
+	@POST
+	@Path("/getByRoomActive")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public ArriendoDTO getByRoomActive(HabitacionDTO habitacionDTO) throws Exception{
+		return logical.getByRoomActive(habitacionDTO);
+	}
+
 	
 }
