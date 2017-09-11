@@ -93,6 +93,11 @@ define(['app-module', 'arriendoService', 'sweetService', 'habitacionService', 'f
           $scope.bauches = [];
           $scope.valoresMediosPago = [];
           $scope.mediosPagoMonto = 0;
+          var f = new Date($scope.arriendoSeleccionado.dateCheckin + (86400000 * $scope.numNohesArriendo));
+          f = f.setHours(12);
+          f = new Date(f);
+          f = f.setMinutes(0);
+          $scope.fechaSalida = f;
       }
 
       $scope.calcularFechaSalida = function(){
