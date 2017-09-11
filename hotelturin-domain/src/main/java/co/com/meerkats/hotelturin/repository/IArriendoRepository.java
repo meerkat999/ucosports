@@ -21,4 +21,10 @@ public interface IArriendoRepository extends JpaRepository<Arriendo,Integer> {
 
 	Arriendo findByHabitacionIdAndEstadoId(String habitacionId, Integer estado_id);
 	
+	@Query(value = "select * from arriendo where MONTH(arriendo_fecha) = MONTH(CURRENT_DATE()) and YEAR(arriendo_fecha) = YEAR(CURRENT_DATE());", nativeQuery = true)
+	List<Arriendo> findThisMonth();
+	
+	@Query(value = "select * from arriendo where MONTH(arriendo_fecha) = MONTH(CURRENT_DATE())-1 and YEAR(arriendo_fecha) = YEAR(CURRENT_DATE());", nativeQuery = true)
+	List<Arriendo> findMesAnterior();
+	
 }

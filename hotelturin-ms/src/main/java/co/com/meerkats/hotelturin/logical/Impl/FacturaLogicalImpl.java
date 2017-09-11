@@ -156,7 +156,7 @@ public class FacturaLogicalImpl extends LogicalCommonImpl<Factura, FacturaDTO> i
 
 	private Double calcularValorHospedaje(Arriendo arriendo, ClienteConsumo clienteConsumo, Habitacion habitacion, Integer numeroNochesCalculado) throws Exception {
 		Double valor = 0D;
-		if(arriendo.getNumeroNoches() != null){
+		if(arriendo.getNumeroNoches() != null && arriendo.getNumeroNoches() != 0){
 			valor = (habitacion.getPrecio() * arriendo.getNumeroNoches());
 		}else if(numeroNochesCalculado != null){
 			valor = (habitacion.getPrecio() * numeroNochesCalculado);
@@ -164,7 +164,7 @@ public class FacturaLogicalImpl extends LogicalCommonImpl<Factura, FacturaDTO> i
 			throw new Exception("No se pudo calcular el valor del monto a pagar.");
 		}
 		if(clienteConsumo != null){
-			valor += clienteConsumo.getSaldo();
+			valor += clienteConsumo.getTotal();
 		}
 		return valor;
 	}

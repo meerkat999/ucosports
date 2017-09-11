@@ -304,18 +304,24 @@ public class ArriendoLogicalImpl extends LogicalCommonImpl<Arriendo, ArriendoDTO
 	private List<ArriendoDTO> findAll() {
 		return listEntitiesToListDTOs(repository.findAll());
 	}
+	
+	private List<ArriendoDTO> findAllMonth() {
+		return listEntitiesToListDTOs(repository.findThisMonth());
+	}
+	
+	private List<ArriendoDTO> findAllMonthAnterior() {
+		return listEntitiesToListDTOs(repository.findMesAnterior());
+	}
 
-	@Override
-	public File exportAll() {
+	private File exportList(List<ArriendoDTO> lista) {
 		File file = null;
 		try {
-			List<ArriendoDTO> all = findAll();
 			XSSFWorkbook workbook = new XSSFWorkbook();
 			XSSFSheet sheet = workbook.createSheet();
 			sheet.setDefaultColumnWidth(20);
 			createHeaders(sheet);
-			all.stream().forEach(c -> {
-				buildRows(all, sheet, c);
+			lista.stream().forEach(c -> {
+				buildRows(lista, sheet, c);
 			});
 			file = new File("pruebaHospedajes.xlsx");
 			FileOutputStream fileOutputStream = new FileOutputStream(file);
@@ -362,12 +368,10 @@ public class ArriendoLogicalImpl extends LogicalCommonImpl<Arriendo, ArriendoDTO
 		row.createCell(6).setCellValue(DateUtil.dateToString(clienteDTO.getFechaNacimiento(), DateUtil.FORMATO_DOS));
 		row.createCell(7).setCellValue(clienteDTO.getCelular());
 		row.createCell(8).setCellValue(c.getNumeroAcompanantes());
-		if(c.getNumeroNoches() != null || c.getNumeroNoches() == 0){
+		if(c.getNumeroNoches() != null && c.getNumeroNoches() > 0){
 			row.createCell(9).setCellValue(c.getNumeroNoches());
 		}else{
-			if(c.getDateCheckout() != null){
-				row.createCell(9).setCellValue(DateUtil.daysBetween(c.getDateCheckout(), c.getDateCheckin()));
-			}
+			row.createCell(9).setCellValue("No se definieron.");
 		}
 		row.createCell(10).setCellValue(c.getEstadoId());
 		row.createCell(11).setCellValue(DateUtil.dateToString(c.getDateCheckout(), DateUtil.FORMATO_DOS));
@@ -440,6 +444,21 @@ public class ArriendoLogicalImpl extends LogicalCommonImpl<Arriendo, ArriendoDTO
 			arriendodto = buildDTO(arriendoEncontrado);
 		}
 		return arriendodto;
+	}
+
+	@Override
+	public File exportAll() {
+		return exportList(findAll());
+	}
+
+	@Override
+	public File exportThisMonth() {
+		return exportList(findAllMonth());
+	}
+
+	@Override
+	public File exportMesAnterior() {
+		return exportList(findAllMonthAnterior());
 	}
 	
 

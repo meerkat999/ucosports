@@ -1,6 +1,8 @@
 package co.com.meerkats.hotelturin.rest;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -31,7 +33,37 @@ public class ArriendoServiceRest {
 	public Response exportAll(){
 		File file = logical.exportAll();
 	    ResponseBuilder response = Response.ok((Object) file);
-	    response.header("Content-Disposition", "attachment; filename=reporteHospedajes.xlsx");
+	    String nombre = "ReporteTodosHospedajes";
+	    response.header("Content-Disposition", "attachment; filename="+nombre+".xlsx");
+	    return response.build();
+	}
+	
+	@GET
+	@Path("/exportAllThisMonth")
+	@Produces("application/vnd.ms-excel")
+	public Response exportAllThisMonth(){
+		File file = logical.exportThisMonth();
+	    ResponseBuilder response = Response.ok((Object) file);
+	    Calendar cal=Calendar.getInstance();
+	    SimpleDateFormat month_date = new SimpleDateFormat("MMMM");
+	    String month_name = month_date.format(cal.getTime());
+	    String nombre = "ReporteHospedajes-" + month_name;
+	    response.header("Content-Disposition", "attachment; filename="+nombre+".xlsx");
+	    return response.build();
+	}
+	
+	@GET
+	@Path("/exportAllMonthAnterior")
+	@Produces("application/vnd.ms-excel")
+	public Response exportAllMonthAnterior(){
+		File file = logical.exportMesAnterior();
+	    ResponseBuilder response = Response.ok((Object) file);
+	    Calendar cal=Calendar.getInstance();
+	    SimpleDateFormat month_date = new SimpleDateFormat("MMMM");
+	    cal.add(Calendar.MONTH, -1);
+	    String month_name = month_date.format(cal.getTime());
+	    String nombre = "ReporteHospedajes-" + month_name;
+	    response.header("Content-Disposition", "attachment; filename="+nombre+".xlsx");
 	    return response.build();
 	}
 	

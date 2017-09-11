@@ -17,7 +17,13 @@
     <div><label>Habitacion: </label>{{arriendoSeleccionado.habitacionId}}</div>
     <div><label>Fecha check-in: </label>{{arriendoSeleccionado.dateCheckin | date:"yyyy/MM/dd 'a las' h:mma"}}</div>
     <div ng-show="arriendoSeleccionado.numeroNoches > 0"><label>Número de noches: </label>{{arriendoSeleccionado.numeroNoches}}</div>
-    <div ng-show="arriendoSeleccionado.numeroNoches == 0"><label>Número de noches: </label>{{numeroNochesCalculado}}</div>
+    
+    
+    <div ng-show="arriendoSeleccionado.numeroNoches == 0"><label>Número de noches: </label>
+    	<input type="text" number ng-change="totalMontoCalcular()" ng-model="numNohesArriendo"></input>
+    </div>
+    
+    
     <div ng-if="arriendoSeleccionado.numeroAcompanantes > 0">
       <label>Número de Acompañantes: </label>{{arriendoSeleccionado.numeroAcompanantes}}
     </div>
@@ -177,7 +183,7 @@
               Número de noches:
             </label>
             <div style="display: table-cell;">
-              {{numeroNochesCalculado}}
+              {{numNohesArriendo}}
             </div>
           </div>
           <div style="display: table-row;">
@@ -219,8 +225,8 @@
             <div style="display: table-cell;" ng-show="arriendoSeleccionado.numeroNoches > 0">
               {{(arriendoSeleccionado.numeroNoches * arriendoSeleccionado.habitacion.precio) | currency}}
             </div>
-            <div style="display: table-cell;" ng-show="numeroNochesCalculado > 0">
-              {{(numeroNochesCalculado * arriendoSeleccionado.habitacion.precio) | currency}}
+            <div style="display: table-cell;" ng-show="numNohesArriendo > 0">
+              {{(numNohesArriendo * arriendoSeleccionado.habitacion.precio) | currency}}
             </div>
           </div>
           <div style="display: table-row;" ng-show="arriendoSeleccionado.clienteConsumo !== null">

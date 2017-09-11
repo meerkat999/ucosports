@@ -17,6 +17,8 @@ public interface IArriendoLogical extends ILogicalCommon<Arriendo, ArriendoDTO> 
 	ListArriendoDTO getByState(ArriendoDTO arriendoDTO);
 	ArriendoDTO checkOut(ArriendoDTO arriendoDTO) throws Exception;
 	File exportAll();
+	File exportThisMonth();
+	File exportMesAnterior();
 	ArriendoDTO addNumAcompanantes(ArriendoDTO arriendoDTO, Integer more) throws Exception;
 	List<ArriendoDTO> findByArriendosConCapacidadEnHabitacion();
 	Arriendo getEntityForOtherEntity(Integer integer) throws Exception;

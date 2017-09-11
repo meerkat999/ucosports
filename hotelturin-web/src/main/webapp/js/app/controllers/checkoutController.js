@@ -54,6 +54,17 @@ define(['app-module', 'arriendoService', 'sweetService', 'habitacionService', 'f
       }
 
       $scope.openArriendo = function(arriendo){
+    	$scope.precioHabitacionArriendo = arriendo.habitacion.precio;
+    	$scope.saldoCalculadoArriendo = 0;
+    	$scope.numNohesArriendo = 0;
+    	$scope.totalMonto = 0;
+    	$scope.mediospagoseleccionados = [];
+        $scope.bauches = [];
+        $scope.valoresMediosPago = [];
+        $scope.mediosPagoMonto = 0;
+    	if(arriendo.numeroNoches === 0){
+    		sweetService.warning("Cuidado, este hospedaje requiere verificar el número de noches, ya que este fue calculado.");
+    	}
         $scope.arriendoSeleccionado = arriendo;
         $scope.facturaHallada = undefined;
         var factura = {
@@ -69,11 +80,19 @@ define(['app-module', 'arriendoService', 'sweetService', 'habitacionService', 'f
             $scope.needFactura = true;
             $scope.date = new Date();
             $scope.calcularFechaSalida();
-            var saldo = arriendo.clienteConsumo === null ? 0 : arriendo.clienteConsumo.saldo === undefined ? 0 : arriendo.clienteConsumo.saldo;
-            var numeroNoches = arriendo.numeroNoches === 0 ? $scope.numeroNochesCalculado : arriendo.numeroNoches;
-            $scope.totalMonto = (numeroNoches * arriendo.habitacion.precio) + saldo;
+            $scope.saldoCalculadoArriendo = arriendo.clienteConsumo === null ? 0 : arriendo.clienteConsumo.saldo === undefined ? 0 : arriendo.clienteConsumo.saldo;
+            $scope.numNohesArriendo = arriendo.numeroNoches === 0 ? $scope.numeroNochesCalculado : arriendo.numeroNoches;
+            $scope.totalMontoCalcular();
           }
         })
+      }
+      
+      $scope.totalMontoCalcular = function(){
+    	  $scope.totalMonto = ($scope.precioHabitacionArriendo * $scope.numNohesArriendo) + $scope.saldoCalculadoArriendo;
+          $scope.mediospagoseleccionados = [];
+          $scope.bauches = [];
+          $scope.valoresMediosPago = [];
+          $scope.mediosPagoMonto = 0;
       }
 
       $scope.calcularFechaSalida = function(){
@@ -178,6 +197,10 @@ define(['app-module', 'arriendoService', 'sweetService', 'habitacionService', 'f
                sweetService.warning("Los medios de pago no cubren el monto total a pagar.");
                return false;
              }
+             if($scope.numNohesArriendo < 1 || $scope.numNohesArriendo === undefined || $scope.numNohesArriendo === ""){
+            	 sweetService.warning("Falta definir el número de noches.");
+                 return false;
+             }
              for (medioPago of $scope.mediospagoseleccionados){
                if((medioPago.needBauche == true && medioPago.numBauche == undefined) ||
                    (medioPago.needBauche == true && medioPago.numBauche == "")){
@@ -199,7 +222,7 @@ define(['app-module', 'arriendoService', 'sweetService', 'habitacionService', 'f
                  fecha : $scope.date,
                  listaMediosPago : $scope.mediospagoseleccionados,
                  listaConsumoPorServicio : null,
-                 numeroNochesCalculado : $scope.numeroNochesCalculado
+                 numeroNochesCalculado : $scope.numNohesArriendo
                }
                facturaService.facturarHospedajeAndCheckout($scope.factura).then(function(data){
                  if(data !== undefined && data.id !== undefined){
