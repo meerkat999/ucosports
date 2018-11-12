@@ -233,7 +233,9 @@ define(['app-module','clienteService', 'tipoDocumentoService', 'sweetService', '
           if(arriendo !== undefined && arriendo.id !== undefined){
             sweetService.warning("No puedes generar un checkin a un cliente que ya tiene uno activo.");
           }else{
-            if($scope.cliente === null || $scope.cliente.id.id === null || $scope.habitacionSeleccionada.id === null || $scope.numeroAcompanantes != $scope.acompanantes.length){
+        	if($scope.conoceElNumeroDeNoches !== undefined && $scope.conoceElNumeroDeNoches.value === 'SI' && ($scope.numeroNoches === "" || $scope.numeroNoches === undefined)){
+                  sweetService.warning("Falta declarar el número de noches.");
+            }else if($scope.cliente === null || $scope.cliente.id.id === null || $scope.habitacionSeleccionada.id === null || $scope.numeroAcompanantes != $scope.acompanantes.length){
               sweetService.warning("Falta información para realizar el check-in.");
             }else{
               sweetService.question("Finalizar Check-in", "¿Está seguro que desea realizar el check-in?", "Realizar", "Cancelar",
